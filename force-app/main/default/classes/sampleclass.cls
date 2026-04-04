@@ -31,7 +31,7 @@ public class sampleclass {
     @AuraEnabled
     public static List<Contact> getContacts(String searchKeyword) {
         String searchQuery = '%' + String.escapeSingleQuotes(searchKeyword) + '%';
-        system.debug('search query  branch changed in remote github');
+        system.debug('search query  branch 2');
         return [SELECT Id, FirstName, LastName, Email FROM Contact WHERE LastName LIKE :searchQuery LIMIT 10];
     }
 }
