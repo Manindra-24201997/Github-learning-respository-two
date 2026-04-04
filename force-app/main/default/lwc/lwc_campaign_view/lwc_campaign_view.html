@@ -1,0 +1,118 @@
+<template>
+    <lightning-accordion>
+        <lightning-accordion-section label="Lwc Campaign Jobs" data-my-id="section1" >
+            <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+                <div class="slds-size_3-of-10">
+                    <div class="slds-m-around_x-small">
+                        <lightning-combobox name="Status"
+                                            label="Job Status"
+                                            value={Svalue}
+                                            placeholder="Select Progress"
+                                            options={Statusvalue}
+                                            onchange={handleChange} ></lightning-combobox>
+                    </div>
+                </div> 
+                <div class="slds-size_4-of-10">
+                    <div class="slds-m-around_x-small">
+                        <lightning-combobox name="CampTemplate"
+                                            label="Campaign Template"
+                                            value={value}
+                                            placeholder="--None--"
+                                            options={CampTemplates}
+                                            onchange={handleChangeTemp} ></lightning-combobox>
+                    </div>
+                </div>
+                <div class="slds-size_3-of-10">
+                    <div class="slds-m-around_x-small" style="margin-top:20%">
+                        <lightning-button variant="neutral" label="Import Template" onclick={ImportTemplate} ></lightning-button>
+                    </div>
+                </div>
+                <div class="slds-size_3-of-10">
+                    <div class="slds-m-around_x-small" style="margin-top:30%">
+                        <lightning-button variant="neutral" label="New Job"  onclick={NewJobRedirect} ></lightning-button>
+                    </div>
+                </div>
+            </div>
+
+           
+
+            <template if:true={showjobnewlayout}>
+                <lightning-record-edit-form data-id="createEditForm"  object-api-name="Job__c"   
+                density="comfy"  onload={handleload} onsubmit={handlesubmit} onsuccess={handlesuccess}>
+                <lightning-messages></lightning-messages>
+                <div class="slds-modal slds-fade-in-open slds-modal_large">
+                    <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium" >New Job</h2>
+                    </div>
+
+                    <div class="slds-modal__content slds-p-around--medium slds-grid slds-wrap ">
+                        <div class="showScroll">
+                            <lightning-layout multiple-rows="true">
+                                <template for:each={fieldsetobj} for:item=ff >
+               
+                                    <template if:true={ff.isreadonly}>
+                                    <lightning-layout-item key = {ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                    <lightning-output-field  field-name={ff.fieldname}  class="slds-p-horizontal_x-large" > </lightning-output-field>
+                                    </lightning-layout-item>
+                                    </template>
+                                    
+                                    <template if:false={ff.isreadonly}>
+                                    
+                                    <template lwc:if={ff.iscampaign}>
+                                    <lightning-layout-item key={ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                    <c-lwc_custom_lookup objname="Campaign__c" data-my-id="Camplwcid"  label="Campaign" search-placeholder="Search Campaign" icon-name="standard:campaign"  selectediconname="standard:campaign"  onlookupselected={handlecmpselected}> </c-lwc_custom_lookup>
+                             </lightning-layout-item>
+                                    </template>
+                                
+                                <template lwc:elseif={ff.ismedia}>
+                                <lightning-layout-item key={ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                        <c-lwc_custom_lookup objname="Media_Type__c" data-my-id="medlwcid"   label="Media types" search-placeholder="Search Media" icon-name="custom:custom99" selectediconname="custom:custom99" onlookupselected={handlecmpselected}> </c-lwc_custom_lookup>
+                                        </lightning-layout-item>
+                                </template>
+                
+                                <template lwc:elseif={ff.isschedule}>
+                                    <lightning-layout-item key={ff.fieldname} class="Schedule_Template__c" data-id="schedule"  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                               <c-lwc_custom_lookup_dependent mediaidisdep={medobj.Id} scheduleidisselected={isscheduleselected} isremovefield={isremovedep} objname="Schedule_Template__c" data-my-id="schlwcid" label="Schedule Template" search-placeholder="Search schedule" icon-name="custom:custom40" selectediconname="custom:custom40" onlookupselected={handlecmpselected}></c-lwc_custom_lookup_dependent> 
+                                        </lightning-layout-item>
+                                   </template>
+                   
+                                     <template lwc:elseif={ff.isclient}>
+                                           <lightning-layout-item key={ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                                   <c-lwc_custom_lookup objname="Client__c" data-my-id="clientlwcid"   label="Client" search-placeholder="Search Client" icon-name="standard:client" selectediconname="standard:client" onlookupselected={handlecmpselected}> </c-lwc_custom_lookup>
+                                                   </lightning-layout-item>
+                                           </template>
+                   
+                                        <template lwc:elseif={ff.isclientcontact}>
+                                                   <lightning-layout-item key={ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                                           <c-lwc_custom_lookup_cltcnt_dependent clientidisdep={clientidfordep} objname="Client_Contact__c" data-my-id="clientcnctlwcid"   label="Client Contact" search-placeholder="Search Client Contact" icon-name="standard:groups" selectediconname="standard:groups" onlookupselected={handlecmpselected}> </c-lwc_custom_lookup_cltcnt_dependent>
+                                                           </lightning-layout-item>
+                                                   </template>
+                                
+                                <template lwc:else>
+                                <lightning-layout-item key = {ff.fieldname}  size="12" small-device-size="12" medium-device-size="12" large-device-size="6" padding="around-small">
+                                <lightning-input-field  field-name={ff.fieldname}  data-my-id="fsOne" class="slds-p-horizontal_x-large" required={ff.required}> </lightning-input-field>
+                                </lightning-layout-item>
+                                </template>
+                                
+                                </template>
+                               
+                                </template>
+                                </lightning-layout>
+
+</div>
+</div>
+
+<div class="slds-modal__footer" >
+    <lightning-button variant="neutral" label="Cancel" title="Successful action" onclick={cancelcmpgn} class="slds-m-left_x-small"></lightning-button>
+    <lightning-button variant="brand" label="Save" type="submit" title="Primary action" onclick={handlesubmit} class="slds-m-left_x-small"></lightning-button>
+</div>
+                    </div>
+                </div>
+                </lightning-record-edit-form>
+                <div class="slds-backdrop slds-backdrop_open"></div>
+
+            </template>
+        </lightning-accordion-section>
+    </lightning-accordion>
+</template>

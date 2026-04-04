@@ -1,0 +1,285 @@
+<aura:component controller="Outdooradvertisingctrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    
+    <aura:attribute name="data" type="list"/>
+    <aura:attribute name="columns" type="list" default="Name,Client"/>
+    <aura:attribute name="statusPicklist" type="list" default="Active"/>
+    
+    <!--Billboard list attributes -->
+    <aura:attribute name="device" type="string" />
+    <aura:attribute name="BBItemsList" type="list"/>
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    <aura:attribute name="clientId" type="String" default=""/>
+    <aura:attribute name="showbillboardform" type="boolean" default="false"/>
+    <aura:attribute name="billboardrcdid" type="string" />
+    
+    <!--sort attributes -->
+    <aura:attribute name="sortAsc" type="boolean"  />
+    <aura:attribute type="String" name="sortField" />
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    
+    <div class="showScroll">
+        <ui:scrollerWrapper class="scrollerSize">
+            <lightning:card title=""> 
+                
+                <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="Orders" >
+                    <lightning:accordionSection name="Orders" label="Orders">
+                        
+                        <div>
+                            <lightning:select name="select1" aura:id="pickStatus" label="Status" onchange="{!c.StatusChange}"   >
+                                <aura:iteration items="{!v.statusPicklist}" var="option">
+                                    <option text="{!option}" value="{!option}" />
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:if isTrue="{!!v.isMobile}">
+                                <aura:if isTrue="{!empty(v.data)}"><br/><br/>
+                                    <b class="slds-m-around_large">No records to display</b>
+                                    <aura:set attribute="else" >
+                                        <div style="margin-top:20px;"> 
+                                            
+                                            <lightning:datatable class="tablecss"
+                                                                 aura:id="DataTable"
+                                                                 columns="{!v.columns}"
+                                                                 data="{!v.data}"
+                                                                 keyField="Id"
+                                                                 hideCheckboxColumn="true" 
+                                                                 onsort="{!c.updateColumnSorting}"
+                                                                 sortedBy="{!v.sortedBy}"
+                                                                 sortedDirection="{!v.sortedDirection}"                                          
+                                                                 showRowNumberColumn="true"
+                                                                 onrowaction="{! c.handleRowAction }" 
+                                                                 />
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                        </div>
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </lightning:card>
+        </ui:scrollerWrapper>
+    </div>
+    
+    <lightning:card  title="" >  
+        <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="Billboards View StoreFront" >
+            
+            <lightning:accordionSection name="Billboards View StoreFront" label="Billboards View StoreFront">                    
+                
+                <aura:if isTrue="{!v.device}">
+                    
+                    <aura:iteration items="{!v.BBItemsList}" var="item">  
+                        <table>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Title :"/>
+                                </td>
+                                <td width="60%">
+                                    {!item.BBWrap.Title__c}  
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Title :"/>
+                                </td>
+                                <td width="60%">
+                                    {!item.BBWrap.Billboard_Status__c}  
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Vendor"/>:
+                                </td>
+                                <td width="60%">
+                                    {!item.BBWrap.BB_Vendor__r.Name}"	
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Expiration Date"/>:
+                                </td>
+                                <td width="60%">
+                                    <ui:outputDate value="{!item.BBWrap.Expiration_Date__c}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="PMT"/>:
+                                </td>
+                                <td width="60%">
+                                    {!item.BBWrap.PMT__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Location"/>:
+                                </td>
+                                <td width="60%">
+                                    {!item.BBWrap.Location__c}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Photo 1:"/>
+                                </td>
+                                <td width="60%">
+                                    <img src="{!v.prefixURL + item.ContentVersionId[0]}" width="200" height="30" alt=" "/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="40%" style="vertical-align:top;">
+                                    <ui:outputText value="Photo 2:"/>
+                                </td>
+                                <td width="60%">
+                                    <img src="{!v.prefixURL + item.ContentVersionId[1]}" width="200" height="30" alt=" "/>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="margin: 0.4rem 0;"/>
+                    </aura:iteration>
+                </aura:if>
+                
+                <aura:if isTrue="{!!v.device}">
+                    
+                    
+                    <table class="slds-table  slds-no-row-hover slds-table--bordered">
+                        <thead>
+                            <tr class="slds-text-heading--label slds-grid">
+                                <!--<th class="slds-truncate slds-size_2-of-12"><b>BB #</b></th>-->
+                                <th class="slds-truncate slds-size_2-of-12" scope="col" onclick="{!c.updateColumnSorting}">
+                                    <div class="slds-truncate" title="Name" style="cursor: pointer;">BB#
+                                        <aura:if isTrue="{!and(v.arrowDirection == 'arrowdown', v.sortField == 'Name')}">
+                                            <lightning:icon iconName="utility:arrowup"  size="xx-small" alternativeText="Indicates approval"/>
+                                            <aura:set attribute="else">
+                                                <lightning:icon iconName="utility:arrowdown"  size="xx-small" alternativeText="Indicates approval"/>
+                                            </aura:set>
+                                        </aura:if>
+                                    </div>
+                                </th>                                
+                                <aura:if isTrue="{!v.device}">
+                                    <th class="slds-truncate slds-size_8-of-12" ><b>Details</b></th>
+                                    <th class="slds-truncate slds-size_2-of-12"><b>Photo</b></th> 
+                                </aura:if>
+                                <aura:if isTrue="{!!v.device}">
+                                    <!--  <th class="slds-truncate slds-size_4-of-12"><b>&nbsp;</b></th>-->
+                                    <th class="slds-truncate slds-size_4-of-12" scope="col" onclick="{!c.updateColumnSorting}">
+                                        <div class="slds-truncate" title="Details" style="cursor: pointer;">Details
+                                            <aura:if isTrue="{!and(v.arrowDirection == 'arrowdown', v.sortField == 'Billboard_Type__c')}">
+                                                <lightning:icon iconName="utility:arrowup"  size="xx-small" alternativeText="Indicates approval"/>
+                                                <aura:set attribute="else">
+                                                    <lightning:icon iconName="utility:arrowdown"  size="xx-small" alternativeText="Indicates approval"/>
+                                                </aura:set>
+                                            </aura:if>
+                                        </div>
+                                    </th>
+                                    <!-- <th class="slds-truncate slds-size_4-of-12" onclick="{!c.updateColumnSorting}" title="Details"><b>Details</b></th>-->
+                                    <th class="slds-truncate slds-size_3-of-12"  ><b>Photo 1</b></th> 
+                                    <th class="slds-truncate slds-size_3-of-12"><b>Photo 2</b></th>
+                                </aura:if>
+                            </tr>
+                        </thead>
+                        <!--  <br/>
+                        <div style="float:right;">
+                            <lightning:button label="Billboard/DOT Repair" title="Neutral action" onclick="{! c.handleClick }" class="slds-text-align_right"/>
+                        </div>
+                        <br/> <br/> <br/>-->
+                        <tbody>
+                            
+                            <aura:iteration items="{!v.BBItemsList}" var="item" indexVar="index">                
+                                <tr width="100%" class="slds-grid" >
+                                    <td class="slds-truncate slds-size_2-of-12" style="">
+                                        <a href="{!'/'+item.BBWrap.Id}"> {!item.BBWrap.Name} </a>
+                                        <div style="margin-top:210px;" title="{!item.BBWrap.Id}">
+                                            <lightning:button variant= "Brand" label="Repair Request" title="Neutral action" onclick="{! c.handleClick }" class="slds-text-align_left" />
+                                        </div>
+                                    </td>
+                                    
+                                    <!--                         <td id="{!index}" style="word-wrap:break-word;white-space:pre-wrap;text-align:left;" class="slds-truncate slds-size_2-of-12" >                     
+                                        <lightning:button variant= "base" label="Billboard/DOT Repair" title="Neutral action" onclick="{! c.handleClick }" class="slds-text-align_left"/>
+                                    </td>-->
+                                    
+                                    <td style="word-wrap:break-word;white-space:pre-wrap;text-align:left;" class="slds-truncate slds-size_4-of-12">
+                                        <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_fixed-layout slds-table_bordered">
+                                            <tr>
+                                                <td style="font-weight:bold;">Billboard Type :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Billboard_Type__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Title :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Title__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Status :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Billboard_Status__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;" >Vendor :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.BB_Vendor__r.Name}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">PMT :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.PMT__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;" >Expiration Date :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Expiration_Date__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Location :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Location__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Illumination :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Illumination__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Latitude :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Latitude__c}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-weight:bold;">Longitude :</td>
+                                                <td class="word-wrap:break-word;white-space:pre-wrap;">{!item.BBWrap.Longitude__c}</td>
+                                            </tr>
+                                        </table>                                    
+                                    </td>
+                                    
+                                    <td class="slds-truncate slds-size_3-of-12" style="text-align:left;"><img src="{!v.prefixURL + item.ContentVersionId[0]}" width="200" height="30" alt=" "/> </td>
+                                    <td class="slds-truncate slds-size_3-of-12" style="text-align:left;"><img src="{!v.prefixURL + item.ContentVersionId[1]}" width="200" height="30" alt=" "/></td>
+                                    
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                </aura:if>
+            </lightning:accordionSection>
+        </lightning:accordion>
+        
+        <aura:if isTrue="{!v.showbillboardform}">
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                        
+                        <span class="slds-assistive-text">Cancel and close</span>
+                    </button>
+                    
+                    <div class="slds-modal__header">
+                        <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Billboard/Dot Service Request Form</h1>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                        <iframe src="{! 'https://loves-storefront--lcsandbox.lightning.force.com/apex/Outdooradvertisingbillboardform?id='+v.billboardrcdid}" width="100%" height="500px;" frameBorder="0"/>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </aura:if>
+        
+        <aura:if isTrue="{!v.clientId}">
+            <lightning:card title="">
+                <iframe src="{! 'https://loves-storefront--lcsandbox.lightning.force.com/apex/DisplayBillboardForClientContact?Id='+v.clientId}" width="100%" height="500px;" frameBorder="0"/>
+            </lightning:card>
+            
+        </aura:if>
+        
+    </lightning:card>
+</aura:component>

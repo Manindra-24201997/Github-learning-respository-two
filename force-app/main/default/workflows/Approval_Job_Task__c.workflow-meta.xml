@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Approval_Task_Submitted_for_Approval</fullName>
+        <description>Approval Task Submitted for Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SVPSalesMarketing</recipient>
+            <type>role</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Approval_Submitted</template>
+    </alerts>
+    <alerts>
+        <fullName>Approval_Task_status_changed_to_Changes_Needed</fullName>
+        <description>Approval Task status changed to Changes Needed</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <recipients>
+            <recipient>SVPSalesMarketing</recipient>
+            <type>role</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Changes_Needed</template>
+    </alerts>
+    <alerts>
+        <fullName>Approved_Email_Sent_to_Submitter</fullName>
+        <description>Approved Email Sent to Submitter</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Approved</template>
+    </alerts>
+    <alerts>
+        <fullName>Approved_Email_Sent_to_Submitter_from_Job_Task</fullName>
+        <description>Approved Email Sent to Submitter from Job Task</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Approved_at_Job_Task</template>
+    </alerts>
+    <alerts>
+        <fullName>Changes_Needed_Email_sent_to_submitter</fullName>
+        <description>Changes Needed Email sent to submitter</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Changes_Needed</template>
+    </alerts>
+    <alerts>
+        <fullName>Changes_Needed_Email_sent_to_submitter_Job_Task</fullName>
+        <description>Changes Needed Email sent to submitter Job Task</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Submitter_Email__c</field>
+            <type>email</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>JobSuite_Email_Template/AP_Changes_Needed_at_Job_Task</template>
+    </alerts>
+    <rules>
+        <fullName>Approved Email Sent to Submitter</fullName>
+        <actions>
+            <name>Approved_Email_Sent_to_Submitter</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Created_From_Job_Task__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <description>Email sent to the submitter when step has been approved</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Approved Email Sent to Submitter form Job Task</fullName>
+        <actions>
+            <name>Approved_Email_Sent_to_Submitter_from_Job_Task</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Created_From_Job_Task__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Email sent to the submitter when step has been approved</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Changes Needed Email Sent to Submitter</fullName>
+        <actions>
+            <name>Changes_Needed_Email_sent_to_submitter</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Changes Needed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Created_From_Job_Task__c</field>
+            <operation>equals</operation>
+            <value>False</value>
+        </criteriaItems>
+        <description>Email sent to the submitter when status has changed to changes Needed</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+    <rules>
+        <fullName>Changes Needed Email Sent to Submitter from Job Task</fullName>
+        <actions>
+            <name>Changes_Needed_Email_sent_to_submitter_Job_Task</name>
+            <type>Alert</type>
+        </actions>
+        <active>false</active>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Status__c</field>
+            <operation>equals</operation>
+            <value>Changes Needed</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Approval_Job_Task__c.Created_From_Job_Task__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>Email sent to the submitter when status has changed to changes Needed</description>
+        <triggerType>onAllChanges</triggerType>
+    </rules>
+</Workflow>

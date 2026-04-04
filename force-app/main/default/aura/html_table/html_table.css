@@ -1,0 +1,88 @@
+/*.THIS {
+}
+*/
+
+.THIS .slds-combobox__form-element {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+.THIS table {
+    color: black !important;
+}
+.THIS table th{
+    color: black !important;
+    padding: 4px;
+}
+
+.THIS td{
+    color: black !important;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.THIS .customTable th {
+    background-color: #a1a1a1 !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1 !important;
+}
+
+.THIS .customTable th[scope=row]:nth-child(1) {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 1 !important;
+}
+/*.THIS .verticalAlign {
+    cursor: pointer;
+    padding: 0px 5px !important;
+}
+.THIS .slds-dropdown {
+    padding:0px !important;
+}
+.THIS .fullWidth {
+    width: 100% !important;
+}
+.THIS .disabledItem {
+    color: #bbb;
+    cursor: no-drop; 
+}
+.THIS .recordListBox {
+    margin-top:0px !important;
+    overflow-y: scroll;
+}
+.THIS .slds-listbox li {
+    padding: .45rem 0.7rem !important;
+    display: flex;
+}
+.THIS .inputBox input {
+    padding-left: 10px;
+}
+.THIS .eachItem:hover {
+    background-color: #F1F1F1;
+    cursor: pointer;
+}
+.THIS .inputIcon {
+    z-index: 99;
+    padding: 2px 0;
+}*/
+
+/* For Scrolling */
+/*The below is for scroolbar width and height  */
+.THIS ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+}
+.THIS ::-webkit-scrollbar-track {
+    display: none !important;
+}
+
+/*The below is for scroll line */
+.THIS ::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Production Status --></label>
+    <name>Status__c</name>
+    <picklistValues>
+        <masterLabel>Cancelled</masterLabel>
+        <translation><!-- Cancelled --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Completed</masterLabel>
+        <translation><!-- Completed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Estimate Needed</masterLabel>
+        <translation><!-- Estimate Needed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Estimate Ready</masterLabel>
+        <translation><!-- Estimate Ready --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>In Progress</masterLabel>
+        <translation><!-- In Progress --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>On Hold</masterLabel>
+        <translation><!-- On Hold --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Ready for Package</masterLabel>
+        <translation><!-- Ready for Package --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Ready for Review</masterLabel>
+        <translation><!-- Ready for Review --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

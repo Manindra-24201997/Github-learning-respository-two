@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Job</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Jobs</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- JobRequestFormFields --></label>
+        <name>JobRequestFormFields</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- Job Field sets --></label>
+        <name>Job_Field_sets</name>
+    </fieldSets>
+    <layouts>
+        <layout>Job Client Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Job Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- Delete --></label>
+        <name>Delete</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Delete lwc --></label>
+        <name>Delete_lwc</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Disconnect --></label>
+        <name>Disconnect</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Duplicate --></label>
+        <name>Duplicate_Job</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Edit Lwc --></label>
+        <name>Edit_Lwc</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- New lwc button --></label>
+        <name>New_lwc_button</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Revision Test --></label>
+        <name>Revision_Test</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- S1 Update --></label>
+        <name>S1_Update</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Work Order --></label>
+        <name>Work_Order</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- Work Order --></label>
+        <name>Work_Order_Loves</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- aura external css --></label>
+        <name>aura_external_css</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- e-Mail Work Order --></label>
+        <name>e_Mail_Work_Order</name>
+    </quickActions>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Job is not yet completed --></errorMessage>
+        <name>Job_Completion_Rule</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Due Date must be greater than Start Date --></errorMessage>
+        <name>Start_Date_must_be_less_than_Due_Date</name>
+    </validationRules>
+    <webLinks>
+        <label><!-- Complete_Jobs --></label>
+        <name>Complete_Jobs</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Lwc --></label>
+        <name>New_Lwc</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- New_Record_Lwc --></label>
+        <name>New_Record_Lwc</name>
+    </webLinks>
+</CustomObjectTranslation>

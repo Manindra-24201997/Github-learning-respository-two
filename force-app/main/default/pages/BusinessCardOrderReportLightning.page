@@ -1,0 +1,652 @@
+<apex:page controller="BusinessCardOrderReportCnt"  sidebar="true" docType="html-5.0" standardStylesheets="true" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+ 
+    <apex:slds />
+   <apex:form html-novalidate="novalidate">
+   
+        <style>
+             .rotate {
+                  float:left;
+                  width: 50px;
+                  height: 95px
+                  top: 300px;
+                  border-style: none;
+                  valign : bottom;
+    
+                /* Safari */
+                -webkit-transform: rotate(-90deg);
+                
+                /* Firefox */
+                -moz-transform: rotate(-90deg);
+                
+                /* IE */
+                -ms-transform: rotate(-90deg);
+                
+                /* Opera */
+                -o-transform: rotate(-90deg);
+                
+                /* Internet Explorer */
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+                 margin: 20px 20px 20px 20px !important;
+            }
+            
+            
+            body
+            {
+                background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+                // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+                //background-image:none !important;
+                //background-color:#D7D7D7 !important;
+                background-repeat: repeat-x;
+                background-position: left top;
+                background-attachment: fixed; 
+                margin:0px !important;
+            }
+         
+          .customImage{ height: 10px; width: 10px; }
+          
+        
+           .pbHeader
+           {
+               background: white !important;
+           }
+           
+           body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+           {
+               background: white;
+           }
+         
+        
+         
+        .bPageBlock 
+        {
+            border-top: 0px;
+        }
+    
+        </style>
+        
+        <meta charset="utf-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <title>jQuery UI Datepicker - Default functionality</title>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+          <link rel="stylesheet" href="/resources/demos/style.css"/>
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        
+        <div class="slds"> 
+      
+        <div style="background-color:#F3F2F2;height:40px; padding-top:14px; color:#333;font-size:18px;font-weight:bold;padding-left:10px;">
+            <h3 class="slds-section-title"><b>&nbsp;Report</b></h3>
+        </div>
+      
+      
+        <apex:pageblock title="Search">
+           <center>
+                <table>
+                    <tr>
+                        <td style="font-weight: bold;width:120px;white-space:nowrap">
+                            {!$ObjectType.Job__c.Fields.Status__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="Jobstatus" value="{!JobStatusString }" size="1">
+                                <apex:selectOptions value="{!JobStatus}"></apex:selectOptions>
+                            </apex:selectList>
+                        </td>
+
+                        <td style="font-weight: bold;width:120px;white-space:nowrap">
+                            Job Type
+                        </td>
+
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList value="{!SringScheduleTypes}" size="1" id="SringScheduleTypes">
+                                <apex:selectOptions value="{!ScheduleTypes}" />
+                            </apex:selectList>
+                        </td>
+                    </tr>
+                    <br/>
+                    <tr>
+
+                        <td colspan="3" style="text-align: center; padding-top: 20px;">
+                            <apex:commandbutton value="Search" action="{!SearchSpecs}" />
+
+                        </td>
+
+                    </tr>
+
+                </table>
+            </center>
+        </apex:pageblock>
+
+      <apex:pageBlock id="results" title="Results">
+
+           <apex:outputPanel rendered="{!jw.size>0}">
+
+                <center> <b><apex:outputtext value="Name Tag Report" style="font-size:15px;"> </apex:outputtext></b> </center>
+                <br/>
+
+                <div>
+                    <table width="100%">
+
+                        <tr>
+                            <th width="25%" style="text-align:justify;"><b>Store Name</b></th>
+                            <th width="15%" style="text-align:justify;"><b>Title</b></th>
+                            <th width="15%" style="text-align:justify;"><b>Name</b></th>
+                            <!-- <th width="15%" style="text-align:justify;"><b>Last Name</b></th>-->
+
+                            <th width="15%" style="text-align:justify;"><b>Year Of Hire</b></th>
+                            <th width="15%" style="text-align:justify;"><b>Logo</b></th>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <apex:repeat value="{!jw}" var="item">
+
+                            <table width="100%">
+
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+
+                                            <tr>
+                                                <td width="25%" style="text-align:justify;" valign="top">
+                                                    <apex:outputField Value="{!item.job.JS_Client__r.Client_Code__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <!--  <td width="15%" style="text-align:justify" valign="top">
+                              <apex:outputfield Value="{!item.jobspecsStore.Description__c}" rendered="{!item.jobspecsTitle.Description__c='Team Member'}"/><br/>
+                              </td>-->
+
+                                                <td width="15%" style="text-align:justify" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsTitle.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="15%" style="text-align:justify" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsName.Description__c}" /> &nbsp;
+                                                    <apex:outputfield Value="{!item.jobspecsStore.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="15%" style="text-align:justify" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsYearofhire.Description__c}" />
+                                                    <br/>
+
+                                                </td>
+
+                                                <td width="15%" style="text-align:justify" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsLogo.Description__c}" />
+                                                    <apex:outputText value="," rendered="{!item.jobspecsLogo2.Description__c!=null}" />
+                                                    <apex:outputField Value="{!item.jobspecsLogo2.Description__c}" />
+                                                    <br/>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </apex:repeat>
+
+                    </table>
+                </div>
+
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!JCONW.size>0}">
+
+                <center> <b><apex:outputtext value="Corporate Office Nameplate" style="font-size:15px;"> </apex:outputtext></b> </center>
+                <br/>
+
+                <div>
+                    <table width="100%">
+
+                        <tr>
+                            <th width="20%" style="text-align:justify;"><b>Name</b></th>
+                            <th width="20%" style="text-align:justify;"><b>Title</b></th>
+                            <th width="20%" style="text-align:justify;"><b>Year Of Hire</b></th>
+                            <th width="20%" style="text-align:justify;"><b>Building</b></th>
+                            <th width="20%" style="text-align:justify;"><b>Nameplate Type</b></th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <apex:repeat value="{!JCONW}" var="item">
+
+                            <table width="100%">
+
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+
+                                            <td width="20%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.jobspecsName.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="20%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.jobspecsTitle.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="20%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.jobspecsYearofhire.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="20%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.jobspecsBuilding.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="20%" style="text-align:justify" valign="top">
+                                                <apex:outputtext Value="{!item.jobspecsNameplateType}" />
+                                                <br/>
+                                            </td>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!CMNWrapperlist.size>0}">
+
+                <center> <b><apex:outputtext value="CMN Form" style="font-size:15px;"> </apex:outputtext></b> </center>
+                <br/>
+
+                <div>
+                    <table width="100%">
+                    
+                       <tr>
+                            <td colspan="12">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+                      
+                        <tr>
+                            <th colspan="2"></th>
+                            <th colspan="5">Flyer</th>
+                            <th colspan="5">Banner</th>
+                        </tr>
+                        
+                         <tr>
+                            <td colspan="12">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <tr>
+                        
+                            <th width="8.33%" style="text-align:justify;"><b>Store</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Name</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Name of Event</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Date</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Time</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Event Details</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Special Details</b></th>
+                            
+                            
+                            <th width="8.33%" style="text-align:justify;"><b>Name of Event</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Date</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Time</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Event Details</b></th>
+                            <th width="8.33%" style="text-align:justify;"><b>Special Details</b></th>
+                            
+                            
+                            
+                        </tr>
+                        <tr>
+                            <td colspan="12">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <apex:repeat value="{!CMNWrapperlist}" var="item">
+
+                            <table width="100%">
+
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+                                        
+                                             <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputtext Value="{!item.ClientCode}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputtext Value="{!item.Clientname}" />
+                                                <br/>
+                                            </td>
+                                            
+                                            
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNFlyerNameofEvent.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNFlyerDate.Description__c}" />
+                                                <br/>
+                                            </td>
+                                            
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNFlyerTime.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNFlyerEventDetails.Description__c}" />
+                                                <br/>
+                                            </td>
+                                            
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNFlyerSpecialDetails.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNBannerNameofEvent.Description__c}" />
+                                                <br/>
+                                            </td>
+                                            
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNBannerDate.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNBannerTime.Description__c}" />
+                                                <br/>
+                                            </td>
+                                            
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNBannerEventDetails.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                            <td width="8.33%" style="text-align:justify" valign="top">
+                                                <apex:outputField Value="{!item.CMNBannerSpecialDetails.Description__c}" />
+                                                <br/>
+                                            </td>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </apex:repeat>
+                    </table>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!jws.size>0}">
+
+                <center> <b><apex:outputtext value="Store Business Card Report" style="font-size:15px;"> </apex:outputtext></b> </center>
+                <br/>
+
+                <div>
+                    <table width="100%">
+
+                        <tr>
+                            <!-- <th width="8.33%" style="text-align:left;"><b>Job Name</b></th>-->
+                            <th width="8.33%" style="text-align:left;"><b>Name</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Title</b></th>
+
+                            <th width="8.33%" style="text-align:left;"><b>Address</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>City</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>State</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Zip</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Phone</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Fax</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Email</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Logo</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Website</b></th>
+                        </tr>
+                        <tr>
+                            <td colspan="100">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <apex:repeat value="{!jws}" var="item">
+
+                            <table width="100%">
+
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+
+                                            <tr>
+                                                <!--     <td width="8.33%" style="text-align:justify;" valign="top">
+                                <apex:outputField Value="{!item.job.name}"/><br/>
+                              </td> -->
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsName.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputfield Value="{!item.jobspecsTitle.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsAddress.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsCity.Description__c}" />
+                                                    <br/>
+
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsState.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsZip.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsPhone.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsFax.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsEmail.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsLogo.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsWebsite.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </apex:repeat>
+
+                    </table>
+                </div>
+
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!JCBCW.size>0}">
+
+                <center> <b><apex:outputtext value="Corporate Business Card" style="font-size:15px;"> </apex:outputtext></b> </center>
+                <br/>
+
+                <div>
+                    <table width="100%">
+
+                        <tr>
+                            <!-- <th width="8.33%" style="text-align:left;"><b>Job Name</b></th>-->
+                            <th width="8.33%" style="text-align:left;"><b>Department</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Name</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Title</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Company</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Address</b></th>
+                            <!-- <th width="8.33%" style="text-align:left;"><b>City</b></th>
+                              <th width="8.33%" style="text-align:left;"><b>State</b></th>
+                              <th width="8.33%" style="text-align:left;"><b>Zip</b></th> -->
+                            <th width="8.33%" style="text-align:left;"><b>Phone</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Fax</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Email</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Mobile</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Logo</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>Website</b></th>
+                            <th width="8.33%" style="text-align:left;"><b>ICE Chat</b></th>
+                        </tr>
+                        <tr>
+                            <td colspan="100">
+                                <hr color="black" />
+                            </td>
+                        </tr>
+
+                        <apex:repeat value="{!JCBCW}" var="item">
+
+                            <table width="100%">
+
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+
+                                            <tr>
+                                                <!--     <td width="8.33%" style="text-align:justify;" valign="top">
+                                <apex:outputField Value="{!item.job.name}"/><br/>
+                              </td> -->
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsDept.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsName.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputfield Value="{!item.jobspecsTitle.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputtext Value="{!item.jobspecsCompany}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputtext Value="{!item.jobspecsAddress}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsPhone.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsFax.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsEmail.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputField Value="{!item.jobspecsMobile.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputText Value="{!item.jobspecsLogo1}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+
+                                                    <apex:outputtext Value="{!item.jobspecsWebsite}" />
+                                                    <br/>
+                                                </td>
+
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    <apex:outputField Value="{!item.jobspecsLogo.Description__c}" />
+                                                    <br/>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </apex:repeat>
+
+                    </table>
+                </div>
+
+            </apex:outputPanel>
+
+            <center>
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton action="{!excel}" value="Export to CSV" rendered="{!OR(jw.size>0,jws.size>0,JCBCW.size>0,JCONW.size>0,CMNWrapperlist.size>0)}" /></apex:pageBlockButtons>
+            </center>
+
+       
+    </apex:pageblock>   
+     </div>
+  </apex:form>
+</apex:page>

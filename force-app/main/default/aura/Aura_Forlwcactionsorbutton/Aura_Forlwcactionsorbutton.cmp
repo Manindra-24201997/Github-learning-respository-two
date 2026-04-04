@@ -1,0 +1,3 @@
+<aura:component implements="lightning:actionOverride,force:hasRecordId,flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome" access="global" >
+    <c:lwc_quickactioncmp2 currentrcdid="{!v.recordId}"></c:lwc_quickactioncmp2>
+</aura:component>

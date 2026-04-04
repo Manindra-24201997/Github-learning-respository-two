@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Spec_Description__c</fullName>
+    <defaultValue>&quot;Enter Description here&quot;</defaultValue>
+    <description>This field is used in the Job Request form. And this field is updated through Workflow field update whenever a record is Created or Edited</description>
+    <externalId>false</externalId>
+    <label>Spec Description</label>
+    <length>32768</length>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>LongTextArea</type>
+    <visibleLines>5</visibleLines>
+</CustomField>

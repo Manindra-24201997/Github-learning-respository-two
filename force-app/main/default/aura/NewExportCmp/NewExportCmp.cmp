@@ -1,0 +1,5 @@
+<aura:component implements="lightning:actionOverride,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasSObjectName" access="global" >
+    <aura:attribute name="NewrecordIds" type="string[]" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+</aura:component>

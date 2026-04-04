@@ -1,0 +1,13 @@
+<template>
+<lightning-card title="declaring event handing own example datatble cmp based on button click">
+    <template if:true={jobreturnrcd.data}>
+<lightning-datatable  key-field="id" columns={column} data={fetchedrecords}></lightning-datatable>
+</template>
+<template if:true={jobreturnrcd.error}>
+    {jobreturnrcd.error}
+</template>
+<lightning-button label="Refresh Button" onclick={callrefresh}></lightning-button>
+<c-lwc_declaratively_event_handling_own_child_cmp onfetchrecords={handlefetchevent}></c-lwc_declaratively_event_handling_own_child_cmp>
+
+</lightning-card>
+</template>

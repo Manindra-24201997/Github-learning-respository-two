@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <assignments>
+        <name>Assign_text</name>
+        <label>Assign text</label>
+        <locationX>954</locationX>
+        <locationY>454</locationY>
+        <assignmentItems>
+            <assignToReference>job_name_assign</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>Job_loop.Name</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Job_loop</targetReference>
+        </connector>
+    </assignments>
+    <description>Fourth screen flow  i.e., Display active job records under campaign</description>
+    <interviewLabel>Fourth screen flow Content document {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Fourth screen flow Job records</label>
+    <loops>
+        <description>Job loop</description>
+        <name>Job_loop</name>
+        <label>Job loop</label>
+        <locationX>245</locationX>
+        <locationY>412</locationY>
+        <collectionReference>get_job_records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Assign_text</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Display_name</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get cmp records</description>
+        <name>Get_cmp_records</name>
+        <label>Get cmp records</label>
+        <locationX>29</locationX>
+        <locationY>230</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>get_job_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Campaign__c</object>
+        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>get_job_records</name>
+        <label>get job records</label>
+        <locationX>188</locationX>
+        <locationY>223</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Job_loop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Campaign__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_cmp_records.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Job__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Display_name</name>
+        <label>Display name</label>
+        <locationX>630</locationX>
+        <locationY>189</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Display_job_name</name>
+            <fieldText>&lt;p&gt;Job name is : {!job_name_assign}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_cmp_records</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <name>job_name_assign</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>loop_collection_variable</name>
+        <dataType>String</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>recordId</description>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>

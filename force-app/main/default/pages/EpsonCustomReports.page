@@ -1,0 +1,86 @@
+<apex:page id="frm" lightningStylesheets="true">
+    <apex:form >
+        <style>
+            .rotate {
+            float:left;
+            width: 50px;
+            height: 95px
+            top: 300px;
+            border-style: none;
+            valign : bottom;
+            
+            /* Safari */
+            -webkit-transform: rotate(-90deg);
+            
+            /* Firefox */
+            -moz-transform: rotate(-90deg);
+            
+            /* IE */
+            -ms-transform: rotate(-90deg);
+            
+            /* Opera */
+            -o-transform: rotate(-90deg);
+            
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+            margin: 20px 20px 20px 20px !important;
+            }
+            
+            body
+            {
+            background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+            // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+            //background-image:none !important;
+            //background-color:#D7D7D7 !important;
+            background-repeat: repeat-x;
+            background-position: left top;
+            background-attachment: fixed; 
+            margin:0px !important;
+            }
+            
+            
+            .customImage{ height: 10px; width: 10px; }
+            
+            
+            .pbHeader
+            {
+            background: white !important;
+            }
+            
+            body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+            {
+            background: white;
+            }
+            
+            
+            
+            .bPageBlock 
+            {
+            border-top: 0px;
+            }
+            
+        </style>
+        
+        <apex:pageBlock id="pb">
+            <table>
+                <tr>
+                    <td> <apex:image url="{!$Resource.BigTop}" width="25" height="25"/> </td>
+                    <td> <h3 style="color:#000000;font-size:1.2em;">Reports</h3> </td>
+                </tr>
+            </table> 
+            <br/>
+            
+            <apex:commandButton value="Status Report" action="/apex/StatusReportSearchLightning"  reRender="frm" rendered="{!$User.UITheme == 'Theme4d'}"/>
+            <apex:commandButton value="Channel Marketing Report" action="/apex/StatusReportChannelMarketing"  reRender="frm" rendered="{!$User.UITheme == 'Theme4d'}"/>
+            
+            <apex:commandButton value="Status Report" action="/apex/StatusReportSearch"  reRender="frm" rendered="{!$User.UITheme == 'Theme3'}"/>
+            
+            
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

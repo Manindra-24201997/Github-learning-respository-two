@@ -1,0 +1,4 @@
+<aura:component controller="ConnectionProcessingClass" access = "global">
+    <aura:handler name="init" value="{!this}" action="{!c.onInit}" />
+    Please Wait until the request is processed once it is done we will redirect you to the main page.
+</aura:component>

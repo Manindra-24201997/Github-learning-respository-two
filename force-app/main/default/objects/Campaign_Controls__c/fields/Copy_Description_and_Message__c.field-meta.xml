@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Copy_Description_and_Message__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>1) Copy the Campaign Description data to the Status Notes fields on all jobs created
+2) Copy the Primary Message data on the campaign to the Primary message field on the jobs created
+3) used for CNE custom data copy</description>
+    <externalId>false</externalId>
+    <label>CNE Custom Data Copy</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

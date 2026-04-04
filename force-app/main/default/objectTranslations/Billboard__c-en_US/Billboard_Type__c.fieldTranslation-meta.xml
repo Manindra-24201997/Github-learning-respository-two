@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Billboard Type --></label>
+    <name>Billboard_Type__c</name>
+    <picklistValues>
+        <masterLabel>Billboard</masterLabel>
+        <translation><!-- Billboard --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Cost Share</masterLabel>
+        <translation><!-- Cost Share --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>DOT</masterLabel>
+        <translation><!-- DOT --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Land Lease</masterLabel>
+        <translation><!-- Land Lease --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

@@ -1,0 +1,12 @@
+<!-- ImageTextOverlay.cmp -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <!-- Container for the image and text overlay -->
+    <div class="image-container" aura:id="imageContainer" style="position: relative;">
+        <img src="{!$Resource.Br_Landing_Page}" alt="Static Resource Image" aura:id="staticImage" style="width:-webkit-fill-available;"/>
+        <div class="text-overlay" aura:id="textOverlay" style="position: absolute;
+    top: 10%;
+    left: 10%;
+    transform: translate(-50%, -50%);
+    z-index: 1;color:white;">Enter text here</div>
+    </div>
+</aura:component>

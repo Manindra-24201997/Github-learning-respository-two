@@ -1,0 +1,24 @@
+<apex:page showHeader="false"  sidebar="false" standardStylesheets="true"   docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" >
+<html>
+<head>
+ </head>
+  <body>
+  <script>
+
+         var s = '{!$User.UITheme == 'Theme3'}';
+         if(s == 'true')
+         {
+             window.open("/apex/customReports", "_self");
+         }
+        
+    </script>
+  
+    <apex:outputPanel rendered="{!$User.UITheme == 'Theme4d'}">
+    
+                <apex:include pageName="customReportsLightning" />
+      
+    </apex:outputPanel>
+    
+    </body>
+    </html>
+</apex:page>

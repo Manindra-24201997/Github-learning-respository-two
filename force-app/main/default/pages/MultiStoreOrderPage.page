@@ -1,0 +1,449 @@
+<apex:page controller="MultiStoreOrderPageController" sidebar="true" docType="html-5.0" applyBodyTag="False" standardStylesheets="false" applyHtmlTag="False" showHeader="False">
+
+    <style>
+        .sfdc_richtext img {
+            border: 0;
+            height: 30%;
+            width: 30%;
+        }
+        
+        .button2 {
+            background-color: #FFD700;
+            font-weight: bold;
+            color: Black;
+        }
+        
+        #ProductsTable img {
+            opacity: 50%;
+            width: 20% !Important;
+        }
+        
+        
+        html,html body
+        {
+              overflow: auto;
+              -webkit-overflow-scrolling:auto;
+        }
+        body
+        {
+          position:absolute;left:0;right:0;top:0;bottom:0;
+          margin:0;
+        }
+        
+        .slds .slds-table .slds-truncate 
+          {
+                min-width: 52px !important;
+                max-width: 125px !important;
+          }
+          
+           .slds-checkbox .slds-checkbox--faux
+           {
+               border: 2px solid lightslategrey !important;
+           }
+        
+        
+           
+    </style>
+
+    <script>
+        function Hidetext(ele) {
+            ele.value = '(xxx)xxx-xxxx';
+        }
+    </script>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+    <body>
+
+        <div class="slds" >
+            <ul class="slds-list--vertical slds-has-dividers">
+                <li class="slds-list__item slds-large-size">
+                    <div class="slds-text-heading--large">
+                        <apex:image value="{!$Resource.LovesHeaderLogo}" />
+                    </div>
+                </li>
+            </ul>
+            <br/>
+
+            <apex:form html-novalidate="novalidate">
+
+                <apex:outputPanel >
+
+                    <apex:pageBlock id="block">
+
+                        <apex:outputpanel id="thestoresection" rendered="{!ShowStoreSupplies}">
+
+                           <br/>
+
+                                        <div style="background-color:SteelBlue;color:white;width:90%;margin-left:3%">
+                                            <h3 class="slds-section-title"><b>&nbsp;Search criteria</b></h3></div>
+
+                                        <apex:outputPanel >
+
+                                            <div class="slds-grid slds-wrap" style="width:90%;margin-left:3%;">
+                                                <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+
+                                                    <div class="slds-grid slds-wrap">
+
+                                                        <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                            <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                                <label class="slds-form-element__label"><b>Select Item Category</b></label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:selectList value="{!MaterialTypeString }" id="selectMType" size="1" multiselect="false" onchange="camname()" styleClass="slds-select slds-m-right--medium">
+                                                                        <apex:selectoptions value="{!MaterialType}"></apex:selectoptions>
+                                                                        <apex:actionFunction name="camname" action="{!ShowItems}" reRender="ajaxrequest" />
+                                                                    </apex:selectList>
+                                                                </div>
+                                                            </div>
+                                                        </aside>
+
+                                                        <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                            <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                                <label class="slds-form-element__label"><b>Item Search</b></label>
+                                                                <div class="slds-form-element__control">
+                                                                    <apex:inputText value="{!MaterialItemNameString}" onkeyup="camname()" onkeydown="if(event.keyCode==13){this.blur();camname();}" styleClass="slds-input">
+                                                                        <apex:actionFunction name="camname" action="{!ShowItems}" reRender="ajaxrequest" />
+                                                                    </apex:inputText>
+                                                                </div>
+                                                            </div>
+                                                        </aside>
+
+                                                    </div>
+                                                </main>
+                                            </div>
+
+                                        </apex:outputPanel>
+                                    
+
+                                  <!--      <div style="background-color:SteelBlue;color:white;">
+                                            <h3 class="slds-section-title"><b>&nbsp;Items List</b></h3>
+                                        </div>-->
+                                        
+                                        <br/>
+                                           <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:90%;margin-left:3%;">
+                                                <apex:pageMessages />
+                                            </div>
+                                        <apex:outputPanel id="ajaxrequest">
+
+                                            <apex:commandButton value="Add To Cart" action="{!AddToCart}"  style="float:right;margin-right:7%" styleClass="slds-button slds-button--neutral" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                            <br/> <br/>
+                                            
+                                             <apex:outputPanel > 
+                                               <table style="width:90%;margin-left:3%" class="slds-table slds-table--bordered" >
+                                                    <tr class="slds-text-heading--label">
+                                                        <th class="slds-truncate"><b>Photo</b></th>
+                                                        <th  class="slds-truncate"><b>Item Description</b></th>
+                                                        <th  class="slds-truncate"><b>Action</b></th>
+                    
+                                                    </tr>
+                                                    <apex:repeat value="{!MediaIdList}" var="p" rendered="{!FirstWrapper}">
+                                                        <tr>
+                                                            <td class="slds-truncate">
+                                                                  <!--<apex:outputText style="width:15px !Important;height:15px !Important;" escape="false" value="{!roleWraps[p].MI.File_Photo__c}"></apex:outputText>-->
+                                                                  <!--  <apex:outputfield value="{!roleWraps[p].MI.File_Photo__c}" ></apex:outputfield>-->
+                                                                  <apex:image id="theImage2" value="/sfc/servlet.shepherd/version/download/{!roleWraps[p].ContentVersionId}" width="200" height="30" alt="No Image"/>
+                                                            </td>
+                                                           <td style="word-wrap:break-word;" class="slds-truncate">
+                                                                <b>{!roleWraps[p].MI.Name}</b><br/>
+                                                                {!roleWraps[p].MI.Description__c}<br/>
+                                                                <b>Package Type:</b> {!roleWraps[p].MI.Package_Type__c}
+                                                            </td>
+                    
+                                                            <td style="padding-left:20px;">
+                                                                <label class="slds-checkbox">
+                                                                    <apex:inputCheckbox value="{!roleWraps[p].checked}" />
+                                                                    <span class="slds-checkbox--faux"></span>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </table>
+                                             </apex:outputPanel>
+                                             
+                                             
+                                             
+                                              
+                                             
+                                         <!--   <apex:pageBlockTable value="{!MediaIdList}" var="p" id="ProductsTable" rendered="{!FirstWrapper}" width="600px" columnsWidth="10%" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+
+                                                <apex:column value="{!roleWraps[p].MI.Name}" headerValue="{!$ObjectType.Material_Item__c.Fields.Name.Label}" />
+                                                <apex:column value="{!roleWraps[p].MI.Description__c}" headerValue="{!$ObjectType.Material_Item__c.Fields.Description__c.Label}" />
+                                                <apex:column value="{!roleWraps[p].MI.Package_Type__c}" headerValue="{!$ObjectType.Material_Item__c.Fields.Package_Type__c.Label}" />
+                                                <apex:column headerValue="{!$ObjectType.Material_Item__c.Fields.File_Photo__c.Label}">
+                                                    <apex:outputfield value="{!roleWraps[p].MI.File_Photo__c}"></apex:outputfield>
+                                                </apex:column>
+                                                <apex:column headerValue="Add to cart">
+                                                    <label class="slds-checkbox">
+                                                        <apex:inputCheckbox value="{!roleWraps[p].checked}" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                    </label>
+                                                </apex:column>
+                                            </apex:pageBlockTable>-->
+
+                                        </apex:outputPanel>
+
+
+                        </apex:outputpanel>
+
+                        <!--***************************************************** Shopping Cart 3rd layout********************************************************************-->
+
+                        <br/>
+                        <apex:outputPanel id="ViewCartSection" rendered="{!ShowAddcartSection}">
+
+                          
+                          
+
+                            <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:90%;margin-left:3%;">
+                                <apex:pageMessages />
+                            </div>
+                          <br/>
+                          
+                            <div style="background-color:SteelBlue;color:white;width:90%;margin-left:3%;">
+                                <h3 class="slds-section-title"><b>&nbsp;Shopping Cart</b></h3></div>
+
+                            
+
+                            <apex:outputText >
+                                <center><b style="color: red;">Click Next to enter a quantity for each store.</b></center>
+                            </apex:outputText>
+                            
+                            
+                            
+                              <apex:outputPanel >
+                                               <table style="width:90%;margin-left:3%;" class="slds-table slds-table--bordered" >
+                                                    <tr class="slds-text-heading--label">
+                                                        <th class="slds-truncate"><b>Photo</b></th>
+                                                        <th  class="slds-truncate"><b>Item Description</b></th>
+                                                        <th  class="slds-truncate"><b>Action</b></th>
+                    
+                                                    </tr>
+                                                    <apex:repeat value="{!roleWraps2}" var="p1">
+                                                        <tr>
+                                                            <td class="slds-truncate">
+                                                                <!-- <apex:outputText style="width:30px !Important;height:30px !Important;" escape="false" value="{!roleWraps2[p1].MI.File_Photo__c}"></apex:outputText>-->
+                                                                <apex:image id="theImage2" value="/sfc/servlet.shepherd/version/download/{!roleWraps2[p1].ContentVersionId}" width="200" height="30" alt="No Image"/>
+                                                            </td>
+                                                            <td  >
+                                                                <b>{!roleWraps2[p1].MI.Name}</b><br/>
+                                                                <b>Package Type:</b> {!roleWraps2[p1].MI.Package_Type__c}
+                                                            </td>
+                    
+                                                            <td  class="slds-truncate">
+                                                                 <apex:commandLink value="Remove" action="{!removeFromCart}" reRender="ViewCartSection" immediate="true">
+                                                                    <apex:param value="{!roleWraps2[p1].MI.Id}" assignTo="{!toUnselect}" name="toUnselect" />
+                                                                </apex:commandLink>
+                                                            </td>
+                                                        </tr>
+                                                    </apex:repeat>
+                                                </table>
+                            
+                            </apex:outputPanel>
+                            
+                            
+                            
+                             
+                          <!--  <apex:pageBlockTable value="{!roleWraps2}" var="p1" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+                                <apex:column >
+                                    <apex:commandLink value="Remove" action="{!removeFromCart}" reRender="ViewCartSection" immediate="true">
+                                        <apex:param value="{!roleWraps2[p1].MI.Id}" assignTo="{!toUnselect}" name="toUnselect" />
+                                    </apex:commandLink>
+                                </apex:column>
+                                <apex:column value="{!roleWraps2[p1].MI.Name}" headerValue="{!$ObjectType.Material_Item__c.Fields.Name.Label}" >
+                                </apex:column>
+                                <apex:column value="{!roleWraps2[p1].MI.Package_Type__c}" headerValue="{!$ObjectType.Material_Item__c.Fields.Package_Type__c.Label}" />
+                                <apex:column headerValue="{!$ObjectType.Material_Item__c.Fields.File_Photo__c.Label}">
+                                    <apex:outputText style="width:30px !Important;height:30px !Important;" escape="false" value="{!roleWraps2[p1].MI.File_Photo__c}"></apex:outputText>
+                                </apex:column>
+                            </apex:pageBlockTable>-->
+                            
+                            
+                        </apex:outputPanel>
+
+                        <!--***************************************************** Store List 1st layout ********************************************************************-->
+
+                        <apex:outputPanel id="showStorelist" rendered="{!ShowStoreList}">
+                            
+                            <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:90%;margin-left:3%;">
+                                <apex:pageMessages />
+                            </div>
+                            <br/>
+                            <div style="background-color:SteelBlue;color:white;width:90%;margin-left:3%;">
+                                <h3 class="slds-section-title"><b>&nbsp;Store List</b></h3>
+                            </div>
+
+                            <br/>
+                            
+
+                            <!-- <apex:pageBlockTable value="{!CWrap}" var="var1"  styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+                            <apex:column headerValue="Action">
+
+                                 <label class="slds-checkbox">
+                                   <apex:inputCheckbox value="{!var1.varCSelect}" />
+                                   <span class="slds-checkbox--faux"></span>
+                                 </label>
+
+                            </apex:column>
+
+                            <apex:column headerValue="Name">
+                                <apex:outputField value="{!var1.varClient.Name}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;"/>
+                            </apex:column>
+
+                            <apex:column headerValue="Client Code">
+                                <apex:outputField value="{!var1.varClient.Client_Code__c}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;"/>
+                            </apex:column>
+                        </apex:pageBlockTable>-->
+
+                            <table style="white;width:90%;margin-left:3%;" class="slds-table slds-table--bordered">
+                                <tr class="slds-text-heading--label">
+                                    <th style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><b>Action</b></th>
+                                    <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Name</b></th>
+                                    <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Client Code</b></th>
+
+                                </tr>
+                                <apex:repeat value="{!CWrap}" var="var1">
+                                    <tr>
+                                        <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate">
+                                            <label class="slds-checkbox">
+                                                <apex:inputCheckbox value="{!var1.varCSelect}" />
+                                                <span class="slds-checkbox--faux"></span>
+                                            </label>
+                                        </td>
+                                        <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                            <apex:outputField value="{!var1.varClient.Name}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;" />
+                                        </td>
+
+                                        <td style="width:25%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                            <apex:outputField value="{!var1.varClient.Client_Code__c}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;" />
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+
+                        </apex:outputPanel>
+
+                        <!--***************************************************** Enter Item Quantities 4th layout ********************************************************************-->
+
+                        <apex:outputPanel rendered="{!CombinedList}">
+                             
+                             <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:90%;margin-left:3%;">
+                                <apex:pageMessages />
+                            </div>
+                            
+                            <br/>
+                            <div style="background-color:SteelBlue;color:white;width:90%;margin-left:3%;">
+                                <h3 class="slds-section-title"><b>&nbsp;Enter Item Quantities</b></h3>
+                            </div>
+<br/>
+
+                            <apex:outputPanel >
+                            
+                                
+                             <table style="white;width:90%;margin-left:3%;" class="slds-table slds-table--bordered">
+                                <tr class="slds-text-heading--label">
+                                    <th style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><b>Client Name</b></th>
+                                    <th style="width:20%;text-align:center;padding-left:25px;" class="slds-truncate"><b>Items</b></th>
+                                </tr>
+                               
+                               <apex:repeat value="{!CombineWrap}" var="W">
+                                    <tr>
+                                        <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate">
+                                          {!W.varCombineClient.Name}
+                                        </td>
+                                    
+                                   <td>  
+                                   <table>
+                                       <tr class="slds-text-heading--label">
+                                            <th><b>Name</b></th>
+                                            <th><b>Max Qty</b></th>
+                                            <th style="text-align:center;"><b>Qty</b></th>
+                                        </tr>
+                                    <apex:repeat value="{!W.MultiitemMap2}" var="I">
+                                       <tr>
+                                            <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate">
+                                              {!I.Mi.Name}
+                                            </td>
+                                            <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                                {!I.Mi.Max_Qty__c}
+                                            </td>
+    
+                                            <td style="width:25%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                               <apex:outputPanel id="QtyPnl"> 
+                                                 <apex:inputtext value="{!I.quantity}" styleClass="slds-input" maxlength="2">
+                                                     <apex:actionSupport event="onchange" action="{!I.checkQty}" reRender="QtyPnl" status="qtyStatus"/>
+                                                    </apex:inputText><br/>
+                                                    <apex:actionStatus id="qtyStatus">
+                                                        <apex:facet name="stop">
+                                                            <apex:outputText rendered="{!I.showQtyErrorMsg}"><font style="color:red;">{!I.ErrMsg}</font></apex:outputText>
+                                                        </apex:facet>
+                                                        <apex:facet name="start">
+                                                             <img src="/img/loading.gif" />&nbsp;&nbsp; <b> Loading....... </b>
+                                                        </apex:facet>
+                                                    </apex:actionStatus>
+                                                    
+                                                 </apex:outputPanel>
+                                            </td>
+                                       </tr>
+                                    </apex:repeat>
+                                    </table>
+                                    </td>
+                                    </tr>
+                                </apex:repeat>
+                                
+                            </table>
+                              
+                              <!--  
+                                
+                            
+                              <apex:pageBlockTable value="{!CombineWrap}" var="W" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+                                    <apex:column value="{!W.varCombineClient.Name}" style="font-size:15px;font-weight:Bold;" />
+                                    <apex:column >
+                                        <apex:pageblockTable value="{!W.MultiitemMap2}" var="I" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+                                            <apex:column value="{!I.Mi.Name}" />
+                                            <apex:column value="{!I.Mi.Max_Qty__c}" />
+                                            <apex:column >
+                                                <apex:inputtext value="{!I.quantity}" />
+                                            </apex:column>
+                                        </apex:pageblockTable>
+                                    </apex:column>
+                                </apex:pageBlockTable>-->
+                                
+                                
+                            </apex:outputPanel>
+                            
+                            
+                            
+                        </apex:outputPanel>
+
+                        <apex:pageBlockButtons location="top">
+
+                            <center>
+                                <b>
+                        <apex:commandButton value="Continue Shopping" action="{!CancelfromCart}" rendered="{!ShowCartBackbutton}" styleClass="slds-button slds-button--neutral" />
+                        <apex:commandButton value="Back" action="{!Back}" rendered="{!ShowStoreList}" styleClass="slds-button slds-button--neutral"/>
+
+                        <apex:commandButton value="Next" action="{!ClientList}" rendered="{!ShowStoreList}" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton value="Next" rendered="{!NextButtonItemLayout}" action="{!Combineddatalist}" styleClass="slds-button slds-button--neutral"/>
+
+                        <apex:commandButton value="Back" action="{!BacktoStore}" rendered="{!ShowStoreSupplies}" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton value="Back" rendered="{!CombinedWrapperBackbutton}" action="{!BackCombineList}" styleClass="slds-button slds-button--neutral"/>
+
+                        <apex:commandButton value="Submit Order" action="{!CreateJobswithchild}" rendered="{!Order}" styleClass="slds-button slds-button--neutral"/>
+                        <apex:commandButton value="Cancel Order" action="{!Back}" rendered="{!Order}" styleClass="slds-button slds-button--neutral"/>
+                    </b>
+                            </center>
+                        </apex:pageBlockButtons>
+                        <br/>
+                        <br/>
+
+                    </apex:pageBlock>
+
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </body>
+
+    </html>
+
+</apex:page>

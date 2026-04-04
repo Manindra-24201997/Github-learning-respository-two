@@ -1,0 +1,14 @@
+<template>
+    <p style="color:blue;">Manindra chennamsetty</p>
+
+    /*Dynamic css using get function - working example*/
+    <p style={stylecss}>Manindra ch</p>
+
+    /*Dynamic css in for loop - working example*/
+<template for:each={arraydatacustom} for:item=c>
+<p key={c.id} style={c.stylecolor}>{c.name}</p>
+<p key={c.id} style={c.stylecolor}>{c.age}</p>
+<p key={c.id} style={c.stylecolor}>{c.developer}</p>
+</template>
+
+</template>

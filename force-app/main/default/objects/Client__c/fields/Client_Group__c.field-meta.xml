@@ -1,0 +1,1022 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Client_Group__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Group</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Biodisel</fullName>
+                <default>false</default>
+                <label>Biodisel</label>
+            </value>
+            <value>
+                <fullName>AccuDate</fullName>
+                <default>false</default>
+                <label>AccuDate</label>
+            </value>
+            <value>
+                <fullName>Advantage</fullName>
+                <default>false</default>
+                <label>Advantage</label>
+            </value>
+            <value>
+                <fullName>Alabama</fullName>
+                <default>false</default>
+                <label>Alabama</label>
+            </value>
+            <value>
+                <fullName>All Shops</fullName>
+                <default>false</default>
+                <label>All Shops</label>
+            </value>
+            <value>
+                <fullName>All Stores</fullName>
+                <default>false</default>
+                <label>All Stores</label>
+            </value>
+            <value>
+                <fullName>Arby&apos;s</fullName>
+                <default>false</default>
+                <label>Arby&apos;s</label>
+            </value>
+            <value>
+                <fullName>Arizona</fullName>
+                <default>false</default>
+                <label>Arizona</label>
+            </value>
+            <value>
+                <fullName>Arkansas</fullName>
+                <default>false</default>
+                <label>Arkansas</label>
+            </value>
+            <value>
+                <fullName>B18</fullName>
+                <default>false</default>
+                <label>B18</label>
+            </value>
+            <value>
+                <fullName>B5</fullName>
+                <default>false</default>
+                <label>B5</label>
+            </value>
+            <value>
+                <fullName>Baskets</fullName>
+                <default>false</default>
+                <label>Baskets</label>
+            </value>
+            <value>
+                <fullName>BBQ</fullName>
+                <default>false</default>
+                <label>BBQ</label>
+            </value>
+            <value>
+                <fullName>BTC</fullName>
+                <default>false</default>
+                <label>BTC</label>
+            </value>
+            <value>
+                <fullName>Bump Bar</fullName>
+                <default>false</default>
+                <label>Bump Bar</label>
+            </value>
+            <value>
+                <fullName>California</fullName>
+                <default>false</default>
+                <label>California</label>
+            </value>
+            <value>
+                <fullName>Carls&apos; Jr.</fullName>
+                <default>false</default>
+                <label>Carls&apos; Jr.</label>
+            </value>
+            <value>
+                <fullName>Chester&apos;s</fullName>
+                <default>false</default>
+                <label>Chester&apos;s</label>
+            </value>
+            <value>
+                <fullName>CMN Footballs</fullName>
+                <default>false</default>
+                <label>CMN Footballs</label>
+            </value>
+            <value>
+                <fullName>CNG</fullName>
+                <default>false</default>
+                <label>CNG</label>
+            </value>
+            <value>
+                <fullName>Colorado</fullName>
+                <default>false</default>
+                <label>Colorado</label>
+            </value>
+            <value>
+                <fullName>Country Stores</fullName>
+                <default>false</default>
+                <label>Country Stores</label>
+            </value>
+            <value>
+                <fullName>CS/TS/Speedco</fullName>
+                <default>false</default>
+                <label>CS/TS/Speedco</label>
+            </value>
+            <value>
+                <fullName>Curtis</fullName>
+                <default>false</default>
+                <label>Curtis</label>
+            </value>
+            <value>
+                <fullName>Deposit Bag Dual</fullName>
+                <default>false</default>
+                <label>Deposit Bag Dual</label>
+            </value>
+            <value>
+                <fullName>Deposit Bag Single</fullName>
+                <default>false</default>
+                <label>Deposit Bag Single</label>
+            </value>
+            <value>
+                <fullName>District 1901</fullName>
+                <default>false</default>
+                <label>District 1901</label>
+            </value>
+            <value>
+                <fullName>District 1902</fullName>
+                <default>false</default>
+                <label>District 1902</label>
+            </value>
+            <value>
+                <fullName>District 1903</fullName>
+                <default>false</default>
+                <label>District 1903</label>
+            </value>
+            <value>
+                <fullName>District 1904</fullName>
+                <default>false</default>
+                <label>District 1904</label>
+            </value>
+            <value>
+                <fullName>District 1905</fullName>
+                <default>false</default>
+                <label>District 1905</label>
+            </value>
+            <value>
+                <fullName>District 1906</fullName>
+                <default>false</default>
+                <label>District 1906</label>
+            </value>
+            <value>
+                <fullName>District 1907</fullName>
+                <default>false</default>
+                <label>District 1907</label>
+            </value>
+            <value>
+                <fullName>District 1911</fullName>
+                <default>false</default>
+                <label>District 1911</label>
+            </value>
+            <value>
+                <fullName>District 1912</fullName>
+                <default>false</default>
+                <label>District 1912</label>
+            </value>
+            <value>
+                <fullName>District 1913</fullName>
+                <default>false</default>
+                <label>District 1913</label>
+            </value>
+            <value>
+                <fullName>District 1914</fullName>
+                <default>false</default>
+                <label>District 1914</label>
+            </value>
+            <value>
+                <fullName>District 1915</fullName>
+                <default>false</default>
+                <label>District 1915</label>
+            </value>
+            <value>
+                <fullName>District 1916</fullName>
+                <default>false</default>
+                <label>District 1916</label>
+            </value>
+            <value>
+                <fullName>District 1917</fullName>
+                <default>false</default>
+                <label>District 1917</label>
+            </value>
+            <value>
+                <fullName>District 1918</fullName>
+                <default>false</default>
+                <label>District 1918</label>
+            </value>
+            <value>
+                <fullName>District 1921</fullName>
+                <default>false</default>
+                <label>District 1921</label>
+            </value>
+            <value>
+                <fullName>District 1922</fullName>
+                <default>false</default>
+                <label>District 1922</label>
+            </value>
+            <value>
+                <fullName>District 1923</fullName>
+                <default>false</default>
+                <label>District 1923</label>
+            </value>
+            <value>
+                <fullName>District 1924</fullName>
+                <default>false</default>
+                <label>District 1924</label>
+            </value>
+            <value>
+                <fullName>District 1925</fullName>
+                <default>false</default>
+                <label>District 1925</label>
+            </value>
+            <value>
+                <fullName>District 1926</fullName>
+                <default>false</default>
+                <label>District 1926</label>
+            </value>
+            <value>
+                <fullName>District 1927</fullName>
+                <default>false</default>
+                <label>District 1927</label>
+            </value>
+            <value>
+                <fullName>District 1928</fullName>
+                <default>false</default>
+                <label>District 1928</label>
+            </value>
+            <value>
+                <fullName>District 1931</fullName>
+                <default>false</default>
+                <label>District 1931</label>
+            </value>
+            <value>
+                <fullName>District 1932</fullName>
+                <default>false</default>
+                <label>District 1932</label>
+            </value>
+            <value>
+                <fullName>District 1933</fullName>
+                <default>false</default>
+                <label>District 1933</label>
+            </value>
+            <value>
+                <fullName>District 1934</fullName>
+                <default>false</default>
+                <label>District 1934</label>
+            </value>
+            <value>
+                <fullName>District 1935</fullName>
+                <default>false</default>
+                <label>District 1935</label>
+            </value>
+            <value>
+                <fullName>District 1936</fullName>
+                <default>false</default>
+                <label>District 1936</label>
+            </value>
+            <value>
+                <fullName>District 1937</fullName>
+                <default>false</default>
+                <label>District 1937</label>
+            </value>
+            <value>
+                <fullName>District 1938</fullName>
+                <default>false</default>
+                <label>District 1938</label>
+            </value>
+            <value>
+                <fullName>District 1939</fullName>
+                <default>false</default>
+                <label>District 1939</label>
+            </value>
+            <value>
+                <fullName>District 1941</fullName>
+                <default>false</default>
+                <label>District 1941</label>
+            </value>
+            <value>
+                <fullName>District 1942</fullName>
+                <default>false</default>
+                <label>District 1942</label>
+            </value>
+            <value>
+                <fullName>District 1943</fullName>
+                <default>false</default>
+                <label>District 1943</label>
+            </value>
+            <value>
+                <fullName>District 1944</fullName>
+                <default>false</default>
+                <label>District 1944</label>
+            </value>
+            <value>
+                <fullName>District 1945</fullName>
+                <default>false</default>
+                <label>District 1945</label>
+            </value>
+            <value>
+                <fullName>District 1946</fullName>
+                <default>false</default>
+                <label>District 1946</label>
+            </value>
+            <value>
+                <fullName>District 1947</fullName>
+                <default>false</default>
+                <label>District 1947</label>
+            </value>
+            <value>
+                <fullName>District 1948</fullName>
+                <default>false</default>
+                <label>District 1948</label>
+            </value>
+            <value>
+                <fullName>District 1951</fullName>
+                <default>false</default>
+                <label>District 1951</label>
+            </value>
+            <value>
+                <fullName>District 1952</fullName>
+                <default>false</default>
+                <label>District 1952</label>
+            </value>
+            <value>
+                <fullName>District 1953</fullName>
+                <default>false</default>
+                <label>District 1953</label>
+            </value>
+            <value>
+                <fullName>District 1954</fullName>
+                <default>false</default>
+                <label>District 1954</label>
+            </value>
+            <value>
+                <fullName>District 1955</fullName>
+                <default>false</default>
+                <label>District 1955</label>
+            </value>
+            <value>
+                <fullName>District 1956</fullName>
+                <default>false</default>
+                <label>District 1956</label>
+            </value>
+            <value>
+                <fullName>District 1957</fullName>
+                <default>false</default>
+                <label>District 1957</label>
+            </value>
+            <value>
+                <fullName>District 1958</fullName>
+                <default>false</default>
+                <label>District 1958</label>
+            </value>
+            <value>
+                <fullName>District 1961</fullName>
+                <default>false</default>
+                <label>District 1961</label>
+            </value>
+            <value>
+                <fullName>District 1962</fullName>
+                <default>false</default>
+                <label>District 1962</label>
+            </value>
+            <value>
+                <fullName>District 1963</fullName>
+                <default>false</default>
+                <label>District 1963</label>
+            </value>
+            <value>
+                <fullName>District 1964</fullName>
+                <default>false</default>
+                <label>District 1964</label>
+            </value>
+            <value>
+                <fullName>District 1965</fullName>
+                <default>false</default>
+                <label>District 1965</label>
+            </value>
+            <value>
+                <fullName>District 1966</fullName>
+                <default>false</default>
+                <label>District 1966</label>
+            </value>
+            <value>
+                <fullName>District 1967</fullName>
+                <default>false</default>
+                <label>District 1967</label>
+            </value>
+            <value>
+                <fullName>District 1968</fullName>
+                <default>false</default>
+                <label>District 1968</label>
+            </value>
+            <value>
+                <fullName>District 1971</fullName>
+                <default>false</default>
+                <label>District 1971</label>
+            </value>
+            <value>
+                <fullName>District 1972</fullName>
+                <default>false</default>
+                <label>District 1972</label>
+            </value>
+            <value>
+                <fullName>District 1973</fullName>
+                <default>false</default>
+                <label>District 1973</label>
+            </value>
+            <value>
+                <fullName>District 1974</fullName>
+                <default>false</default>
+                <label>District 1974</label>
+            </value>
+            <value>
+                <fullName>District 1975</fullName>
+                <default>false</default>
+                <label>District 1975</label>
+            </value>
+            <value>
+                <fullName>District 1976</fullName>
+                <default>false</default>
+                <label>District 1976</label>
+            </value>
+            <value>
+                <fullName>District 1977</fullName>
+                <default>false</default>
+                <label>District 1977</label>
+            </value>
+            <value>
+                <fullName>District 1978</fullName>
+                <default>false</default>
+                <label>District 1978</label>
+            </value>
+            <value>
+                <fullName>District 1981</fullName>
+                <default>false</default>
+                <label>District 1981</label>
+            </value>
+            <value>
+                <fullName>District 1982</fullName>
+                <default>false</default>
+                <label>District 1982</label>
+            </value>
+            <value>
+                <fullName>District 1983</fullName>
+                <default>false</default>
+                <label>District 1983</label>
+            </value>
+            <value>
+                <fullName>District 1984</fullName>
+                <default>false</default>
+                <label>District 1984</label>
+            </value>
+            <value>
+                <fullName>District 1985</fullName>
+                <default>false</default>
+                <label>District 1985</label>
+            </value>
+            <value>
+                <fullName>District 1986</fullName>
+                <default>false</default>
+                <label>District 1986</label>
+            </value>
+            <value>
+                <fullName>District 1987</fullName>
+                <default>false</default>
+                <label>District 1987</label>
+            </value>
+            <value>
+                <fullName>District 1988</fullName>
+                <default>false</default>
+                <label>District 1988</label>
+            </value>
+            <value>
+                <fullName>District 4901</fullName>
+                <default>false</default>
+                <label>District 4901</label>
+            </value>
+            <value>
+                <fullName>District 4902</fullName>
+                <default>false</default>
+                <label>District 4902</label>
+            </value>
+            <value>
+                <fullName>District 4903</fullName>
+                <default>false</default>
+                <label>District 4903</label>
+            </value>
+            <value>
+                <fullName>District 4904</fullName>
+                <default>false</default>
+                <label>District 4904</label>
+            </value>
+            <value>
+                <fullName>District 4905</fullName>
+                <default>false</default>
+                <label>District 4905</label>
+            </value>
+            <value>
+                <fullName>District 4906</fullName>
+                <default>false</default>
+                <label>District 4906</label>
+            </value>
+            <value>
+                <fullName>Division 1900</fullName>
+                <default>false</default>
+                <label>Division 1900</label>
+            </value>
+            <value>
+                <fullName>Division 1910</fullName>
+                <default>false</default>
+                <label>Division 1910</label>
+            </value>
+            <value>
+                <fullName>Division 1920</fullName>
+                <default>false</default>
+                <label>Division 1920</label>
+            </value>
+            <value>
+                <fullName>Division 1930</fullName>
+                <default>false</default>
+                <label>Division 1930</label>
+            </value>
+            <value>
+                <fullName>Division 1940</fullName>
+                <default>false</default>
+                <label>Division 1940</label>
+            </value>
+            <value>
+                <fullName>Division 1950</fullName>
+                <default>false</default>
+                <label>Division 1950</label>
+            </value>
+            <value>
+                <fullName>Division 1960</fullName>
+                <default>false</default>
+                <label>Division 1960</label>
+            </value>
+            <value>
+                <fullName>Division 1970</fullName>
+                <default>false</default>
+                <label>Division 1970</label>
+            </value>
+            <value>
+                <fullName>Division 1980</fullName>
+                <default>false</default>
+                <label>Division 1980</label>
+            </value>
+            <value>
+                <fullName>DM Only</fullName>
+                <default>false</default>
+                <label>DM Only</label>
+            </value>
+            <value>
+                <fullName>Dog Park</fullName>
+                <default>false</default>
+                <label>Dog Park</label>
+            </value>
+            <value>
+                <fullName>EBT</fullName>
+                <default>false</default>
+                <label>EBT</label>
+            </value>
+            <value>
+                <fullName>Empanada</fullName>
+                <default>false</default>
+                <label>Empanada</label>
+            </value>
+            <value>
+                <fullName>Encore</fullName>
+                <default>false</default>
+                <label>Encore</label>
+            </value>
+            <value>
+                <fullName>Encore S</fullName>
+                <default>false</default>
+                <label>Encore S</label>
+            </value>
+            <value>
+                <fullName>Fleet Sales</fullName>
+                <default>false</default>
+                <label>Fleet Sales</label>
+            </value>
+            <value>
+                <fullName>Florida</fullName>
+                <default>false</default>
+                <label>Florida</label>
+            </value>
+            <value>
+                <fullName>Funnels</fullName>
+                <default>false</default>
+                <label>Funnels</label>
+            </value>
+            <value>
+                <fullName>Georgia</fullName>
+                <default>false</default>
+                <label>Georgia</label>
+            </value>
+            <value>
+                <fullName>Godfather&apos;s</fullName>
+                <default>false</default>
+                <label>Godfather&apos;s</label>
+            </value>
+            <value>
+                <fullName>Hardee&apos;s</fullName>
+                <default>false</default>
+                <label>Hardee&apos;s</label>
+            </value>
+            <value>
+                <fullName>Hardee&apos;s Midwest</fullName>
+                <default>false</default>
+                <label>Hardee&apos;s Midwest</label>
+            </value>
+            <value>
+                <fullName>Hotels</fullName>
+                <default>false</default>
+                <label>Hotels</label>
+            </value>
+            <value>
+                <fullName>Hot to Go</fullName>
+                <default>false</default>
+                <label>Hot to Go</label>
+            </value>
+            <value>
+                <fullName>Iced Coffee</fullName>
+                <default>false</default>
+                <label>Iced Coffee</label>
+            </value>
+            <value>
+                <fullName>Idaho</fullName>
+                <default>false</default>
+                <label>Idaho</label>
+            </value>
+            <value>
+                <fullName>Illinois</fullName>
+                <default>false</default>
+                <label>Illinois</label>
+            </value>
+            <value>
+                <fullName>Indiana</fullName>
+                <default>false</default>
+                <label>Indiana</label>
+            </value>
+            <value>
+                <fullName>Iowa</fullName>
+                <default>false</default>
+                <label>Iowa</label>
+            </value>
+            <value>
+                <fullName>Junge - 10</fullName>
+                <default>false</default>
+                <label>Junge - 10</label>
+            </value>
+            <value>
+                <fullName>Junge - 6</fullName>
+                <default>false</default>
+                <label>Junge - 6</label>
+            </value>
+            <value>
+                <fullName>Junge - 8</fullName>
+                <default>false</default>
+                <label>Junge - 8</label>
+            </value>
+            <value>
+                <fullName>Kansas</fullName>
+                <default>false</default>
+                <label>Kansas</label>
+            </value>
+            <value>
+                <fullName>Kentucky</fullName>
+                <default>false</default>
+                <label>Kentucky</label>
+            </value>
+            <value>
+                <fullName>Laundry</fullName>
+                <default>false</default>
+                <label>Laundry</label>
+            </value>
+            <value>
+                <fullName>Light Mechanical</fullName>
+                <default>false</default>
+                <label>Light Mechanical</label>
+            </value>
+            <value>
+                <fullName>Louisiana</fullName>
+                <default>false</default>
+                <label>Louisiana</label>
+            </value>
+            <value>
+                <fullName>Love&apos;s Subs</fullName>
+                <default>false</default>
+                <label>Love&apos;s Subs</label>
+            </value>
+            <value>
+                <fullName>Lunchable</fullName>
+                <default>false</default>
+                <label>Lunchable</label>
+            </value>
+            <value>
+                <fullName>Michigan</fullName>
+                <default>false</default>
+                <label>Michigan</label>
+            </value>
+            <value>
+                <fullName>Minnesota</fullName>
+                <default>false</default>
+                <label>Minnesota</label>
+            </value>
+            <value>
+                <fullName>Mississippi</fullName>
+                <default>false</default>
+                <label>Mississippi</label>
+            </value>
+            <value>
+                <fullName>Missouri</fullName>
+                <default>false</default>
+                <label>Missouri</label>
+            </value>
+            <value>
+                <fullName>Musket</fullName>
+                <default>false</default>
+                <label>Musket</label>
+            </value>
+            <value>
+                <fullName>Nebraska</fullName>
+                <default>false</default>
+                <label>Nebraska</label>
+            </value>
+            <value>
+                <fullName>Nevada</fullName>
+                <default>false</default>
+                <label>Nevada</label>
+            </value>
+            <value>
+                <fullName>New Jersey</fullName>
+                <default>false</default>
+                <label>New Jersey</label>
+            </value>
+            <value>
+                <fullName>New Mexico</fullName>
+                <default>false</default>
+                <label>New Mexico</label>
+            </value>
+            <value>
+                <fullName>New York</fullName>
+                <default>false</default>
+                <label>New York</label>
+            </value>
+            <value>
+                <fullName>North Carolina</fullName>
+                <default>false</default>
+                <label>North Carolina</label>
+            </value>
+            <value>
+                <fullName>North Dakota</fullName>
+                <default>false</default>
+                <label>North Dakota</label>
+            </value>
+            <value>
+                <fullName>Ohio</fullName>
+                <default>false</default>
+                <label>Ohio</label>
+            </value>
+            <value>
+                <fullName>Oil Change</fullName>
+                <default>false</default>
+                <label>Oil Change</label>
+            </value>
+            <value>
+                <fullName>Oil Play</fullName>
+                <default>false</default>
+                <label>Oil Play</label>
+            </value>
+            <value>
+                <fullName>Oklahoma</fullName>
+                <default>false</default>
+                <label>Oklahoma</label>
+            </value>
+            <value>
+                <fullName>Oregon</fullName>
+                <default>false</default>
+                <label>Oregon</label>
+            </value>
+            <value>
+                <fullName>Pennsylvania</fullName>
+                <default>false</default>
+                <label>Pennsylvania</label>
+            </value>
+            <value>
+                <fullName>Pocket Task List</fullName>
+                <default>false</default>
+                <label>Pocket Task List</label>
+            </value>
+            <value>
+                <fullName>Power Wings</fullName>
+                <default>false</default>
+                <label>Power Wings</label>
+            </value>
+            <value>
+                <fullName>Prep Table</fullName>
+                <default>false</default>
+                <label>Prep Table</label>
+            </value>
+            <value>
+                <fullName>Propane</fullName>
+                <default>false</default>
+                <label>Propane</label>
+            </value>
+            <value>
+                <fullName>Retread</fullName>
+                <default>false</default>
+                <label>Retread</label>
+            </value>
+            <value>
+                <fullName>Roller Grill</fullName>
+                <default>false</default>
+                <label>Roller Grill</label>
+            </value>
+            <value>
+                <fullName>RV Dump</fullName>
+                <default>false</default>
+                <label>RV Dump</label>
+            </value>
+            <value>
+                <fullName>Scanner</fullName>
+                <default>false</default>
+                <label>Scanner</label>
+            </value>
+            <value>
+                <fullName>Soft Serve</fullName>
+                <default>false</default>
+                <label>Soft Serve</label>
+            </value>
+            <value>
+                <fullName>South Carolina</fullName>
+                <default>false</default>
+                <label>South Carolina</label>
+            </value>
+            <value>
+                <fullName>South Dakota</fullName>
+                <default>false</default>
+                <label>South Dakota</label>
+            </value>
+            <value>
+                <fullName>Speedco</fullName>
+                <default>false</default>
+                <label>Speedco</label>
+            </value>
+            <value>
+                <fullName>Subway</fullName>
+                <default>false</default>
+                <label>Subway</label>
+            </value>
+            <value>
+                <fullName>Table Cards</fullName>
+                <default>false</default>
+                <label>Table Cards</label>
+            </value>
+            <value>
+                <fullName>Taco</fullName>
+                <default>false</default>
+                <label>Taco</label>
+            </value>
+            <value>
+                <fullName>Tamales</fullName>
+                <default>false</default>
+                <label>Tamales</label>
+            </value>
+            <value>
+                <fullName>Tennessee</fullName>
+                <default>false</default>
+                <label>Tennessee</label>
+            </value>
+            <value>
+                <fullName>Texas</fullName>
+                <default>false</default>
+                <label>Texas</label>
+            </value>
+            <value>
+                <fullName>TirePass</fullName>
+                <default>false</default>
+                <label>TirePass</label>
+            </value>
+            <value>
+                <fullName>Tobacco ID</fullName>
+                <default>false</default>
+                <label>Tobacco ID</label>
+            </value>
+            <value>
+                <fullName>Travel Stops</fullName>
+                <default>false</default>
+                <label>Travel Stops</label>
+            </value>
+            <value>
+                <fullName>Trillium</fullName>
+                <default>false</default>
+                <label>Trillium</label>
+            </value>
+            <value>
+                <fullName>Truck Care</fullName>
+                <default>false</default>
+                <label>Truck Care</label>
+            </value>
+            <value>
+                <fullName>TS/Speedco</fullName>
+                <default>false</default>
+                <label>TS/Speedco</label>
+            </value>
+            <value>
+                <fullName>Under 18</fullName>
+                <default>false</default>
+                <label>Under 18</label>
+            </value>
+            <value>
+                <fullName>Under 19</fullName>
+                <default>false</default>
+                <label>Under 19</label>
+            </value>
+            <value>
+                <fullName>Under 21</fullName>
+                <default>false</default>
+                <label>Under 21</label>
+            </value>
+            <value>
+                <fullName>Utah</fullName>
+                <default>false</default>
+                <label>Utah</label>
+            </value>
+            <value>
+                <fullName>Virginia</fullName>
+                <default>false</default>
+                <label>Virginia</label>
+            </value>
+            <value>
+                <fullName>Warmer</fullName>
+                <default>false</default>
+                <label>Warmer</label>
+            </value>
+            <value>
+                <fullName>Washington</fullName>
+                <default>false</default>
+                <label>Washington</label>
+            </value>
+            <value>
+                <fullName>Wayne</fullName>
+                <default>false</default>
+                <label>Wayne</label>
+            </value>
+            <value>
+                <fullName>West Virginia</fullName>
+                <default>false</default>
+                <label>West Virginia</label>
+            </value>
+            <value>
+                <fullName>Wheel Club</fullName>
+                <default>false</default>
+                <label>Wheel Club</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Conventional Diesel</fullName>
+                <default>false</default>
+                <label>Winter Additive - Conventional Diesel</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Extreme Weather</fullName>
+                <default>false</default>
+                <label>Winter Additive - Extreme Weather</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Junge</fullName>
+                <default>false</default>
+                <label>Winter Additive - Junge</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Splash</fullName>
+                <default>false</default>
+                <label>Winter Additive - Splash</label>
+            </value>
+            <value>
+                <fullName>Wisconsin</fullName>
+                <default>false</default>
+                <label>Wisconsin</label>
+            </value>
+            <value>
+                <fullName>Wyoming</fullName>
+                <default>false</default>
+                <label>Wyoming</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

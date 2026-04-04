@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template" >
+    
+    <aura:attribute name="cmpbool" type="boolean" default="false"/>
+    <aura:attribute name="Materialitemsincartevent" type="object"/>  
+    
+</aura:event>

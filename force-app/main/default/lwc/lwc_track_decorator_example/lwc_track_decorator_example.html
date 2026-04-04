@@ -1,0 +1,16 @@
+<template>
+<lightning-card title="lwc track decorator">
+<lightning-input label="Enter text" onchange={handletext} value={textvalue}></lightning-input>
+<br/>
+Message is {textvalue}
+
+/***********   Now javascript object ************************/
+<br/>
+<lightning-button label="Update car property" onclick={updatecarproperty}></lightning-button><br/>
+<diV class="styleclass">
+car name : {cars.name}
+car mileage : {cars.mileage}
+car sunroof : {cars.sunroof}
+</diV>
+</lightning-card>
+</template>

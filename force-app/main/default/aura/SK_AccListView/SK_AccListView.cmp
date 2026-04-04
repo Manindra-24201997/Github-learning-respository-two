@@ -1,0 +1,33 @@
+<aura:component controller="sampleclass" implements="flexipage:availableForAllPageTypes,force:appHostable" access="global">
+    <aura:attribute name="recList" type="List" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:registerEvent name="skEvent" type="c:SK_AccListViewEvent"/> 
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <div class="slds-align--absolute-center">
+        <lightning:spinner aura:id="spinner" variant="brand" size="large" class="slds=hide"/>
+    </div>
+    
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+                <tr class="slds-text-title--caps">
+                    <th scope="col">Actions</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Industry</th>
+                </tr>
+            </thead>
+            <aura:iteration items="{!v.recList}" var="item">
+            <tr>
+                <td>
+                    <lightning:button variant="brand" label="Send AccountId through Events" value="{!item.Id}" onclick="{! c.fireEvent }" />
+                </td>
+                <td> {!item.Name}</td>
+                <td> {!item.Type}</td>
+                <td> {!item.Industry}</td>
+            </tr>
+            </aura:iteration>
+            </table>
+	
+</aura:component>

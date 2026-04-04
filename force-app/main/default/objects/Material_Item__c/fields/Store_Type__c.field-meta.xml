@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Store_Type__c</fullName>
+    <externalId>false</externalId>
+    <label>Client Group</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>BioDiesel</fullName>
+                <default>false</default>
+                <label>BioDiesel</label>
+            </value>
+            <value>
+                <fullName>AccuDate</fullName>
+                <default>false</default>
+                <label>AccuDate</label>
+            </value>
+            <value>
+                <fullName>Advantage</fullName>
+                <default>false</default>
+                <label>Advantage</label>
+            </value>
+            <value>
+                <fullName>All Shops</fullName>
+                <default>false</default>
+                <label>All Shops</label>
+            </value>
+            <value>
+                <fullName>All Stores</fullName>
+                <default>false</default>
+                <label>All Stores</label>
+            </value>
+            <value>
+                <fullName>Arby&apos;s</fullName>
+                <default>false</default>
+                <label>Arby&apos;s</label>
+            </value>
+            <value>
+                <fullName>B18</fullName>
+                <default>false</default>
+                <label>B18</label>
+            </value>
+            <value>
+                <fullName>B5</fullName>
+                <default>false</default>
+                <label>B5</label>
+            </value>
+            <value>
+                <fullName>Baskets</fullName>
+                <default>false</default>
+                <label>Baskets</label>
+            </value>
+            <value>
+                <fullName>BBQ</fullName>
+                <default>false</default>
+                <label>BBQ</label>
+            </value>
+            <value>
+                <fullName>Beer Draft</fullName>
+                <default>false</default>
+                <label>Beer Draft</label>
+            </value>
+            <value>
+                <fullName>BTC</fullName>
+                <default>false</default>
+                <label>BTC</label>
+            </value>
+            <value>
+                <fullName>Bump Bar</fullName>
+                <default>false</default>
+                <label>Bump Bar</label>
+            </value>
+            <value>
+                <fullName>California</fullName>
+                <default>false</default>
+                <label>California</label>
+            </value>
+            <value>
+                <fullName>Carl&apos;s Jr.</fullName>
+                <default>false</default>
+                <label>Carl&apos;s Jr.</label>
+            </value>
+            <value>
+                <fullName>Chester&apos;s</fullName>
+                <default>false</default>
+                <label>Chester&apos;s</label>
+            </value>
+            <value>
+                <fullName>CMN Footballs</fullName>
+                <default>false</default>
+                <label>CMN Footballs</label>
+            </value>
+            <value>
+                <fullName>CNG</fullName>
+                <default>false</default>
+                <label>CNG</label>
+            </value>
+            <value>
+                <fullName>Country Stores</fullName>
+                <default>false</default>
+                <label>Country Stores</label>
+            </value>
+            <value>
+                <fullName>CS/TS/Speedco</fullName>
+                <default>false</default>
+                <label>CS/TS/Speedco</label>
+            </value>
+            <value>
+                <fullName>Curtis</fullName>
+                <default>false</default>
+                <label>Curtis</label>
+            </value>
+            <value>
+                <fullName>DEF</fullName>
+                <default>false</default>
+                <label>DEF</label>
+            </value>
+            <value>
+                <fullName>Deposit Bag Dual</fullName>
+                <default>false</default>
+                <label>Deposit Bag Dual</label>
+            </value>
+            <value>
+                <fullName>Deposit Bag Single</fullName>
+                <default>false</default>
+                <label>Deposit Bag Single</label>
+            </value>
+            <value>
+                <fullName>DM Only</fullName>
+                <default>false</default>
+                <label>DM Only</label>
+            </value>
+            <value>
+                <fullName>Dog Park</fullName>
+                <default>false</default>
+                <label>Dog Park</label>
+            </value>
+            <value>
+                <fullName>EBT</fullName>
+                <default>false</default>
+                <label>EBT</label>
+            </value>
+            <value>
+                <fullName>Empanada</fullName>
+                <default>false</default>
+                <label>Empanada</label>
+            </value>
+            <value>
+                <fullName>EM Production</fullName>
+                <default>false</default>
+                <label>EM Production</label>
+            </value>
+            <value>
+                <fullName>Encore</fullName>
+                <default>false</default>
+                <label>Encore</label>
+            </value>
+            <value>
+                <fullName>Fleet Sales</fullName>
+                <default>false</default>
+                <label>Fleet Sales</label>
+            </value>
+            <value>
+                <fullName>Florida</fullName>
+                <default>false</default>
+                <label>Florida</label>
+            </value>
+            <value>
+                <fullName>Funnels</fullName>
+                <default>false</default>
+                <label>Funnels</label>
+            </value>
+            <value>
+                <fullName>Godfather&apos;s</fullName>
+                <default>false</default>
+                <label>Godfather&apos;s</label>
+            </value>
+            <value>
+                <fullName>Hardee&apos;s</fullName>
+                <default>false</default>
+                <label>Hardee&apos;s</label>
+            </value>
+            <value>
+                <fullName>Hardee&apos;s Midwest</fullName>
+                <default>false</default>
+                <label>Hardee&apos;s Midwest</label>
+            </value>
+            <value>
+                <fullName>Hotels</fullName>
+                <default>false</default>
+                <label>Hotels</label>
+            </value>
+            <value>
+                <fullName>Hot to Go</fullName>
+                <default>false</default>
+                <label>Hot to Go</label>
+            </value>
+            <value>
+                <fullName>I-10</fullName>
+                <default>false</default>
+                <label>I-10</label>
+            </value>
+            <value>
+                <fullName>Iced Coffee</fullName>
+                <default>false</default>
+                <label>Iced Coffee</label>
+            </value>
+            <value>
+                <fullName>Illinois</fullName>
+                <default>false</default>
+                <label>Illinois</label>
+            </value>
+            <value>
+                <fullName>Indiana</fullName>
+                <default>false</default>
+                <label>Indiana</label>
+            </value>
+            <value>
+                <fullName>Iowa</fullName>
+                <default>false</default>
+                <label>Iowa</label>
+            </value>
+            <value>
+                <fullName>Junge - 10</fullName>
+                <default>false</default>
+                <label>Junge - 10</label>
+            </value>
+            <value>
+                <fullName>Junge - 6</fullName>
+                <default>false</default>
+                <label>Junge - 6</label>
+            </value>
+            <value>
+                <fullName>Junge - 8</fullName>
+                <default>false</default>
+                <label>Junge - 8</label>
+            </value>
+            <value>
+                <fullName>Laundry</fullName>
+                <default>false</default>
+                <label>Laundry</label>
+            </value>
+            <value>
+                <fullName>Light Mechanical</fullName>
+                <default>false</default>
+                <label>Light Mechanical</label>
+            </value>
+            <value>
+                <fullName>Love&apos;s Subs</fullName>
+                <default>false</default>
+                <label>Love&apos;s Subs</label>
+            </value>
+            <value>
+                <fullName>Mississippi</fullName>
+                <default>false</default>
+                <label>Mississippi</label>
+            </value>
+            <value>
+                <fullName>Missouri</fullName>
+                <default>false</default>
+                <label>Missouri</label>
+            </value>
+            <value>
+                <fullName>Oil Change</fullName>
+                <default>false</default>
+                <label>Oil Change</label>
+            </value>
+            <value>
+                <fullName>Oil Play</fullName>
+                <default>false</default>
+                <label>Oil Play</label>
+            </value>
+            <value>
+                <fullName>Oklahoma</fullName>
+                <default>false</default>
+                <label>Oklahoma</label>
+            </value>
+            <value>
+                <fullName>Pocket Task List</fullName>
+                <default>false</default>
+                <label>Pocket Task List</label>
+            </value>
+            <value>
+                <fullName>Power Wings</fullName>
+                <default>false</default>
+                <label>Power Wings</label>
+            </value>
+            <value>
+                <fullName>Prep Table</fullName>
+                <default>false</default>
+                <label>Prep Table</label>
+            </value>
+            <value>
+                <fullName>Propane</fullName>
+                <default>false</default>
+                <label>Propane</label>
+            </value>
+            <value>
+                <fullName>Retread</fullName>
+                <default>false</default>
+                <label>Retread</label>
+            </value>
+            <value>
+                <fullName>Roller Grill</fullName>
+                <default>false</default>
+                <label>Roller Grill</label>
+            </value>
+            <value>
+                <fullName>RV Dump</fullName>
+                <default>false</default>
+                <label>RV Dump</label>
+            </value>
+            <value>
+                <fullName>Scanner</fullName>
+                <default>false</default>
+                <label>Scanner</label>
+            </value>
+            <value>
+                <fullName>Soft Serve</fullName>
+                <default>false</default>
+                <label>Soft Serve</label>
+            </value>
+            <value>
+                <fullName>Speedco</fullName>
+                <default>false</default>
+                <label>Speedco</label>
+            </value>
+            <value>
+                <fullName>Subway</fullName>
+                <default>false</default>
+                <label>Subway</label>
+            </value>
+            <value>
+                <fullName>Table Cards</fullName>
+                <default>false</default>
+                <label>Table Cards</label>
+            </value>
+            <value>
+                <fullName>Taco</fullName>
+                <default>false</default>
+                <label>Taco</label>
+            </value>
+            <value>
+                <fullName>Tennessee</fullName>
+                <default>false</default>
+                <label>Tennessee</label>
+            </value>
+            <value>
+                <fullName>Texas</fullName>
+                <default>false</default>
+                <label>Texas</label>
+            </value>
+            <value>
+                <fullName>TirePass</fullName>
+                <default>false</default>
+                <label>TirePass</label>
+            </value>
+            <value>
+                <fullName>Tobacco ID</fullName>
+                <default>false</default>
+                <label>Tobacco ID</label>
+            </value>
+            <value>
+                <fullName>Travel Stops</fullName>
+                <default>false</default>
+                <label>Travel Stops</label>
+            </value>
+            <value>
+                <fullName>Trillium</fullName>
+                <default>false</default>
+                <label>Trillium</label>
+            </value>
+            <value>
+                <fullName>Truck Care</fullName>
+                <default>false</default>
+                <label>Truck Care</label>
+            </value>
+            <value>
+                <fullName>TS/Speedco</fullName>
+                <default>false</default>
+                <label>TS/Speedco</label>
+            </value>
+            <value>
+                <fullName>Under 18</fullName>
+                <default>false</default>
+                <label>Under 18</label>
+            </value>
+            <value>
+                <fullName>Under 19</fullName>
+                <default>false</default>
+                <label>Under 19</label>
+            </value>
+            <value>
+                <fullName>Under 21</fullName>
+                <default>false</default>
+                <label>Under 21</label>
+            </value>
+            <value>
+                <fullName>Virginia</fullName>
+                <default>false</default>
+                <label>Virginia</label>
+            </value>
+            <value>
+                <fullName>Warmer</fullName>
+                <default>false</default>
+                <label>Warmer</label>
+            </value>
+            <value>
+                <fullName>Wayne</fullName>
+                <default>false</default>
+                <label>Wayne</label>
+            </value>
+            <value>
+                <fullName>Wheel Club</fullName>
+                <default>false</default>
+                <label>Wheel Club</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Conventional Diesel</fullName>
+                <default>false</default>
+                <label>Winter Additive - Conventional Diesel</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Extreme Weather</fullName>
+                <default>false</default>
+                <label>Winter Additive - Extreme Weather</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Junge</fullName>
+                <default>false</default>
+                <label>Winter Additive - Junge</label>
+            </value>
+            <value>
+                <fullName>Winter Additive - Splash</fullName>
+                <default>false</default>
+                <label>Winter Additive - Splash</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

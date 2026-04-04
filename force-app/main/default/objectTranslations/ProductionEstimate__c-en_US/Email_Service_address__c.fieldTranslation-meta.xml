@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- This will going to use in Email address for email to non-licensed user functionality --></help>
+    <label><!-- Email Service address --></label>
+    <name>Email_Service_address__c</name>
+</CustomFieldTranslation>

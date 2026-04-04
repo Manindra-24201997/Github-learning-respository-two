@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>New_Lwc</fullName>
+    <availability>online</availability>
+    <description>Calling from vf page but not displaying properly.</description>
+    <displayType>massActionButton</displayType>
+    <height>600</height>
+    <linkType>page</linkType>
+    <masterLabel>New Lwc</masterLabel>
+    <openType>noSidebar</openType>
+    <page>vf_for_lwc</page>
+    <protected>false</protected>
+    <requireRowSelection>true</requireRowSelection>
+</WebLink>

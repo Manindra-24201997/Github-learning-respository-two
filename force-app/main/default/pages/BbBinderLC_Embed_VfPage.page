@@ -1,0 +1,97 @@
+<apex:page Controller="BB_Binder_Report_Pdf_Class" >
+     <style>
+             .rotate {
+                  float:left;
+                  width: 50px;
+                  height: 95px
+                  top: 300px;
+                  border-style: none;
+                  valign : bottom;
+    
+                /* Safari */
+                -webkit-transform: rotate(-90deg);
+                
+                /* Firefox */
+                -moz-transform: rotate(-90deg);
+                
+                /* IE */
+                -ms-transform: rotate(-90deg);
+                
+                /* Opera */
+                -o-transform: rotate(-90deg);
+                
+                /* Internet Explorer */
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+                 margin: 20px 20px 20px 20px !important;
+            }
+            
+                 body
+            {
+                background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159)) !important;
+                // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+                //background-image:none !important;
+                //background-color:#D7D7D7 !important;
+                background-repeat: repeat-x  !important;
+                background-position: left top  !important;
+                background-attachment: fixed  !important; 
+                margin:0px !important;
+            }
+       
+         
+          .customImage{ height: 10px; width: 10px; }
+          
+        
+           .pbHeader
+           {
+               background: white !important;
+           }
+           
+           body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+           {
+               background: white;
+           }
+         
+        
+         
+        .bPageBlock 
+        {
+            border-top: 0px;
+        }
+    
+        </style>
+    <apex:form >
+        <apex:pageMessages />
+        <apex:includeLightning />
+        <apex:inputhidden id="hidData" value="{!PDFData}"/>
+        <apex:actionfunction name="jsGeneratePDF" action="{!downloadPDF}" />
+        <div id="vfDemo" />
+    <script>
+        // Calling Lightning component from vf page
+        $Lightning.use("c:BB_Binder_Report_Pdf_App", function () {
+            $Lightning.createComponent("c:BB_Binder_Report_LC", {
+                // passing parameters to Lightning Component
+            },
+                "vfDemo",
+                function (component) {
+                    console.log("Lightning component rendered successfully!!");
+                    // Event Service hander to handele the lightning component cusom event
+                      $A.eventService.addHandler({ "event": "c:LcToVfEvent", "handler": retriveEventData });
+                });
+        });
+
+        function retriveEventData(event) {
+            
+            var eventRecordDatalist = event.getParam("reslutwrapper");                       
+            var hidData = document.getElementById('{!$Component.hidData}');
+            hidData.value = JSON.stringify(eventRecordDatalist);            
+            jsGeneratePDF();
+        }
+
+    </script>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,231 @@
+<aura:component controller="JobsForClientContactLtCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:attribute name="statusPicklist" type="list" default="Active"/>
+    <aura:attribute name="data" type="list"/>
+    <aura:attribute name="columns" type="list" default="Name,Client"/>
+    <aura:attribute name="sortedBy" type="String" default="CreatedDate" />
+    <aura:attribute name="sortedDirection" type="String" default="desc" />
+    
+    <aura:attribute name="Shpdata" type="list"/>
+    <aura:attribute name="Shpcolumns" type="list"/>
+    <aura:attribute name="ShpsortedBy" type="String" default="CreatedDate" />
+    <aura:attribute name="ShpsortedDirection" type="String" default="desc" />
+    
+    <aura:attribute name="loadMoreStatus" type="String" default="Please scroll down to load more data"/>
+    <aura:attribute name="enableInfiniteLoading" type="boolean" default="true"/>
+    <aura:attribute name="rowNumberOffset" type="Integer" default="0"/>
+    <aura:attribute name="rowsToLoad" type="Integer" default="10"/>			
+    <aura:attribute name="currentCount" type="Integer" default="10"/>
+    <aura:attribute name="initialRows" type="Integer" default="10"/>  
+    <aura:attribute name="isMobile" type="Boolean" default="false"/> 
+    <aura:attribute name="isShpListOpen" type="Boolean" default="false"/> 
+    <aura:attribute name="ShpactiveSections" type="List" default="['Shipments']" />
+    
+    <div class="showScroll">
+        <ui:scrollerWrapper class="scrollerSize">
+            <lightning:card title=""> 
+                
+                <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="Orders" >
+                    <lightning:accordionSection name="Orders" label="Orders">
+                        
+                        <div>
+                            <lightning:select name="select1" aura:id="pickStatus" label="Status" onchange="{!c.StatusChange}"   >
+                                <aura:iteration items="{!v.statusPicklist}" var="option">
+                                    <option text="{!option}" value="{!option}" />
+                                </aura:iteration>
+                            </lightning:select>
+                            <aura:if isTrue="{!!v.isMobile}">
+                                <aura:if isTrue="{!empty(v.data)}"><br/><br/>
+                                    <b class="slds-m-around_large">No records to display</b>
+                                    <aura:set attribute="else" >
+                                        <div style="margin-top:20px;"> 
+                                            
+                                            <lightning:datatable class="tablecss"
+                                                                 aura:id="DataTable"
+                                                                 columns="{!v.columns}"
+                                                                 data="{!v.data}"
+                                                                 keyField="Id"
+                                                                 hideCheckboxColumn="true" 
+                                                                 onsort="{!c.updateColumnSorting}"
+                                                                 sortedBy="{!v.sortedBy}"
+                                                                 sortedDirection="{!v.sortedDirection}"                                          
+                                                                 showRowNumberColumn="true"
+                                                                 onrowaction="{! c.handleRowAction }" 
+                                                                 />
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!!v.isMobile}">
+                                <aura:if isTrue="{!v.isShpListOpen}">
+                                    <lightning:messages />    
+                                    <!--************************************************  MODAL BOX Start *************************************************--> 
+                                    
+                                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                                        
+                                        <div class="slds-modal__container">
+                                            <!-- *************************************************** MODAL BOX HEADER Start ***********************************-->
+                                            <header class="slds-modal__header">
+                                                <lightning:buttonIcon iconName="utility:close"
+                                                                      onclick="{! c.closeModel }"
+                                                                      alternativeText="close"
+                                                                      variant="bare-inverse"
+                                                                      class="slds-modal__close"/>
+                                                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{!v.Shpdata[0].Job__r.Job_Auto_Number__c} - Shipments</h2>
+                                            </header>
+                                            <!--*********************************************** MODAL BOX BODY Part Start **************************************************-->
+                                            <div class="slds-modal__content slds-p-around_medium slds-grid slds-wrap" id="modal-content-id-1">
+                                                
+                                                <lightning:accordion allowMultipleSectionsOpen="false"  activeSectionName="{!v.ShpactiveSections}"> 
+                                                    <lightning:accordionSection name="Shipments" label="Shipments"  class="slds-card" >    
+                                                        
+                                                        <aura:if isTrue="{!empty(v.Shpdata)}">
+                                                            <br/> <b>No records to display</b>
+                                                            <aura:set attribute="else" >
+                                                                
+                                                                <lightning:datatable class="Shptablecss"
+                                                                                     aura:id="ShpDataTable"
+                                                                                     columns="{!v.Shpcolumns}"
+                                                                                     data="{!v.Shpdata}"
+                                                                                     keyField="Id"
+                                                                                     hideCheckboxColumn="true" 
+                                                                                     onsort="{!c.ShpupdateColumnSorting}"
+                                                                                     sortedBy="{!v.ShpsortedBy}"
+                                                                                     sortedDirection="{!v.ShpsortedDirection}"                                          
+                                                                                     showRowNumberColumn="true"
+                                                                                     />    
+                                                            </aura:set>
+                                                        </aura:if>
+                                                    </lightning:accordionSection> 
+                                                </lightning:accordion>      
+                                            </div>
+                                            <!--************************************************ MODAL BOX FOOTER Part Start ****************************************************************-->
+                                            <footer class="slds-modal__footer">
+                                                <lightning:button variant="neutral" 
+                                                                  label="Cancel"
+                                                                  title="Cancel"
+                                                                  onclick="{! c.closeModel }"/>
+                                            </footer>
+                                        </div>
+                                        
+                                    </section>
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                    <!--************************************************ MODAL BOX Part END Here ***************************************************-->
+                                    
+                                </aura:if>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isMobile}">
+                                <aura:if isTrue="{!v.isShpListOpen}">
+                                    <lightning:messages />    
+                                    
+                                    <lightning:accordion allowMultipleSectionsOpen="false"  activeSectionName="{!v.ShpactiveSections}"> 
+                                        <lightning:accordionSection name="Shipments" label="Shipments"  class="slds-card" >    
+                                            
+                                            <aura:if isTrue="{!empty(v.Shpdata)}">
+                                                <br/> <b>No records to display</b>
+                                                <aura:set attribute="else" >
+                                                    
+                                                    <lightning:card>        
+                                                        
+                                                        <aura:iteration items="{!v.Shpdata}" var="Shp">
+                                                            <table>
+                                                                
+                                                                <tr>
+                                                                    <td width="40%" >
+                                                                        <ui:outputText value="Manifest Date"/>:
+                                                                    </td>
+                                                                    <td width="60%">
+                                                                        <ui:outputDate value="{!Shp.Shipment_Date__c}"/>	
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="40%">
+                                                                        <ui:outputText value="Status"/>:
+                                                                    </td>
+                                                                    <td width="60%">
+                                                                        {!Shp.Status__c}
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td width="40%">
+                                                                        <ui:outputText value="Tracking Number"/>:
+                                                                    </td>
+                                                                    <td width="60%">
+                                                                        {!Shp.Tracking_Number__c}
+                                                                    </td>
+                                                                </tr>
+                                                                
+                                                            </table>
+                                                            <hr style="margin: 0.4rem 0;"/>
+                                                        </aura:iteration>
+                                                        
+                                                    </lightning:card>
+                                                    
+                                                    
+                                                </aura:set>
+                                            </aura:if>
+                                        </lightning:accordionSection> 
+                                    </lightning:accordion>      
+                                    
+                                    <div class="slds-backdrop slds-backdrop_open"></div>
+                                    <!--************************************************ MODAL BOX Part END Here ***************************************************-->
+                                    
+                                </aura:if>
+                                
+                            </aura:if>
+                            
+                            
+                            <aura:if isTrue="{!v.isMobile}">
+                                <aura:if isTrue="{!empty(v.data)}"><br/>
+                                    <b> No records to display.</b>
+                                    <aura:set attribute="else">
+                                        <lightning:card>        
+                                            
+                                            <aura:iteration items="{!v.data}" var="ord">
+                                                <table>
+                                                    
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <a href="{!'/'+ord.Id}" style="white-space:pre-wrap;">{!ord.Name}</a>  
+                                                        </td>
+                                                        <td width="20%" style="text-align:right;" class="MobileMoreActions">
+                                                            <lightning:buttonMenu name="{!ord.Id}" aura:id="ShpItem" onselect="{!c.handleMobileQuickAction}">
+                                                                <lightning:menuItem value="Shipment" label="Shipment" iconName="standard:shipment"/>
+                                                            </lightning:buttonMenu>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="40%" >
+                                                            <ui:outputText value="Order Date"/>:
+                                                        </td>
+                                                        <td width="60%">
+                                                            <ui:outputDate value="{!ord.CreatedDate}"/>	
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="40%">
+                                                            <ui:outputText value="Status"/>:
+                                                        </td>
+                                                        <td width="60%">
+                                                            {!ord.Status__c}
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </table>
+                                                <hr style="margin: 0.4rem 0;"/>
+                                            </aura:iteration>
+                                            
+                                        </lightning:card>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                        </div>
+                    </lightning:accordionSection>
+                </lightning:accordion>
+            </lightning:card>
+        </ui:scrollerWrapper>
+    </div>
+</aura:component>

@@ -1,0 +1,467 @@
+<apex:page controller="BBBinderReportController" docType="html-5.0" >
+  
+  <apex:form >
+            <style>
+            .rotate {
+              float:left;
+              width: 50px;
+              height: 95px
+              top: 300px;
+              border-style: none;
+              valign : bottom;
+
+            /* Safari */
+            -webkit-transform: rotate(-90deg);
+            
+            /* Firefox */
+            -moz-transform: rotate(-90deg);
+            
+            /* IE */
+            -ms-transform: rotate(-90deg);
+            
+            /* Opera */
+            -o-transform: rotate(-90deg);
+            
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+        </style>   
+        
+       <!--  <script type="text/javascript">
+         
+           function doSearch() {
+            
+            searchServer
+            (
+                
+                 document.getElementById("strBBname").value,
+                 document.getElementById("strBBstatus").options[document.getElementById("strBBstatus").selectedIndex].value, 
+                 document.getElementById("strBBClientName").value,
+                 document.getElementById("strBBVendorName").value,
+                 document.getElementById("strBBtype").value,
+                 document.getElementById("strBBlocation").value,
+                 document.getElementById("strTitle").value
+                
+                
+                
+            );
+             }
+
+             function clearFields() {
+                 document.getElementById("strBBname").value = "";
+                 document.getElementById("strBBstatus").selectedIndex = 0;
+                 document.getElementById("strBBClientName").value = "";
+                 document.getElementById("strBBVendorName").value = ""; 
+                 document.getElementById("strBBtype").value = "";
+                 document.getElementById("strBBlocation").value = "";
+                 document.getElementById("strTitle").value = "";
+                 
+             }
+      </script>
+      
+      <apex:actionFunction name="searchServer" action="{!searchbillboards}" reRender="results">
+      
+                 <apex:param name="strBBname" value=""/>
+                 <apex:param name="strBBstatus" value=""/>
+                 <apex:param name="strBBClientName" value=""/>
+                 <apex:param name="strBBVendorName" value=""/>
+                 <apex:param name="strBBtype" value=""/>
+                 <apex:param name="strBBlocation" value=""/>
+                 <apex:param name="strTitle" value=""/>
+                 
+                 
+                 
+                 
+                 
+      </apex:actionFunction>-->
+  
+       <apex:pageBlock title="BB Binder Report Search">
+       <apex:pageMessages ></apex:pageMessages>
+         <table width="100%" border="0">
+                <tr>
+                    <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.name.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strBBname}"/>
+                    </td>
+                    
+                    
+                   <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Title__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strTitle}"/>
+                    </td>
+                    
+                    <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Billboard_Status__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="bbstatus" value="{!BBStatusString }" multiselect="true" size="2">
+                           <apex:selectOptions value="{!BBStatus}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+                      
+                      
+                      
+                </tr>
+              
+               <tr>
+               
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Client_Name__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="clint" value="{!strBBClientName}" size="1" >
+                           <apex:selectOptions value="{!Clients}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+                    
+                    
+              <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.BB_Vendor__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="vendor" value="{!strBBVendorName}" size="1" >
+                           <apex:selectOptions value="{!vendors}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>       
+               
+              <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Billboard_Type__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="bbtype" value="{!strBBtype}" size="1" >
+                           <apex:selectOptions value="{!BBType}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+               
+               
+               </tr>
+              
+               
+              <tr>
+              
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Client__c.Fields.Dummy_Picklist_1__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="district" value="{!strDistrict}" size="1" >
+                           <apex:selectOptions value="{!District}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Location__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strBBlocation}"/>
+              </td>
+              
+              <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Size__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strSize}"/>
+              </td>
+              
+              
+              
+             </tr>
+              
+              <tr>
+              
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Illumination__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="illu" value="{!strIllumination}" size="1" >
+                           <apex:selectOptions value="{!Illumination}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+                
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Expiration_Date__c.Label} From
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputfield value="{!dat.Expiration_Date__c}"  /> 
+                    </td>  
+               
+                 <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Expiration_Date__c.Label} To
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                       <apex:inputfield value="{!dat2.Expiration_Date__c}"  /> 
+                    </td>  
+               
+                
+             
+              
+              
+              
+             </tr>
+              
+               <tr>
+                 
+                 <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.PMT__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strPMT}"/>
+                </td>
+                 
+                 
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Latitude__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strLat}"/>
+                </td>
+                
+              
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Longitude__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strLong}"/>
+                </td>
+              
+               </tr>
+              
+              
+              <tr>
+               
+                    <td colspan="3" style="text-align: right; padding-top: 20px;">
+                    <apex:commandbutton value="Search" action="{!searchbillboards}" rerender="results" tabindex="10" status="status" />
+                       
+                        
+                        
+                    </td>
+                   <!-- <td colspan="3" style="text-align: left; padding-top: 20px;">
+                        <apex:commandbutton value="Clear" onclick="clearFields();" rerender="results,selectMediaList,selectList,selectSList,selectVList" action="{!clearForm}"
+                            tabindex="11" />
+                    </td> -->
+                </tr>
+              
+                
+       
+       </table>
+       
+       </apex:pageBlock>
+  
+       <apex:pageBlock id="results" title="Results" >
+       <apex:pageMessages ></apex:pageMessages>
+       
+        <apex:repeat value="{!CDWrapper}" var="cdw">
+          
+       
+         <apex:repeat value="{!cdw.CNWrapper}" var="cnw" >
+         
+         <div class="header">
+         
+         <div style="width:100%;font-weight: bolder;width:100%;">
+              
+                <b> <apex:outputText value="{!cdw.strClientDist}"   style="font-size:18px;font-weight:bold;"/> </b> 
+           
+              </div> <br/>
+              
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+              
+              <div style="width:100%;font-weight: bolder;width:100%">
+                 <b> <apex:outputText value="{!cnw.strClientName}"   style="font-size:14.5px;font-weight:bold;"/> </b> , <b> <apex:outputText value="{!cnw.strClientcode}"   style="font-size:14.5px;font-weight:bold;"/> </b>
+               </div> <br/>        
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/> 
+               
+             
+             </div> <br/>
+         
+        
+           <apex:repeat value="{!cnw.BWrapper}" var="item">
+            
+           <b> <apex:outputText value="{!item.bb.Title__c}"   style="font-size:14px;font-weight:bold;"/> </b> 
+           <br/>  <br/>        
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/>  <br/>  
+           
+             <div> 
+             
+               <table>
+               
+                  <tr style="vertical-align:top;" width="25%" >   
+                    
+                    <td style="font-weight:bold;font-size:13px">
+               <!--     Title :{!item.bb.Title__c} <br/>
+                   
+                    BB#:{!item.bb.name}<br/>
+                    
+                    
+                    Client :{!item.bb.Client_Name__r.name}<br/> -->
+                    
+                    Vendor :{!item.bb.BB_Vendor__r.name}<br/><br/> 
+                    
+                    PMT :{!item.bb.PMT__c}<br/><br/> 
+                    
+                    Expiration Date :
+                        <apex:outputText value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(item.bb.Expiration_Date__c !=null,true,false)}">
+                        <apex:param value="{!if(item.bb.Expiration_Date__c !=null,item.bb.Expiration_Date__c,'-')}"/> </apex:outputText>
+                        <apex:outputText value=" " rendered="{!if(item.bb.Expiration_Date__c == null,true,false)}" ></apex:outputText> 
+                       <br/><br/> 
+                         
+                     
+                     
+                    
+                    Location :{!item.bb.Location__c}<br/> <br/> 
+                    
+                    Illumination :{!item.bb.Illumination__c} <br/>  <br/> 
+                    
+                    Latitude :{!item.bb.Latitude__c}<br/>  <br/> 
+                     
+                    Longitude :{!item.bb.Longitude__c}<br/>  
+                       
+                    
+                     
+                   </td>
+                   
+                    <td width="30%">
+                   
+                     <apex:outputfield value="{!item.bb.Photo_1_New__c}" style="height:10px;width:10px;" rendered="{!Not(IsBlank(item.bb.Attachment_ID__c ))}"></apex:outputfield>
+                   <br/>
+                   </td>
+                   
+                  </tr>    
+                  
+               </table><hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+             
+             </div> 
+             
+           </apex:repeat>
+     <!--    <apex:pageblockTable value="{!cnw.BWrapper}" var="item">
+         
+         <table>
+         
+          <tr>
+          <apex:column headerValue="" width="50%">
+     
+                   <table>
+                    
+                     
+                      
+                     <tr>
+                       <td style="font-weight:bold;">Title :</td>
+                       <td><b>{!item.bb.Title__c}</b></td>
+                     
+                     </tr>
+                     <tr>
+                       <td style="font-weight:bold;">BB#:</td>
+                       <td>{!item.bb.name}</td>
+                     
+                     </tr>
+                     
+                     <tr>
+                       <td style="font-weight:bold;" >Client :</td>
+                       <td>{!item.bb.Client_Name__r.name}</td>
+                     
+                     </tr>
+                    <tr>
+                       <td style="font-weight:bold;" >Vendor :</td>
+                       <td>{!item.bb.BB_Vendor__r.name}</td>
+                     
+                     </tr>
+                     
+                     
+                     
+                     <tr>
+                       <td style="font-weight:bold;">PMT :</td>
+                       <td>{!item.bb.PMT__c}</td>
+                     
+                     </tr>
+                     
+                     
+                      <tr>
+                       <td style="font-weight:bold;" >Expiration Date :</td>
+                       <td>
+                       <div style="width:100%;float:left;" align = "left">
+                    <apex:outputText value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(item.bb.Expiration_Date__c !=null,true,false)}">
+                    <apex:param value="{!if(item.bb.Expiration_Date__c !=null,item.bb.Expiration_Date__c,'-')}"/> </apex:outputText>
+                    <apex:outputText value=" " rendered="{!if(item.bb.Expiration_Date__c == null,true,false)}" ></apex:outputText> 
+                   </div>
+                       
+                       
+                       </td>
+                     
+                     </tr>
+                     <tr>
+                       <td style="font-weight:bold;">Title:</td>
+                       <td>{!item.bb.Title__c}</td>
+                     
+                     </tr>
+                     
+                     
+                      <tr>
+                       <td style="font-weight:bold;">Location :</td>
+                       <td>{!item.bb.Location__c}</td>
+                     
+                     </tr>
+                     
+                     <tr>
+                       <td style="font-weight:bold;">Illumination :</td>
+                       <td>{!item.bb.Illumination__c}</td>
+                     
+                     </tr>
+                   
+                    <tr>
+                       <td style="font-weight:bold;">Latitude :</td>
+                       <td>{!item.bb.Latitude__c}</td>
+                     
+                     </tr>
+                     
+                     <tr>
+                       <td style="font-weight:bold;">Longitude :</td>
+                       <td>{!item.bb.Longitude__c}</td>
+                     
+                     </tr>
+                   
+                   </table>
+                 
+     
+    
+            </apex:column>
+     
+     
+     
+           <apex:column width="50%">
+           
+     
+               <apex:outputfield value="{!item.bb.Photo_1_New__c}" style="height:10px;width:10px;"></apex:outputfield>
+          
+          </apex:column>
+          
+     
+     
+      </tr>
+      
+      
+      
+      </table>
+       
+         
+         </apex:pageblockTable>  -->
+         
+         
+         
+         
+         
+         
+         </apex:repeat>
+         
+         </apex:repeat>
+      <apex:commandbutton value="Print Report" action="{!PrintReport}"  />
+       
+       </apex:pageBlock>
+  
+  </apex:form>
+  
+</apex:page>

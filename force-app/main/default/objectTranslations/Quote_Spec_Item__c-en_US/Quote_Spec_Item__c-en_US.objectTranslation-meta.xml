@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Quote Spec Items</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Quote Spec Items</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- Quote_Spec_Item_Fieldset --></label>
+        <name>Quote_Spec_Item_Fieldset</name>
+    </fieldSets>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>DomainUrl</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DomainUrl</shortDescription>
+        <value>https://loves-storefront.lightning.force.com/</value>
+    </labels>
+    <labels>
+        <fullName>JobNumberSeparator</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>JobNumberSeparator</shortDescription>
+        <value>-</value>
+    </labels>
+    <labels>
+        <fullName>Select_Staff</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Select Staff</shortDescription>
+        <value>Select Staff</value>
+    </labels>
+    <labels>
+        <fullName>SiteFinalText</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>SiteFinalText</shortDescription>
+        <value>Job Record saved</value>
+    </labels>
+    <labels>
+        <fullName>Site_File_Custom_Text</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Site File Custom Text</shortDescription>
+        <value>25MB file/s limitation. If your file size is larger, please contact creative &amp; brand team at brand@fireeye.com</value>
+    </labels>
+</CustomLabels>

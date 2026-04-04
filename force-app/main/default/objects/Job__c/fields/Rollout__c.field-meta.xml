@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Rollout__c</fullName>
+    <description>If job is a Rollout, use this field to note what type of Rollout.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Rollout types:
+To Distro - for projects with a Distro list
+To Store(s) - for projects go to a short list or named store(s) (ex. all Travel Stops)
+Bulk Ship - All items shipping to the same location (ex. Ship to &quot;vendor&quot; for kitting)</inlineHelpText>
+    <label>Rollout</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>To Distro</fullName>
+                <default>false</default>
+                <label>To Distro</label>
+            </value>
+            <value>
+                <fullName>To Store(s)</fullName>
+                <default>false</default>
+                <label>To Store(s)</label>
+            </value>
+            <value>
+                <fullName>Bulk Ship</fullName>
+                <default>false</default>
+                <label>Bulk Ship</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

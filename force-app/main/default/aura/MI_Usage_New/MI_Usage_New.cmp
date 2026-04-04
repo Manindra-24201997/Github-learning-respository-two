@@ -1,0 +1,67 @@
+<aura:component controller="Material_Items_Controller" implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="MIUIFieldSet" type="List"/>
+    <aura:attribute name="recordId" type="String"/>
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+        <aura:attribute name="MaterialUsageItems" type="Object" />
+    <aura:attribute name="isMIUIOpen" type="boolean"  default="True"/>
+
+    
+    <force:recordData aura:id="record"
+                      layoutType="FULL"
+                      recordId="{!v.recordId}"
+                      targetError="{!v.recordError}"
+                      targetRecord="{!v.record}"
+                      targetFields ="{!v.simpleRecord}"
+                      mode="VIEW"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <ltng:require  styles="{!$Resource.LtngStyles + '/LCmpModalandChart/Styles/ModalHederFooterStyles.css'}"/>
+    
+     <aura:if isTrue="{!v.isMIUIOpen}" >
+   <lightning:recordEditForm aura:id="MIUIEditform" density="comfy" objectApiName="Material_Usage_line_item__c"   onsubmit="{!c.MIUIOnSubmit}" onsuccess="{!c.MIUIOnSuccess}">
+        <lightning:messages />
+       
+        <!--Modal Header-->  
+        <div class="modal-header slds-modal__header slds-size_1-of-1">
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate"> Material Usage</h2>
+        </div>
+        <!--End Modal Header-->  
+         
+        <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+            <lightning:layout multipleRows="true">                        
+                <aura:iteration items="{!v.MIUIFieldSet}" var="field">
+                    <aura:if isTrue="{!(field=='Material_Item__c')}">    
+                        <aura:set attribute="else">   
+                            <lightning:inputField fieldName="{!field}" aura:id="MIUIField" class="slds-form-element slds-size--1-of-2 slds-p-horizontal_x-small"   /> 
+                        </aura:set>
+                    </aura:if>
+                    <aura:if isTrue="{!field=='Material_Item__c'}"> 
+                        <div class="slds-form-element slds-size--1-of-2 slds-p-horizontal_x-small">
+                            <label class="slds-form-element__label" for="text-input-id-1"> Material Item</label>
+                            <div class="slds-form-element__control">
+                                <ui:outputText value="{!v.simpleRecord.Name}"  />
+                            </div>
+                        </div>
+                    </aura:if>
+                    
+                </aura:iteration>
+            </lightning:layout>
+        </div>
+        
+        <footer class="slds-modal__footer">
+          <lightning:button variant="neutral" 
+                              label="Cancel"
+                              title="Cancel"
+                              onclick="{! c.doCancel}"/>
+            <lightning:button variant="brand" 
+                              label="Save"
+                              title="Save"
+                              type="submit" />
+       </footer>
+       
+    </lightning:recordEditForm> 
+        
+    </aura:if>
+    </aura:component>

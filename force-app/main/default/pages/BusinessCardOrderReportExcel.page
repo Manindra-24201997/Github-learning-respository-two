@@ -1,0 +1,49 @@
+<apex:page controller="BusinessCardOrderReportCnt" showHeader="false" contentType="text/csv;#NameTagBusCard {!NOW()}.csv"  cache="true"  language="en-US"> 
+
+             <!-------------------------------------------------------- CBC ------------------------------------------------------------------------------>
+             
+               <apex:outputText rendered="{!JCBCW.size>0}">Deparment, Name, Title, Company, Address, Phone, Fax, Email, Mobile, Logo, Website, ICE Chat</apex:outputText>
+                <apex:repeat value="{!JCBCW}" var="item" rendered="{!JCBCW.size>0}">
+"{!item.jobspecsDept.Description__c}","{!item.jobspecsName.Description__c}","{!item.jobspecsTitle.Description__c}","{!item.jobspecsCompany}","{!item.jobspecsAddress}",{!item.jobspecsPhone.Description__c},{!item.jobspecsFax.Description__c},{!item.jobspecsEmail.Description__c},{!item.jobspecsMobile.Description__c} , {!item.jobspecsLogo1}, {!item.jobspecsWebsite},{!item.jobspecsLogo.Description__c}
+                </apex:repeat> 
+                
+                <!-------------------------------------------------------- SBC ------------------------------------------------------------------------------>
+                <apex:outputText rendered="{!jws.size>0}">Name,Title,Address,City,State,Zip,Phone,Fax,Email,Logo,Website </apex:outputText>
+                <apex:repeat value="{!jws}" var="item"  rendered="{!jws.size>0}">
+"{!item.jobspecsName.Description__c}","{!item.jobspecsTitle.Description__c}","{!item.jobspecsAddress.Description__c}","{!item.jobspecsCity.Description__c}",{!item.jobspecsState.Description__c},{!item.jobspecsZip.Description__c},{!item.jobspecsPhone.Description__c},{!item.jobspecsFax.Description__c},{!item.jobspecsEmail.Description__c},{!item.jobspecsLogo.Description__c},{!item.jobspecsWebsite.Description__c}
+                </apex:repeat> 
+                
+                
+                <!-------------------------------------------------------- Name Tag ------------------------------------------------------------------------------>
+                
+                
+                <apex:outputText rendered="{!jw.size>0}">Store Name,Title,Name,Year Of Hire,Logo</apex:outputText>
+                    
+                   
+                <apex:repeat value="{!jw}" var="item"  rendered="{!jw.size>0}">
+{!item.job.JS_Client__r.Client_Code__c},{!item.jobspecsTitle.Description__c},{!item.jobspecsName.Description__c}  {!item.jobspecsStore.Description__c},{!item.jobspecsYearofhire.Description__c},"<apex:outputText Value="{!item.jobspecsLogo.Description__c}" escape="false"/><apex:outputText value=" , " rendered="{!item.jobspecsLogo2.Description__c!=null}" /><apex:outputText Value="{!item.jobspecsLogo2.Description__c}" escape="false"/>"
+                </apex:repeat> 
+                
+                
+                
+                 <!-------------------------------------------------------- Nameplate Tag ------------------------------------------------------------------------------>
+                
+                
+                <apex:outputText rendered="{!JCONW.size>0}">Name,Title,Year Of Hire,Buliding,Nameplate Type</apex:outputText>
+                    
+                   
+                <apex:repeat value="{!JCONW}" var="item"  rendered="{!JCONW.size>0}">
+{!item.jobspecsName.Description__c},{!item.jobspecsTitle.Description__c},{!item.jobspecsYearofhire.Description__c},{!item.jobspecsBuilding.Description__c},"<apex:outputText Value="{!item.jobspecsNameplateType}"/>"
+                </apex:repeat> 
+
+
+                <!-------------------------------------------------------- CMN ------------------------------------------------------------------------------>
+                
+               <apex:outputText rendered="{!CMNWrapperlist.size>0}">,,Flyer,,,,,Banner,,,,</apex:outputText> 
+                Store,Name,Name of Event,Date,Time,Event Details,Special Details,Name of Event,Date,Time,Event Details,Special Details
+                <apex:repeat value="{!CMNWrapperlist}" var="item"  rendered="{!CMNWrapperlist.size>0}">
+{!item.ClientCode},"{!item.Clientname}","{!item.CMNFlyerNameofEvent.Description__c}","{!item.CMNFlyerDate.Description__c}","{!item.CMNFlyerTime.Description__c}","{!item.CMNFlyerEventDetails.Description__c}","{!item.CMNFlyerSpecialDetails.Description__c}","{!item.CMNBannerNameofEvent.Description__c}","{!item.CMNBannerDate.Description__c}","{!item.CMNBannerTime.Description__c}","{!item.CMNBannerEventDetails.Description__c}","{!item.CMNBannerSpecialDetails.Description__c}"
+                </apex:repeat> 
+
+  
+</apex:page>

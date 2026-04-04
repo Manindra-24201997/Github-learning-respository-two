@@ -1,0 +1,17 @@
+/*external css file with .css file extension */
+.custom-class{
+	font-size:20px;
+	color:red;
+	background-color:black;
+}
+.cuf-content {
+	padding: 0 0rem !important;
+	}
+	.slds-p-around--medium {
+	padding: 0rem !important;
+	}       
+	.slds-modal__content{
+	overflow-y:hidden !important;
+	height:unset !important;
+	max-height:unset !important;
+	}

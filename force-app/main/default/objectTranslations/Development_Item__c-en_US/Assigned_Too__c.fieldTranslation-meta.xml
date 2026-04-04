@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Assigned Too --></label>
+    <name>Assigned_Too__c</name>
+    <picklistValues>
+        <masterLabel>Mani</masterLabel>
+        <translation><!-- Mani --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Steve</masterLabel>
+        <translation><!-- Steve --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sugunakar</masterLabel>
+        <translation><!-- Sugunakar --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sunil</masterLabel>
+        <translation><!-- Sunil --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tama</masterLabel>
+        <translation><!-- Tama --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vara</masterLabel>
+        <translation><!-- Vara --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

@@ -1,0 +1,58 @@
+/*The componenet related .css file is working for any where but except for quick actions buttons like edit facing modal issues so we are using external css*/
+/*
+.slds-modal__close{
+display : none !important;
+}
+.slds-button_icon-inverse
+{
+display : none !important;
+}
+
+.THIS .frequired label:after { 
+    content:" *";
+    color: #e32;
+}
+.THIS .scrollerSizecart{
+    height:25rem;
+}
+.THIS .slds-rich-text-editor{
+    word-break: break-word !important;
+}
+.THIS .slds-textarea{
+    height:115px !important;
+}
+.THIS .slds-rich-text-area__content{
+    height:150px !important;
+}
+
+@media (min-width: 48em){
+    .THIS .slds-modal__container {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 90rem !important;
+        min-width: 30rem !important;
+    }
+}
+
+.THIS .slds-textarea{
+    height:115px !important;
+}
+.THIS .slds-rich-text-area__content{
+    height:150px !important;
+}
+
+
+.THIS .slds-p-horizontal_x-small{
+    
+    padding-left:0px !important;//added for edit layout fields alignment
+    padding-right:0px !important;
+}
+.THIS .slds-p-around_small{
+    padding: 0 10px 0 10px !important;//added for edit layout fields alignment
+}
+
+
+.THIS .slds-modal__close {
+    display: none !important;
+}
+*/

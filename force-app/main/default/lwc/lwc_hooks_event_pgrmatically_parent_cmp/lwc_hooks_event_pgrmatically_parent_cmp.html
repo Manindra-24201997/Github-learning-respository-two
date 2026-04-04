@@ -1,0 +1,8 @@
+<template>
+<lightning-card title="lwc hooks custom example parent data table cmp">
+    <template if:true={jobrcd.data}>
+<lightning-datatable columns={colm} data={jobrcd.data} key-field="id" hide-checkbox-column="true"></lightning-datatable>
+</template>
+<c-lwc_hooks_event_pgrmatically_child_cmp></c-lwc_hooks_event_pgrmatically_child_cmp>
+</lightning-card>
+</template>

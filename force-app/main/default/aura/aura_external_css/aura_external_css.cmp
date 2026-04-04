@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,flexipage:availableForRecordHome,force:hasSObjectName,force:hasRecordId" access="global">
+    <aura:handler name="init" value="{!this}" action="{! c.myAction}" /> 
+    <ltng:require  styles="{!$Resource.auraexternalcss + '/externalstyles/headercss/styles/headingnewcss.css'}"/>
+    <h1 class="custom-class">Hello World</h1>
+</aura:component>

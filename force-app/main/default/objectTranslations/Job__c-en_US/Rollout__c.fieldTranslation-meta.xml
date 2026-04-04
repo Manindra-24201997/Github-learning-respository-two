@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help>
+        <!-- Rollout types:
+To Distro - for projects with a Distro list
+To Store(s) - for projects go to a short list or named store(s) (ex. all Travel Stops)
+Bulk Ship - All items shipping to the same location (ex. Ship to &quot;vendor&quot; for kitting) -->
+    </help>
+    <label><!-- Rollout --></label>
+    <name>Rollout__c</name>
+    <picklistValues>
+        <masterLabel>Bulk Ship</masterLabel>
+        <translation><!-- Bulk Ship --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>To Distro</masterLabel>
+        <translation><!-- To Distro --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>To Store(s)</masterLabel>
+        <translation><!-- To Store(s) --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

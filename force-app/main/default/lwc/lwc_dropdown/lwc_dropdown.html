@@ -1,0 +1,68 @@
+<template>
+    <lightning-accordion active-section-name="A" allow-multiple-sections-open="true">
+        <lightning-accordion-section name="A" label="Accordion Title A" class="slds-card">
+            <div class="slds-form-element">
+
+                <div class="slds-grid slds-gutters">
+
+                    <div class="slds-col slds-size_3-of-12">
+                <label class="slds-form-element__label" for="select-01">Select Label</label>
+                <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                <select class="slds-select" data-my-id="select-01" >
+                <option value="" >Select…</option>
+                <option>Option One</option>
+                <option>Option Two</option>
+                <option>Option Three</option>
+                </select>
+                </div>
+                </div>
+                </div>
+
+                <div class="slds-col slds-size_3-of-12">
+                    <label class="slds-form-element__label" for="select-02">Select Label</label>
+                    <div class="slds-form-element__control">
+                    <div class="slds-select_container">
+                    <select class="slds-select" id="select-02">
+                    <option value="">Select…</option>
+                    <option>Option One</option>
+                    <option>Option Two</option>
+                    <option>Option Three</option>
+                    </select>
+                    </div>
+                    </div>
+                    </div>
+
+                    <div class="slds-col slds-size_3-of-12">
+                        <label class="slds-form-element__label" for="select-03">Select Label</label>
+                        <div class="slds-form-element__control">
+                        <div class="slds-select_container">
+                        <select class="slds-select" data-my-id="select-03" onchange={handleonchange} >
+                        <option value="">Select…</option>
+                        <option value="true">Option One</option>
+                        <option>Option Two</option>
+                        <option>Option Three</option>
+                        </select>
+                        </div>
+                        </div>
+                        </div>
+
+                        <div class="slds-col slds-size_3-of-12">
+                            <label class="slds-form-element__label" for="select-04">Select Label</label>
+                            <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                            <select class="slds-select" id="select-04">
+                            <option value="">Select…</option>
+                            <option>Option One</option>
+                            <option>Option Two</option>
+                            <option>Option Three</option>
+                            </select>
+                            </div>
+                            </div>
+                            </div>
+                </div>
+
+                </div>
+            </lightning-accordion-section>
+            </lightning-accordion>
+</template>

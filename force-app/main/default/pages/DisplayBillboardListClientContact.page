@@ -1,0 +1,96 @@
+<apex:page controller="DisplayBillboardListClientContactCon" sidebar="false" readOnly="true" >
+    <apex:form >
+        <apex:pageBlock title="Billboards View StoreFront">
+            <apex:pageblockTable value="{!BillboardList}" var="item">
+                <table>
+                    <tr width = "100%" >
+                        <td >
+                            <apex:column headerValue="BB #">
+                                
+                                <apex:outputLink tabindex="tab1" value="/apex/BillboardDetailPage?id={!Item.Id}">{!Item.Name}</apex:outputLink>
+                                
+                            </apex:column>
+                        </td>
+                    </tr>
+                    <br/> <br/> <br/> <br/> <br/>  <br/> <br/>
+                    <tr>
+                        <apex:column headerValue="Details">
+                            <table>
+                                <!-- <tr>
+<td style="font-weight:bold;">BB # :</td>
+<td><apex:outputLink tabindex="tab1" value="/apex/BillboardDetailPage?id={!Item.Id}">{!Item.Name}</apex:outputLink></td>
+
+</tr>-->
+                                <tr>
+                                    <td style="font-weight:bold;">Title :</td>
+                                    <td>{!item.Title__c}</td>
+                                </tr>
+                                 <tr>
+                                    <td style="font-weight:bold;">Status :</td>
+                                    <td>{!item.Billboard_Status__c}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;" >Vendor :</td>
+                                    <td>{!item.BB_Vendor__r.name}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">PMT :</td>
+                                    <td>{!item.PMT__c}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;" >Expiration Date :</td>
+                                    <td>{!item.Expiration_Date__c}</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td style="font-weight:bold;">Location :</td>
+                                    <td>{!item.Location__c}</td>
+                                </tr>
+                                <tr>
+                                    <td >Illumination :</td>
+                                    <td>{!item.Illumination__c}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">Latitude :</td>
+                                    <td>{!item.Latitude__c}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">Longitude :</td>
+                                    <td>{!item.Longitude__c}</td>
+                                </tr>
+                            </table>
+                        </apex:column>
+                        
+                        <!-- <apex:repeat value="{!contentVerMap[item.Id]}" var="photo" >
+<apex:column headerValue="{!$ObjectType.Billboard__c.Fields.Photo_1_New__c.Label}">
+<apex:image  value="/sfc/servlet.shepherd/version/download/{!photo}" width="200" height="100" alt="No Image"/>
+</apex:column> 
+</apex:repeat> -->
+                        
+                        
+                        
+                        <apex:column headerValue="{!$ObjectType.Billboard__c.Fields.Photo_1_New__c.Label}">
+                           
+                                <apex:repeat value="{!contentVerMap[item.Id]}" var="ss" rows="1" first="0">
+                                    <div class="slds-col">
+                                     <span> <apex:image id="theImage1" value="/sfc/servlet.shepherd/version/download/{!ss}" width="200" height="100" alt="No Image"/> </span>  
+                                    </div>
+                                </apex:repeat>
+                        </apex:column>
+                        
+                           <apex:column headerValue="{!$ObjectType.Billboard__c.Fields.Photo_2_New__c.Label}">
+                           
+                                <apex:repeat value="{!contentVerMap[item.Id]}" var="ss" rows="1" first="1">
+                                    <div class="slds-col">
+                                     <span> <apex:image id="theImage1" value="/sfc/servlet.shepherd/version/download/{!ss}" width="200" height="100" alt="No Image"/> </span>  
+                                    </div>
+                                </apex:repeat>
+                        </apex:column>
+                        
+                        
+                    </tr>
+                </table>
+            </apex:pageblockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

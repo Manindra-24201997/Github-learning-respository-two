@@ -1,0 +1,419 @@
+<aura:component controller="Custom_Reports_LC_Class" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="JobStatusList" type="List" />   
+    <aura:attribute name="ResultsList" type="object"/>    
+    <aura:attribute name="JobTypeSelect" type="string"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <lightning:card>   
+        <aura:set attribute="title">
+            <lightning:icon iconName="standard:product" size="medium"/>
+            <label  style="font-size:20px !important;font-weight:bold !important;margin-top:70px !important;margin-left: 5px;">Name Tag/Business Card Report</label>
+        </aura:set>
+    </lightning:card>
+    
+    <lightning:card>          
+        <aura:set attribute="title">          
+            
+        </aura:set>    
+        
+        <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="Search">   
+            <lightning:accordionSection name="Search" label="Search"  class="slds-card" >
+                
+                <div>
+                    <lightning:layout multipleRows="true">  
+                        <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                            <lightning:select aura:id="Job_status" name="Job_status" label="Status" >
+                                <aura:iteration items="{!v.JobStatusList}" var="Listitem">
+                                    <option value="{!Listitem}">{!Listitem}</option> 
+                                </aura:iteration>
+                            </lightning:select>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                            <lightning:select aura:id="Job_Type" name="Job_Type" label="Job Type" >
+                                <option value="Store Business Card">Store Business Card</option>
+                                <option value="Corporate Business Card">Corporate Business Card</option>
+                                <option value="Corporate Office Nameplate">Corporate Office Nameplate</option>
+                                <option value="Name Tag">Name Tag</option>
+                                <option value="CMN">CMN</option>                        
+                            </lightning:select>
+                        </lightning:layoutItem>
+                        <lightning:layoutItem class="slds-align_absolute-center" size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">
+                            <lightning:button variant="brand" label="Search" title="Search" onclick="{! c.handleSearch }" />
+                        </lightning:layoutItem>
+                    </lightning:layout>
+                </div> 
+            </lightning:accordionSection>
+        </lightning:accordion>
+    </lightning:card>
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+    </aura:if> 
+    <lightning:card>             
+        <aura:set attribute="title">          
+            
+        </aura:set>
+        
+        <aura:set attribute="actions">  
+            <aura:if isTrue="{!!empty(v.ResultsList)}">
+                <lightning:button label="Export to CSV" onclick="{!c.downloadCsv}"/>
+            </aura:if>
+        </aura:set>    
+        
+        <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="Results">   
+            <lightning:accordionSection name="Results" label="Results"  class="slds-card" >
+                
+                    
+                <aura:if isTrue="{!v.JobTypeSelect=='Name Tag'}"> 
+                    <aura:if isTrue="{!empty(v.ResultsList)}">
+                        <center style="padding-bottom:10px;font-size: 15px;"><b>No records found for the search criteria</b></center>
+                        <aura:set attribute="else">
+                            <center style="padding-bottom:10px;font-size: 15px;"><b>Name Tag Report</b></center>
+                            <div>
+                                <table width="100%" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead >
+                                        <tr>
+                                            <th width="20%" style="text-align:left"><b>Store Name</b></th>
+                                            <th width="20%" style="text-align:left"><b>Title</b></th>
+                                            <th width="20%" style="text-align:left"><b>Name</b></th>
+                                            <th width="20%" style="text-align:left"><b>Year Of Hire</b></th>
+                                            <th width="20%" style="text-align:left"><b>Logo</b></th>
+                                        </tr>                    
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.ResultsList}" var="ResultListitem">
+                                            <tr>
+                                                <td width="20%" style="text-align:left" valign="top" >
+                                                    {!ResultListitem.job.JS_Client__r.Client_Code__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsTitle.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsName.Description__c} &nbsp;
+                                                    {!ResultListitem.jobspecsStore.Description__c}
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsYearofhire.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsLogo.Description__c}
+                                                    <aura:if isTrue="{!ResultListitem.jobspecsLogo2.Description__c!=null}">
+                                                        {!ResultListitem.jobspecsLogo2.Description__c}
+                                                    </aura:if>
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.JobTypeSelect=='Corporate Office Nameplate'}">         
+                    <aura:if isTrue="{!empty(v.ResultsList)}">
+                        <center style="padding-bottom:10px;font-size: 15px;"><b>No records found for the search criteria</b></center>
+                        <aura:set attribute="else">
+                            <center style="padding-bottom:10px;font-size: 15px;"><b>Corporate Office Nameplate</b></center>
+                            <div>
+                                <table width="100%" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead >
+                                        <tr>
+                                            <th width="20%" style="text-align:left"><b>Name</b></th>
+                                            <th width="20%" style="text-align:left"><b>Title</b></th>
+                                            <th width="20%" style="text-align:left"><b>Year Of Hire</b></th>
+                                            <th width="20%" style="text-align:left"><b>Building</b></th>
+                                            <th width="20%" style="text-align:left"><b>Nameplate Type</b></th>
+                                        </tr>                    
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.ResultsList}" var="ResultListitem">
+                                            <tr>
+                                                <td width="20%" style="text-align:left" valign="top" >
+                                                    {!ResultListitem.jobspecsName.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsTitle.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsYearofhire.Description__c} 
+                                                </td>
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsBuilding.Description__c}
+                                                    <br/>
+                                                </td> 
+                                                <td width="20%" style="text-align:left" valign="top">
+                                                    {!ResultListitem.jobspecsNameplateType}
+                                                    <br/>
+                                                </td> 
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.JobTypeSelect=='Corporate Business Card'}">  
+                    <aura:if isTrue="{!empty(v.ResultsList)}">
+                        <center style="padding-bottom:10px;font-size: 15px;"><b>No records found for the search criteria</b></center>
+                        <aura:set attribute="else">
+                            <center style="padding-bottom:10px;font-size:15px;"><b>Corporate Business Card Report</b></center>
+                            <div>
+                                <table width="100%" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead >                     
+                                        <tr>
+                                            <th width="8.33%" style="text-align:left;"><b>Department</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Name</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Title</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Company</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Address</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Phone</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Fax</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Email</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Mobile</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Logo</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Website</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>ICE Chat</b></th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.ResultsList}" var="item">
+                                            <tr>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsDept.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsName.Description__c}
+                                                    <br/>
+                                                </td>
+                                                
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsTitle.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsCompany}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsAddress}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    
+                                                    {!item.jobspecsPhone.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    
+                                                    {!item.jobspecsFax.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsEmail.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsMobile.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsLogo1}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsWebsite}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsLogo.Description__c}
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+                <aura:if isTrue="{!v.JobTypeSelect=='Store Business Card'}">  
+                    <aura:if isTrue="{!empty(v.ResultsList)}">
+                        <center style="padding-bottom:10px;font-size: 15px;"><b>No records found for the search criteria</b></center>
+                        <aura:set attribute="else">
+                            <center style="padding-bottom:10px;font-size: 15px;"><b>Store Business Card Report</b></center>
+                            <div>
+                                <table width="100%" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead >                     
+                                        <tr>
+                                            <th width="13%" style="text-align:left;"><b>Name</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Title</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Address</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>City</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>State</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Zip</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Phone</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Fax</b></th>
+                                            <th width="12%" style="text-align:left;"><b>Email</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Logo</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Website</b></th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.ResultsList}" var="item">
+                                            <tr>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsName.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsTitle.Description__c}
+                                                    <br/>
+                                                </td>
+                                                
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsAddress.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsCity.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsState.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    
+                                                    {!item.jobspecsZip.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    
+                                                    {!item.jobspecsPhone.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsFax.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsEmail.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsLogo.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.jobspecsWebsite.Description__c}
+                                                    <br/>
+                                                </td>                           
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>   
+                <aura:if isTrue="{!v.JobTypeSelect=='CMN'}">  
+                    <aura:if isTrue="{!empty(v.ResultsList)}">
+                        <center style="padding-bottom:10px;font-size: 15px;"><b>No records found for the search criteria</b></center>
+                        <aura:set attribute="else">
+                            <center style="padding-bottom:10px;font-size: 15px;"><b>CMN Form</b></center>
+                            <div>
+                                <table width="100%" class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead > 
+                                        <tr>
+                                            <th colspan="2"></th>
+                                            <th colspan="5">Flyer</th>
+                                            <th colspan="5">Banner</th>
+                                        </tr>
+                                        <tr>
+                                            <th width="8.33%" style="text-align:left;"><b>Store</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Name</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Name of Event</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Date</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Time</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Event Details</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Special Details</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Name of Event</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Date</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Time</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Event Details</b></th>
+                                            <th width="8.33%" style="text-align:left;"><b>Special Details</b></th>
+                                        </tr> 
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.ResultsList}" var="item">
+                                            <tr>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.ClientCode}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.Clientname}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNFlyerNameofEvent.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNFlyerDate.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNFlyerTime.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNFlyerEventDetails.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNFlyerSpecialDetails.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNBannerNameofEvent.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNBannerDate.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNBannerTime.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNBannerEventDetails.Description__c}
+                                                    <br/>
+                                                </td>
+                                                <td width="8.33%" style="text-align:left" valign="top">
+                                                    {!item.CMNBannerSpecialDetails.Description__c}
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </aura:set>
+                    </aura:if>
+                </aura:if>
+            </lightning:accordionSection>
+        </lightning:accordion>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Material Media Type --></label>
+    <name>Material_Media_Type__c</name>
+    <picklistValues>
+        <masterLabel>Backlit</masterLabel>
+        <translation><!-- Backlit --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Banner</masterLabel>
+        <translation><!-- Banner --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Fabric</masterLabel>
+        <translation><!-- Fabric --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Foam Board</masterLabel>
+        <translation><!-- Foam Board --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Ink</masterLabel>
+        <translation><!-- Ink --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Lamination</masterLabel>
+        <translation><!-- Lamination --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Magnetic</masterLabel>
+        <translation><!-- Magnetic --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Paper</masterLabel>
+        <translation><!-- Paper --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Polyester</masterLabel>
+        <translation><!-- Polyester --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tape</masterLabel>
+        <translation><!-- Tape --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Velcro</masterLabel>
+        <translation><!-- Velcro --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Vinyl</masterLabel>
+        <translation><!-- Vinyl --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

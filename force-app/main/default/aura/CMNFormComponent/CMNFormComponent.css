@@ -1,0 +1,107 @@
+.THIS .scrollerSize{
+    height: 100rem; 
+}
+
+.THIS .scrollerSizeMobile{
+    height: 40rem; 
+}
+
+.THIS .slds-accordion__summary-action {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+    background: #e2e4e6  !important;
+    line-height: 1.675rem  !important;
+    padding: 5px  !important;
+    font-size: 1.1em !important;
+    color: darkslategrey !important;
+}
+.THIS .buttonsclass
+{
+    margin-top: 26px !important;
+}
+
+.THIS .slds-card__body
+{
+    margin-top: -1.25rem !important;
+}
+
+
+.THIS .slds-accordion__section {
+    padding: 0.65rem !important;
+}
+
+.THIS .slds-table td {
+    padding: .5rem .5rem !important;
+}
+
+.THIS slds-card cStoreFront
+{
+    padding: .5rem .5rem .5rem .5rem !important;
+    background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgba(32, 92, 159, 0), rgb(32, 92, 159));
+}
+
+.THIS .loading {
+    background: transparent url('http://loading.gif') center no-repeat;
+    
+}
+
+.THIS .CMNBannerCls
+{
+    background-image: url('../resource/BannerCMNForm/BannerCMNForm.PNG');
+    background-repeat:no-repeat;
+    height:400vw;
+    width:50vw;
+    position: absolute;
+    background-size: contain;
+    
+}
+
+@font-face {
+    font-family: 'AGBookTTBol';
+    src: url('../resource/CMNFonts/CMNFonts/AGBookTTBol.ttf');
+}
+
+@font-face {
+    font-family: 'AGBookTTIta';
+    src: url('../resource/CMNFonts/CMNFonts/AGBookTTIta.ttf');
+}
+
+@font-face {
+    font-family: 'AGBookTTLig';
+    src: url('../resource/CMNFonts/CMNFonts/AGBookTTLig.ttf');
+}
+
+@font-face {
+    font-family: 'AGBookTTMed';
+    src: url('../resource/CMNFonts/CMNFonts/AGBookTTMed.ttf');
+}
+
+@font-face {
+    font-family: 'AGBookTTReg';
+    src: url('../resource/CMNFonts/CMNFonts/AGBookTTReg.ttf');
+}
+
+.THIS .slds-card__body
+{
+        height: 200% !important;
+}
+
+.THIS .slds-checkbox_on
+{
+    display: none !important;
+}
+
+.THIS .slds-checkbox_off
+{
+    display: none !important;
+}
+
+.THIS .slds-accordion__summary
+{
+    margin-top: 15px;
+    margin-bottom: 18px;
+    margin-left: 3px;
+    margin-right: 3px;
+}

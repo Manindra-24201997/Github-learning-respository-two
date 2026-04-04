@@ -1,0 +1,11 @@
+<template>
+<lightning-card title="lwc for loop conditional check parent cmp">
+
+    <template for:each={fruits} for:item=m>
+        <c-lwc_conditional_check_for_loop_child_cmp key={m} ismango={m}></c-lwc_conditional_check_for_loop_child_cmp>
+        <template if:true={ismango}>
+            {m}
+        </template>
+    </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,323 @@
+<apex:page controller="StatusReportSearchController"   sidebar="true" docType="html-5.0" standardStylesheets="true" showHeader="false" applyBodyTag="false" applyHtmlTag="false" readOnly="true">
+    
+    <apex:slds />
+    <apex:form html-novalidate="novalidate">
+        <style>
+            .rotate {
+            float:left;
+            width: 50px;
+            height: 95px
+            top: 300px;
+            border-style: none;
+            valign : bottom;
+            
+            /* Safari */
+            -webkit-transform: rotate(-90deg);
+            
+            /* Firefox */
+            -moz-transform: rotate(-90deg);
+            
+            /* IE */
+            -ms-transform: rotate(-90deg);
+            
+            /* Opera */
+            -o-transform: rotate(-90deg);
+            
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+            margin: 20px 20px 20px 20px !important;
+            }
+            
+            .tablecls
+            {
+            font-style: Arial !important;
+            }
+            
+            body
+            {
+            background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+            // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+            //background-image:none !important;
+            //background-color:#D7D7D7 !important;
+            background-repeat: repeat-x;
+            background-position: left top;
+            background-attachment: fixed; 
+            margin:0px !important;
+            font-family: Arial !important;
+            }
+            
+            
+            .customImage{ height: 10px; width: 10px; }
+            
+            .pbHeader
+            {
+            background: white !important;
+            }
+            
+            body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+            {
+            background: white;
+            }
+            
+            .bPageBlock 
+            {
+            border-top: 0px;
+            }
+            
+        </style>
+        
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>jQuery UI Datepicker - Default functionality</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+        <link rel="stylesheet" href="/resources/demos/style.css"/>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        $( function() {
+            $( "#promoDueDt1" ).datepicker();
+        } );
+        
+        $( function() {
+            $( "#promoDueDt2" ).datepicker();
+        } );
+        </script>
+        
+        <apex:includeLightning />
+        <!--Lightning Container-->
+        <div  id="LightningContainer"/>
+        <apex:outputPanel id="scriptval">
+            <script type="text/javascript">
+            //get account Id from URL
+            function myFunction(){
+                var accountId = "{!ReturnValue}";
+                // alert('acc id === '+accountId);
+                //Create Lightning Component
+                $Lightning.use("c:NewExportApp", function() {
+                    $Lightning.createComponent("c:NewExportCmp", 
+                                               { "NewrecordIds" : accountId }, //Pass Parameter
+                                               "LightningContainer", function(component) {
+                                                   console.log('Component created');
+                                               });
+                });
+            }
+            //The below displays return value only when we clicks another button.
+            function displaySeasonJS()
+            {
+                alert('in Javascript function displaySeasonJS() - theSeasonIs is - ' + theSeasonIs);
+            }
+            </script>
+        </apex:outputPanel>
+        
+        <div class="slds"> 
+            <div style="background-color:#F3F2F2;height:40px; padding-top:14px; color:#333;font-size:18px;font-weight:bold;padding-left:10px;">
+                <h3 class="slds-section-title"><b>&nbsp;Status Report</b></h3>
+            </div>
+            <apex:pageblock title="Search">
+                <table>
+                    <tr>
+                        <td style="font-weight: bold; align: left; valign: bottom;width:100px;color:black;">
+                            {!$ObjectType.Job__c.Fields.Status__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap;">
+                            <apex:selectList id="status" value="{!StatusString }" size="1" style="width: 185px;white-space:nowrap;height:25px;" >
+                                <apex:selectOptions value="{!jobStatus}"></apex:selectOptions>
+                            </apex:selectList>  
+                        </td>
+                        <td style="font-weight: bold;width:120px;white-space:nowrap;color:black;">
+                            {!$ObjectType.Job__c.Fields.Campaign__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="campg" value="{!strCampaignName}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!Campaigns}"></apex:selectOptions>
+                            </apex:selectList>
+                        </td>
+                        <td style="width:100px;font-weight: bold; white-space: nowrap;color:black;">
+                            {!$ObjectType.Job__c.Fields.JS_Client__c.Label}
+                        </td>
+                        <td style="width: 10px; white-space: nowrap;">
+                            <apex:selectList id="client" value="{!strClientName}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:actionSupport event="onchange" rerender="clientCon"/>
+                                <apex:selectOptions value="{!Clients}"></apex:selectOptions>
+                            </apex:selectList> 
+                        </td>
+                        <td style="font-weight: bold; width:120px;white-space:nowrap;color:black;">
+                            {!$ObjectType.Job__c.Fields.Dummy_Picklist_2__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="Depart" value="{!DepartmentString}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!Departments}"></apex:selectOptions>
+                            </apex:selectList> 
+                        </td>
+                        <br/>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold; width:120px;white-space:nowrap;color:black;">
+                            {!$ObjectType.Job__c.Fields.Dummy_Picklist_3__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="JT" value="{!JobTypeString}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!JobType}"></apex:selectOptions>
+                            </apex:selectList>  
+                        </td>
+                        <td style="font-weight: bold;width:120px;white-space:nowrap">
+                            Created By
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="users" value="{!strUsers}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!users}"></apex:selectOptions>
+                            </apex:selectList>
+                        </td>
+                        <td style="font-weight: bold;width:120px;white-space:nowrap">
+                            {!$ObjectType.Job__c.Fields.JS_Client_Contact__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap" >
+                            <apex:selectList id="clientCon" value="{!strClientContactName}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!ClientContacts}"></apex:selectOptions>
+                            </apex:selectList>
+                        </td>
+                        <td style="font-weight: bold;width:120px;white-space:nowrap">
+                            Owned By
+                        </td>
+                        <td style="width: 280px;white-space:nowrap">
+                            <apex:selectList id="owner" Value="{!Owner}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!users}"></apex:selectOptions>
+                            </apex:selectList> 
+                        </td>  
+                    </tr>
+                    
+                    <tr> 
+                        <td style="font-weight: bold; align: left; valign: bottom;width:100px;color:black;">
+                            {!$ObjectType.Job__c.Fields.Job_Timing_Status__c.Label}
+                        </td>
+                        <td style="width: 280px;white-space:nowrap;">
+                            <apex:selectList id="timing" Value="{!Timing}" size="1" style="width: 185px;white-space:nowrap;height:25px;">
+                                <apex:selectOptions value="{!timingval}"></apex:selectOptions>
+                            </apex:selectList>                             
+                        </td>
+                    </tr>
+                    <tr>
+                        
+                        <td colspan="3" style="text-align: right; padding-top: 20px;">
+                            <apex:commandButton value="Search" action="{!searchjobds}"  reRender="results" status="searchStatus" />
+                            <apex:actionStatus startText="Searching.." id="searchStatus"/>
+                        </td>
+                    </tr>
+                </table>
+            </apex:pageblock>
+            
+            <apex:pageBlock id="results" title="Results">
+                <div width="100%" align="right">
+                    <apex:commandButton action="{!PrintReportChannelMarketing}"  value="Print Result"  style="align:right;" rendered="{!CNWrapper.size != 0}" styleClass="slds-button slds-button--neutral"/>
+                </div>     
+                <apex:repeat value="{!CNWrapper}" var="cnw" >
+                    <div > 
+                        <div>  
+                            <table width="100%" style="page-break-inside: avoid; ">
+                                <tr>  
+                                    <th width="1%">&nbsp;</th>
+                                    <!-- <th width="10%" style="text-align:justify;font-size:14px;vertical-align:Top !important;"><b>{!$ObjectType.Job__c.Fields.Job_Auto_Number__c.Label}</b></th>-->
+                                    <th width="23%" style="text-align:left;font-size:14px;"><b>{!$ObjectType.Job__c.Fields.Name.Label}</b><br/><b>Job Description</b></th>
+                                    <th width="6%" style="text-align:left;padding-right:40px;font-size:14px;"><b>Delivery</b></th>
+                                    <th width="6%" style="text-align:left;padding-right:40px;font-size:14px;"><b>Timing Status</b></th>  
+                                    <th width="11%" style="text-align:left;padding-right:40px;font-size:14px;"><b>Next Task</b><br/><b>Task Due Date</b></th> 
+                                    <th width="35%" style="text-align:left;font-size:14px;vertical-align:Top !important;"><b>Status Notes</b></th>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <hr />
+                                    </td>
+                                </tr>
+                            </table> 
+                            <table width="100%" style="page-break-inside: avoid;">
+                                <tr><td><b><apex:outputText value="{!cnw.strCampaignName}" style="font-size:16px;font-weight:bold;font-color:#0000FF;page-break-inside: avoid;"/></b></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="7">
+                                        <hr color="black"/>
+                                    </td>
+                                </tr>
+                            </table> 
+                            <br/>
+                        </div>  
+                        
+                        <div style="page-break-inside: avoid;" class = "tablecls">
+                            <table width="100%" style="page-break-inside: avoid;"> 
+                                
+                                <apex:repeat value="{!cnw.jWrapper}" var="child" >
+                                    
+                                    <tr style="page-break-inside: avoid;"> 
+                                        <td width="1%" style="text-align:left;page-break-inside: avoid;font-size:14px;" valign="top">
+                                            <apex:outputtext value="{!child.Count}"/> <br/>
+                                        </td>
+                                        <!-- <td width="10%" style="text-align:left;page-break-inside: avoid;font-size:14px;" valign="top">
+<apex:outputText value="{!child.job.Job_Auto_Number__c}"/><br/>
+</td>-->
+                                        <td width="23%" style="text-align:left;page-break-inside: avoid;font-size:14px;" valign="top">
+                                            <apex:outputText value="{!child.job.Name}"/><br/>
+                                            <apex:outputText value="{!child.job.Job_Description__c}"/>
+                                        </td>
+                                        <td width="7%" style="text-align:left;page-break-inside: avoid;font-size:14px;" valign="top">
+                                            
+                                            <apex:repeat value="{!child.jobTasks2}" var="jobTasks2" >
+                                                <apex:outputText value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(jobTasks2!=null,true,false)}">
+                                                    <apex:param value="{!if(jobTasks2!=null,jobTasks2,'-')}"/> </apex:outputText>
+                                                <apex:outputText value=" " rendered="{!if(jobTasks2== null,true,false)}" ></apex:outputText> 
+                                                <br/>
+                                            </apex:repeat> 
+                                        </td>
+                                        
+                                        <td width="6%" style="text-align:left;page-break-inside:avoid;font-size:14px;" valign="top">
+                                            <span style="{!if(child.job.Job_Timing_Status__c='On Track','background-color:limegreen;', if(child.job.Job_Timing_Status__c == 'At Risk','background-color:yellow;',if(child.job.Job_Timing_Status__c == 'Delayed','background-color:red;','')))}">  <apex:outputText value="{!child.job.Job_Timing_Status__c}"/></span><br/>
+                                        </td>
+                                        
+                                        <td width="11%" style="text-align:left;page-break-inside: avoid;font-size:14px;" valign="top">
+                                            <apex:repeat value="{!child.job.Job_Task__r}" var="gchildren" >
+                                                <apex:outputText value="{!gchildren.Name}"/> <br/>
+                                                <div style="width:100%;float:left;" align = "left">
+                                                    <apex:outputText value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(gchildren.Revised_Due_Date__c!=null,true,false)}">
+                                                        <apex:param value="{!if(gchildren.Revised_Due_Date__c!=null,gchildren.Revised_Due_Date__c,'-')}"/> </apex:outputText>
+                                                    <apex:outputText value=" " rendered="{!if(gchildren.Revised_Due_Date__c== null,true,false)}" ></apex:outputText> 
+                                                </div>
+                                            </apex:repeat>
+                                        </td>
+                                        
+                                        <td width = "35%" style="text-align:left;font-size:14px;" valign="top">
+                                            <div>
+                                                <apex:outputText value="{!left(child.JobStatusNotes,355)}" style="font-size:14px;page-break-inside: avoid;word-break: break-word !important;" escape="false"/>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                    <tr style="page-break-inside: avoid;">
+                                        <td width="100%" colspan="7" style="page-break-inside: avoid;">
+                                            <hr/> 
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </table>
+                        </div>
+                    </div> 
+                </apex:repeat>
+                <div width="100%"  >  
+                    <apex:outputText value="No Records to display" rendered="{!If(CNWrapper.size = null ||CNWrapper.size = 0 ,True,False)}" style="font-size:14px;font-weight:bold;font-color:#0000FF;"/> 
+                </div>
+                <div width="100%" align="right">  
+                    <apex:commandButton action="{!PrintReportChannelMarketing}"  value="Print Result"  style="align:right;" rendered="{!CNWrapper.size != 0}"/> 
+                    <apex:actionFunction name="af1" action="{!Result}" oncomplete="myFunction()" rerender="scriptval"/>
+                    <br/><br/>
+                    <apex:commandButton value="Call ActionFunction" rerender="displaySeason" onclick="af1()"/>
+                    
+                    <br/><br/>
+                    <apex:commandButton value="Call Javascript function" onclick="displaySeasonJS();"/>
+                    
+                </div>
+                
+            </apex:pageBlock> 
+        </div>
+    </apex:form>
+</apex:page>

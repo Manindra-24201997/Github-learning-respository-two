@@ -1,0 +1,6 @@
+/*external css file with .css file extension */
+ .custom-class{
+     font-size:20px;
+     color:red;
+     background-color:black;
+}

@@ -1,0 +1,32 @@
+<!-- This page is used for JS Report functionality, overriden with JS_Report_Tab-->
+<apex:page id="frm">
+   <apex:form >
+      <apex:pageBlock id="pb">
+         <table>
+            <tr>
+                <td> <apex:image url="{!$Resource.BigTop}" width="25" height="25"/> </td>
+                <td> <h3 style="color:#000000;font-size:1.2em;">Reports</h3> </td>
+            </tr>
+         </table> 
+         <br/>
+  
+         <apex:commandButton value="BB Maintenance Report" onClick="window.open('/apex/BBMaintReport');" reRender="frm" rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+         
+         <apex:commandButton value="BB Binder Report" onClick="window.open('/apex/BBBinderReport');" reRender="frm" rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+          
+         <apex:commandButton value="Loves Campaign Status Report" onClick="window.open('/apex/LovesCampaignStatusReport');" reRender="frm"  rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+         
+         <apex:commandButton value="Training Campaign Status Report" onClick="window.open('/apex/TrainingCampaignStatusReport');" reRender="frm"  rendered="{!IF($Profile.Name =='Training Department', true , false)}"/>
+          
+         <apex:commandButton value="Name Tag/Business Card Report" onClick="window.open('/apex/BusinessCardOrderReport');" reRender="frm" rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+          
+         <apex:commandButton value="MI Import" onClick="window.open('/apex/MaterialInventoryItemImport');" reRender="frm" rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+         
+           <apex:commandButton value="New Store Outdoor Report" onClick="window.open('/apex/NewStoreOutdoorReport');" reRender="frm" rendered="{!IF($Profile.Name !='Training Department', true , false)}"/>
+          
+         
+          
+     </apex:pageBlock>
+   </apex:form>
+</apex:page>
+<!-- End of Page -->

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>45.0</apiVersion>
+    <availableInTouch>false</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>old Used for Approve functionality of Estimate Line Item Object under Estimate tab of any Job.</description>
+    <label>ApproveEstimate</label>
+</ApexPage>

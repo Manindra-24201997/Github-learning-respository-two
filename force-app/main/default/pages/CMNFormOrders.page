@@ -1,0 +1,616 @@
+<apex:page controller="CMNFormOrdersController" sidebar="true" docType="html-5.0" applyBodyTag="False" standardStylesheets="false" applyHtmlTag="False" showHeader="False">
+    <style>
+        .sfdc_richtext img {
+            border: 0;
+            height: 30%;
+            width: 30%;
+        }
+        
+        .button2 {
+            background-color: #FFD700;
+            font-weight: bold;
+            color: Black;
+        }
+        
+        #ProductsTable img {
+            opacity: 50%;
+            width: 20% !Important;
+        }
+        
+        .required:after {
+            content: " *";
+            color: Red;
+            font: bold;
+        }
+        
+        .slds-theme--error {
+            color: white !important;
+        }
+        
+        .slds-checkbox .slds-checkbox--faux {
+            border: 2px solid lightslategrey !important;
+        }
+        
+        html,
+        html body {
+            overflow: auto;
+            -webkit-overflow-scrolling: auto;
+        }
+        
+        body {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: 0;
+        }
+    </style>
+
+    <style type="text/css">
+@font-face {
+            font-family: AGBookTTBol;
+            src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTBol.ttf')
+        }
+        
+        );
+    }
+    @font-face {
+        font-family: AGBookTTIta;
+        src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTIta.ttf')
+    }
+    );
+}
+@font-face {
+    font-family: AGBookTTLig;
+    src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTLig.ttf')
+}
+);
+
+}
+@font-face {
+    font-family: AGBookTTMed;
+    src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTMed.ttf')
+}
+);
+
+}
+@font-face {
+    font-family: AGBookTTReg;
+    src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTReg.ttf')
+}
+);
+
+}
+    </style>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+    <body>
+
+        <div class="slds">
+            <ul class="slds-list--vertical slds-has-dividers">
+                <li class="slds-list__item slds-large-size">
+                    <div class="slds-text-heading--large">
+                        <apex:image value="{!$Resource.LovesHeaderLogo}" />
+                    </div>
+                </li>
+            </ul>
+            <br/>
+
+            <apex:form html-novalidate="novalidate">
+                <apex:outputPanel >
+                    <apex:pageBlock id="block">
+
+                        <!-------------------------------------------------------- 1st Form----------------------------------------------------------------->
+
+                        <div align="center" draggable="false">
+
+                            <b> <apex:commandButton value="Back" action="{!Back}" rendered="{!ShowCMNForm}"  styleClass="slds-button slds-button--neutral"/>
+                         <apex:commandButton value="Next" action="{!CMNBMethod}" rendered="{!ShowCMNForm}" styleClass="slds-button slds-button--neutral" /></b>
+                        </div>
+
+                        <apex:outputPanel rendered="{!ShowCMNForm}" id="CMNForm">
+                            <br/>
+                            <br/>
+                            <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:95%;margin-left:3%;">
+                                <apex:pageMessages />
+                            </div>
+                            <br/>
+                            <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                <h3 class="slds-section-title"><b>&nbsp;CMN Flyer</b></h3>
+                            </div>
+
+                            <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--6-of-12">
+
+                                    <div class="slds-grid slds-wrap">
+
+                                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><b>Media Type :</b></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><b>Job Type :</b></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:OutputText value="{!CMNScheduletype.name}"></apex:outputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <div class="slds-form-element__control">
+                                                        First you will configure your event Flyer. Once you have entered your details you will then enter the details for your Banner on the next page.
+                                                        <br/> If you do not want a Flyer for your event, please type "No Flyer" in the fields.
+                                                        <br/> Items marked with an asterisk (<font style="color:red;">*</font>) are required.
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><b><font style="color: SteelBlue;font-size:16px;">Name of Event:</font></b></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNFlyerNameofEvent}" maxlength="36" onkeyup="document.getElementById('name').innerHTML = this.value;" styleClass="slds-input" html-placeholder="36 Characters with spaces">
+                                                                <apex:actionSupport event="onkeyup" rerender="CMNForm" />
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><font style="color: SteelBlue;font-size:16px;"><b>Date:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNFlyerDate}" maxlength="26" onkeyup="document.getElementById('Date').innerHTML = this.value;" styleClass="slds-input" html-placeholder="26 Characters with Spaces">
+                                                                <apex:actionSupport event="onkeyup" rerender="CMNForm" />
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><font style="color: SteelBlue;font-size:16px;"><b>Time:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNFlyerTime}" onkeyup="document.getElementById('Time').innerHTML = this.value;" styleClass="slds-input" html-placeholder="12:00 p.m. – 5:30 p.m.">
+                                                                <apex:actionSupport event="onkeyup" rerender="CMNForm" />
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Event Details:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:inputText maxlength="170" value="{!CMNFlyerEventDetails}" onkeyup="document.getElementById('Event').innerHTML = this.value;" styleClass="slds-input" html-placeholder="A short description of your event, if needed. 170 characters with spaces.">
+                                                            <apex:actionSupport event="onkeyup" rerender="CMNForm" />
+                                                        </apex:inputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Special Details:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:inputTextarea value="{!CMNFlyerSpecialDetails}" styleClass="slds-input" html-placeholder="Communicate details or questions about your request here. This content does not appear on your item."></apex:inputTextarea>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"></label>
+                                                    <div class="slds-form-element__control">
+                                                        <b>NOTICE:</b> EchoMedia will include the following statement regarding funds raised for your event: "All donations benefit our local CMN hospital."
+                                                        <br/>
+                                                        <br/> All flyers and banners will feature the Love's logo and CMN Hospitals logo. Flyers will display important event details including a brief description of the event.
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                        </div>
+
+                                        <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Item Preview</b></font></label>
+                                                    <div class="slds-form-element__control">
+
+                                                        <div style="width:99%;background:white;border:3px solid black;">
+                                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                                <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerHeaders.PNG')}" width="100%" height="60%" />
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                                <span id="name" style="font-family: AGBookTTBol;font-size:4vw;color:#57585A;line-height:1">{!CMNFlyerNameofEvent}</span>
+                                                                <br/>
+                                                                <span id="Date" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;line-height:2"><b>{!CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span id="Time" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;"><b>{!CMNFlyerTime}</b></span >    
+                                                                <br/>
+                                                                 <span id="Event" style="font-family:AGBookTTBol;font-size:1.8vw;color:#57585A;"><b>{!CMNFlyerEventDetails}</b></span >                 
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+
+                                                                <font style="font-family:AGBookTTReg;font-size:0.8vw;color:black;">  Proceeds benefit Children’s Miracle Network Hospitals® </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTReg;font-size:0.8vw;color:black;">     For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                                </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTIta;font-size:0.7vw;color:black;">        Not responsible for any accidents.</font>
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                               <table  width="100%">
+                                                               <tr>
+                                                                   <td style="font-family:AGBookTTBol;font-size:1vw;color:black;width:35%">
+                                                                      <b>    <apex:outputText value="{!clientcontact.Client__r.name}  {!clientcontact.Client__r.Client_Code__c}"/><br/>
+                                                                             <apex:outputText value="{!clientcontact.Client__r.Billing_Street__c }"/><br/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_City__c}, "/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_State__c}"/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_Postal_Code__c}"/><br/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Phone__c}"/></b>
+                                                                   </td>
+                                                                   <td>
+                                                                       <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerFooters.PNG')}" style="float:right;width:65%" />
+                                                                   </td>
+                                                               </tr>
+                                                               </table>
+
+                                                            </div>
+                                                             </div>
+
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                        </div>
+
+                                    </div>
+                                </main>
+                            </div>
+
+                        </apex:outputPanel>
+
+                        <!--------------------------------------------------------2nd Form----------------------------------------------------------------->
+                         <div align="center" draggable="false" >
+                                    <b> <apex:commandButton value="Back" action="{!BackToFlyer}" rendered="{!ShowCMNBannerForm}"  styleClass="slds-button slds-button--neutral"/>
+                                      <apex:commandButton value="Next" action="{!CMNConMethod}" rendered="{!ShowCMNBannerForm}" styleClass="slds-button slds-button--neutral" /></b>
+                        </div>
+
+                        <apex:outputPanel rendered="{!ShowCMNBannerForm}" id="CMNBForm">
+                            <br/>
+                            <br/>
+                              <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:95%;margin-left:3%;">
+                                    <apex:pageMessages />
+                               </div> 
+                            <br/>
+
+                            <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                <h3 class="slds-section-title"><b>&nbsp;CMN Banner</b></h3>
+                            </div>
+
+                            <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                <main class="slds-col slds-col--padded slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+
+                                    <div class="slds-grid slds-wrap">
+
+                                       <div class="slds-p-horizontal--small slds-size--1-of-3 slds-medium-size--2-of-6 slds-large-size--4-of-12">
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><b>Media Type :</b></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><b>Job Type :</b></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:OutputText value="{!CMNScheduletype.name}"></apex:outputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <div class="slds-form-element__control">
+                                                        If you do not want a Banner for your event, please type "No Banner" in the fields.
+                                                        <br/> Items marked with an asterisk (<font style="color:red;">*</font>) are required.
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><font style="color: SteelBlue;font-size:16px;"><b>Name of Event:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNBannerNameofEvent}" maxlength="36"  onkeyup="document.getElementById('NameB').innerHTML = this.value;" styleClass="slds-input" html-placeholder="36 Characters with spaces">
+                                                                 <apex:actionSupport event="onkeyup" rerender="CMNBForm"/>
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><font style="color: SteelBlue;font-size:16px;"><b>Time:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNBannerTime}"  onkeyup="document.getElementById('TimeB').innerHTML = this.value;" styleClass="slds-input" html-placeholder="12:00 p.m. – 5:30 p.m.">
+                                                                 <apex:actionSupport event="onkeyup" rerender="CMNBForm"/>
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label required"><font style="color: SteelBlue;font-size:16px;"><b>Date:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                            <apex:inputText value="{!CMNBannerDate}" maxlength="26" onkeyup="document.getElementById('DateB').innerHTML = this.value;" styleClass="slds-input" html-placeholder="26 Characters with Spaces">
+                                                             <apex:actionSupport event="onkeyup" rerender="CMNBForm"/>
+                                                            </apex:inputText>
+                                                        </apex:outputPanel>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Event Details:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:inputText value="{!CMNBannerEventDetails}" maxlength="60" onkeyup="document.getElementById('EventB').innerHTML = this.value;" styleClass="slds-input" html-placeholder="A short description of your event, if needed. 60 characters with spaces.">
+                                                            <apex:actionSupport event="onkeyup" rerender="CMNBForm"/>
+                                                        </apex:inputText>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Special Details:</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <apex:inputTextarea value="{!CMNBannerSpecialDetails}" styleClass="slds-input" html-placeholder="Communicate details or questions about your request here. This content does not appear on your item."></apex:inputTextarea>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                            <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"></label>
+                                                    <div class="slds-form-element__control">
+                                                        <b>NOTICE:</b> EchoMedia will include the following statement regarding funds raised for your event: "All donations benefit our local CMN hospital."
+                                                        <br/>
+                                                        <br/> All flyers and banners will feature the Love's logo and CMN Hospitals logo. Flyers will display important event details including a brief description of the event.
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                        </div>
+
+                                      <div class="slds-p-horizontal--small slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--8-of-12">
+
+                                              <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Item Preview</b></font></label>
+                                                   <div class="slds-form-element__control"   style="background-image:url('{!URLFOR($Resource.BannerCMNForm, 'BannerCMNForm.PNG')}');background-repeat:no-repeat;height:400vw;width:55vw;position: absolute;background-size: contain;">
+
+                                                        <div style="padding-left:17.6vw;padding-top:0.8vw;">
+                                                            <div style="position: absolute;">
+                                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:3vw;color:#57585A;line-height:2.5vw;"><b>{!CMNBannerNameofEvent}</b></span>
+                                                            </div>
+
+                                                            <div style="padding-top:5.8vw;position: absolute;">
+                                                                <span id="DateB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;line-height:2vmin;"><b>{!CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span id="TimeB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;"><b>{!CMNBannerTime}</b></span >
+                                                            </div>
+
+                                                            <div style="padding-top:8.5vw;position: absolute;">
+                                                                <span id="EventB" style="font-family: AGBookTTBol;font-size:1.1vw;color:#57585A;"><b>{!CMNBannerEventDetails}</b></span >                  
+                                                            </div>
+
+                                                        </div>  
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                        </div>
+
+                                    </div>
+                                </main>
+                            </div>
+
+                        </apex:outputPanel>
+
+                        <!--------------------------------------------------------3rd Form----------------------------------------------------------------->
+                         <div align="center" draggable="false" >
+                        <b> <apex:commandButton value="Back" action="{!CMNBMethod}" rendered="{!ShowCMNConForm}"  styleClass="slds-button slds-button--neutral"/>
+                            <apex:commandButton value="Place Order" action="{!order}"  rendered="{!ShowCMNConForm}" styleClass="slds-button slds-button--neutral"/></b>
+                        <br/>
+                        </div>
+
+                        <br/>
+
+                        <apex:outputPanel rendered="{!ShowCMNConForm}" id="CMNConForm">
+
+                         <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:95%;margin-left:3%;">
+                                    <apex:pageMessages />
+                               </div> 
+                                <br/> <br/>
+
+                            <div style="background-color:SteelBlue;color:white;width:95%;">
+                                <h3 class="slds-section-title"><b>&nbsp;CMN Confirmation</b></h3>
+                            </div>
+
+                             <div class="slds-grid slds-wrap">
+
+                                               <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--6-of-6 slds-large-size--12-of-12"> 
+
+                                                  <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--12-of-12">
+                                                            <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                                <label class="slds-form-element__label"><font style="color:Black;font-size:16px;"><b>Confirm your CMN order below</b></font></label>
+
+                                                            </div>
+                                                        </aside>
+                                                  </div>      
+
+                              <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                <main class="slds-col slds-col--padded slds-size--3-of-3 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+
+                                    <div class="slds-grid slds-wrap">
+
+                                      
+                                            <aside class="slds-col slds-size--2-of-3 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Item Preview</b></font></label>
+                                                    <div class="slds-form-element__control">
+
+                                                        <div style="width:99%;background:white;border:3px solid black;">
+                                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                                <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerHeaders.PNG')}" width="100%" height="60%" />
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                                <span id="name" style="font-family: AGBookTTBol;font-size:4vw;color:#57585A;line-height:1">{!CMNFlyerNameofEvent}</span>
+                                                                <br/>
+                                                                <span id="Date" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;line-height:2"><b>{!CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span id="Time" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;"><b>{!CMNFlyerTime}</b></span >    
+                                                                <br/>
+                                                                 <span id="Event" style="font-family:AGBookTTBol;font-size:1.8vw;color:#57585A;"><b>{!CMNFlyerEventDetails}</b></span >                 
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+
+                                                                <font style="font-family:AGBookTTReg;font-size:0.8vw;color:black;">  Proceeds benefit Children’s Miracle Network Hospitals® </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTReg;font-size:0.8vw;color:black;">     For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                                </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTIta;font-size:0.7vw;color:black;">        Not responsible for any accidents.</font>
+                                                            </div>
+
+                                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                               <table  width="100%">
+                                                               <tr>
+                                                                   <td style="font-family:AGBookTTBol;font-size:1vw;color:black;width:35%">
+                                                                      <b>    <apex:outputText value="{!clientcontact.Client__r.name}  {!clientcontact.Client__r.Client_Code__c}"/><br/>
+                                                                             <apex:outputText value="{!clientcontact.Client__r.Billing_Street__c }"/><br/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_City__c}, "/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_State__c}"/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Billing_Postal_Code__c}"/><br/>
+                                                                             <apex:outputText value=" {!clientcontact.Client__r.Phone__c}"/></b>
+                                                                   </td>
+                                                                   <td>
+                                                                       <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerFooters.PNG')}" style="float:right;width:65%" />
+                                                                   </td>
+                                                               </tr>
+                                                               </table>
+
+                                                            </div>
+                                                             </div>
+
+                                                    </div>
+                                                </div>
+                                            </aside>
+                                            
+                                              
+                                       
+                                           <aside class="slds-col slds-size--1-of-3 slds-medium-size--3-of-6 slds-large-size--6-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium" >
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Approved</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <div style="padding-top:15px;">
+                                                            <label class="slds-checkbox" >
+                                                                <apex:inputCheckbox value="{!FlyerApproved}" />   
+                                                                <span class="slds-checkbox--faux"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                         
+                                            <aside class="slds-col slds-size--2-of-3 slds-medium-size--4-of-6 slds-large-size--7-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;"><b>Item Preview</b></font></label>
+                                                    <div class="slds-form-element__control"   style="background-image:url('{!URLFOR($Resource.BannerCMNForm, 'BannerCMNForm.PNG')}');background-repeat:no-repeat;height:400vw;width:55vw;position: absolute;background-size: contain;">
+
+                                                         <div style="padding-left:17.7vw;padding-top:0.8vw;">
+                                                            <div style="position: absolute;">
+                                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:3vw;color:#57585A;line-height:2.5vw;"><b>{!CMNBannerNameofEvent}</b></span>
+                                                            </div>
+
+                                                            <div style="padding-top:6.1vw;position: absolute;">
+                                                                <span id="DateB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;line-height:2vmin;"><b>{!CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span id="TimeB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;"><b>{!CMNBannerTime}</b></span >
+                                                            </div>
+
+                                                            <div style="padding-top:8.5vw;position: absolute;">
+                                                                <span id="EventB" style="font-family: AGBookTTBol;font-size:1.1vw;color:#57585A;"><b>{!CMNBannerEventDetails}</b></span >                  
+                                                            </div>
+
+                                                        </div>  
+                                                    </div>
+                                                </div>
+                                            </aside>
+                                            
+                                             <aside class="slds-col slds-size--1-of-3 slds-medium-size--2-of-6 slds-large-size--5-of-12">
+                                                <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                    <label class="slds-form-element__label"><font style="color: SteelBlue;font-size:16px;padding-left:26px;"><b>Approved</b></font></label>
+                                                    <div class="slds-form-element__control">
+                                                        <div style="padding-left:26px;padding-top:15px;">
+                                                            <label class="slds-checkbox" >
+                                                                <apex:inputCheckbox value="{!BannerApproved}" />   
+                                                                <span class="slds-checkbox--faux"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </aside>
+
+                                        </div>
+                                </main>
+                                </div>
+                                
+                                
+                            </div>
+
+                        </apex:outputPanel>
+
+                    </apex:pageBlock>
+
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </body>
+
+    </html>
+
+</apex:page>

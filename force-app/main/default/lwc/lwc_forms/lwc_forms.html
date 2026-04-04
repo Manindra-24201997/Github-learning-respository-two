@@ -1,0 +1,48 @@
+<template>
+
+/********** lightning-record-view-form*************/
+<br/>
+<lightning-card title="lightning record view form">
+<lightning-record-view-form object-api-name={objectApiName} record-id={recordId}>
+<lightning-output-field field-name={nme}></lightning-output-field>
+<lightning-output-field field-name={clientname}></lightning-output-field>
+<lightning-output-field field-name={clientcontact}></lightning-output-field>
+<lightning-output-field field-name={status}></lightning-output-field>
+<lightning-output-field field-name={startdate}></lightning-output-field>
+<lightning-output-field field-name={schedulecalc}></lightning-output-field>
+</lightning-record-view-form>
+</lightning-card>
+
+/********** lightning-record-form*************/
+
+<lightning-card title="lightning record form fields mode - Read only">
+<lightning-record-form object-api-name={objectApiName} record-id={recordId} columns="1" fields={fields} 
+mode="readonly"  ></lightning-record-form>
+</lightning-card>
+
+<lightning-card title="lightning record form fields mode - view">
+<lightning-record-form object-api-name={objectApiName} record-id={recordId} columns="1" fields={fields}
+mode="view"  ></lightning-record-form>
+</lightning-card>
+
+<lightning-card title="lightning record form fields mode - edit">
+<lightning-record-form object-api-name={objectApiName} record-id={recordId} columns="1" fields={fields}
+mode="edit"  ></lightning-record-form>
+</lightning-card>
+
+
+/********** lightning-record-edit-view-form*************/
+
+<lightning-card title="lightning record edit form">
+<lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onsuccess={handleSuccess}>
+<lightning-input-field field-name={nme}></lightning-input-field>
+<lightning-input-field field-name={clientname}></lightning-input-field>
+<lightning-input-field field-name={clientcontact}></lightning-input-field>
+<lightning-input-field field-name={status}></lightning-input-field>
+<lightning-input-field field-name={startdate}></lightning-input-field>
+<lightning-input-field field-name={schedulecalc}></lightning-input-field>
+<lightning-button label="save" type="submit" variant="brand"></lightning-button>
+</lightning-record-edit-form>
+</lightning-card>
+
+</template>

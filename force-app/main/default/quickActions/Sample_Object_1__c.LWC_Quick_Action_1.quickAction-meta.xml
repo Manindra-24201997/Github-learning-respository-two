@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionSubtype>ScreenAction</actionSubtype>
+    <description>This approach is from youtube video.Below is the url :
+https://www.youtube.com/watch?v=BJaY0TOKAOU</description>
+    <label>LWC Quick Action 1</label>
+    <lightningWebComponent>lwc_quickactioncmp1</lightningWebComponent>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <type>LightningWebComponent</type>
+</QuickAction>

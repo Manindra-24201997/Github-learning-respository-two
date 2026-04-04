@@ -1,0 +1,63 @@
+<apex:page controller="MaterialInventoryItemImportController" tabStyle="Material_Inventory_Item__c">
+    <apex:form >
+    <apex:sectionHeader title="Import Material Inventory Items"/>
+        <apex:pagemessages />
+        <apex:pageBlock id="kk">
+        
+            <apex:pageBlockButtons location="bottom">
+                  <apex:commandButton value="Insert" action="{!saveme}"/>
+                  <apex:commandButton value="Cancel" action="{!cancelme}"/>
+                  <apex:commandButton value="Refresh" action="{!Refresh}"/>                 
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1" > 
+         
+            <apex:pageBlockSectionItem >
+                <apex:outputText > Select a File <br/> (Please Upload .CSV format only)</apex:outputText>
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString1}"/>
+            </apex:pageBlockSectionItem>
+                  <apex:pageBlockSectionItem >
+                     <apex:outputText > Click to Upload </apex:outputText>           
+                     <apex:commandButton value="Upload" action="{!importCSVFile}" status="csvstatus"> &nbsp;&nbsp;&nbsp; <b> {!csvAsString1}</b>
+                      <apex:actionStatus id="csvstatus">
+                                <apex:facet name="start">
+                                  <img src="/img/loading.gif" />
+                                </apex:facet>
+                      </apex:actionStatus>
+                 </apex:commandbutton> 
+                 </apex:pageBlockSectionItem>
+                 
+            </apex:pageBlockSection>
+           
+                
+        </apex:pageBlock>
+     <apex:pageBlock title="Records" rendered="{!recordsdisplay}">
+           <apex:pageblocktable value="{!miiList}" var="acc">
+             
+              <apex:column headerValue="Item Name">
+                 <apex:outputField value="{!acc.name}"/>
+              </apex:column>
+              
+              <apex:column headerValue="Mfg Item Number">
+                 <apex:outputField value="{!acc.Mfg_Item_Number__c }"/>
+              </apex:column>
+              
+              <apex:column headerValue="Qty On Shelf">
+                 <apex:outputField value="{!acc.Qty_On_Shelf__c}"/>
+              </apex:column>
+              
+              <apex:column headerValue="InventoryDate">
+                <apex:outputText value="{0,date, MM/dd/yyyy}">
+                    <apex:param value="{!acc.Inventory_Date__c}"/>
+                </apex:outputText>
+              </apex:column>  
+              
+        </apex:pageblocktable>
+     </apex:pageBlock>
+     
+     <apex:pageBlock rendered="{!recordinsert}">
+        <b>  {!Miilist.size} was successfully inserted </b>
+     </apex:pageBlock> 
+     
+     
+   </apex:form>
+</apex:page>

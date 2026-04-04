@@ -1,0 +1,25 @@
+<template>
+<lightning-card title="lwc constructor with dom element">
+/* Here in constructor also we written code for dom element but in lwc constructor we cannot add attributes to host element i.e., custom element.But if you click buttons it is working.Please check code. */
+<div class="slds-p-around_medium">
+<p><lightning-formatted-url value="https://developer.salesforce.com/docs/component-library/documentation/en/lwc/lwc.create_lifecycle_hooks_created" 
+    label="Visit lwc constructor salesforce document"></lightning-formatted-url></p>
+<p><lightning-formatted-url value="https://salesforcediaries.com/2019/12/12/constructor-in-lightning-web-component/" 
+label="Visit life cycle constructor"></lightning-formatted-url></p>
+<p><lightning-formatted-url value="https://salesforcediaries.com/2020/05/01/adding-or-removing-css-class-in-lightning-web-component-pragmatically/" 
+    label="Visit lwc with dom"></lightning-formatted-url></p>
+    <p><lightning-formatted-url value="https://salesforce.stackexchange.com/questions/349786/lwc-get-button-element-in-javascript-from-lwc" 
+        label="Visit setting property values in js"></lightning-formatted-url></p>
+</div>
+
+
+<div data-id="divblock" class="navBar">
+Manindra
+</div>
+<lightning-button variant="brand" label="class 1"  title="Primary action" onclick={handleClick1}
+class="slds-m-left_x-small"></lightning-button>
+<lightning-button variant="brand" label="class 2" title="Primary action" onclick={handleClick2}
+class="slds-m-left_x-small"></lightning-button>
+
+</lightning-card>
+</template>

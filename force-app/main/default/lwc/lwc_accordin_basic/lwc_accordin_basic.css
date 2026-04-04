@@ -1,0 +1,5 @@
+:host {
+    --slds-c-accordion-heading-text-color: red;
+    --slds-c-accordion-heading-color : yellow;
+    --slds-c-accordion-heading-font-size: 1.2rem
+  }

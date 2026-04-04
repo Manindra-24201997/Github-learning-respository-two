@@ -1,0 +1,69 @@
+.THIS  .tablecss {
+    line-height: 25px;
+}
+
+.THIS .Shptablecss {
+    line-height: 35px !important;
+}
+
+@media (min-width: 48em) {
+.THIS .slds-modal__container {
+    margin: 0 auto;
+    width: 75% !important;
+    max-width: 50rem !important;
+    min-width: 30rem !important;
+ }
+}
+
+.THIS .scrollerSize{
+    height:100rem;
+}
+.THIS .slds-accordion__summary-action {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+    background: #e2e4e6  !important;
+    line-height: 1.675rem  !important;
+    padding: 5px  !important;
+    font-size: 1.1em !important;
+    color: darkslategrey !important;
+}
+
+.THIS .slds-card__body
+{
+    margin-top: -1.25rem !important;
+}
+.THIS .slds-accordion__section {
+    padding: 0.65rem !important;
+}
+.THIS .slds-accordion__content{
+    margin-left:20px !important;
+    margin-right:20px !important;
+}
+.THIS .slds-truncate {
+    text-overflow: inherit;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+}
+
+.THIS .MobileMoreActions .slds-dropdown-trigger .slds-dropdown_left
+{
+    left:auto !important;
+    right:0 !important;
+    transform:translateX(0) !important;
+}
+
+.THIS .MobileMoreActions .slds-dropdown-trigger .slds-button
+{
+    line-height:1.5rem !important;
+}
+
+.THIS .slds-accordion__summary
+{
+    margin-top: 15px;
+    margin-bottom: 18px;
+    margin-left: 3px;
+    margin-right: 3px;
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Store Features --></label>
+    <name>Store_Features__c</name>
+    <picklistValues>
+        <masterLabel>Cat Scales</masterLabel>
+        <translation><!-- Cat Scales --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Cost Share</masterLabel>
+        <translation><!-- Cost Share --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Dog Park</masterLabel>
+        <translation><!-- Dog Park --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Factoring</masterLabel>
+        <translation><!-- Factoring --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Illumination</masterLabel>
+        <translation><!-- Illumination --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Land Lease</masterLabel>
+        <translation><!-- Land Lease --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Price Pack</masterLabel>
+        <translation><!-- Price Pack --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

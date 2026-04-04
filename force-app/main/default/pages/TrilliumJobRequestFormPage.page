@@ -1,0 +1,513 @@
+<apex:page controller="TrilliumJobRequestFormPageExt" sidebar="true" docType="html-5.0" applyBodyTag="False" standardStylesheets="false" applyHtmlTag="False" showHeader="False">
+
+    <style>
+        .sfdc_richtext img {
+            border: 0;
+            height: 30%;
+            width: 30%;
+        }
+        
+        .button2 {
+            background-color: #FFD700;
+            font-weight: bold;
+            color: Black;
+        }
+        
+        #ProductsTable img {
+            opacity: 50%;
+            width: 20% !Important;
+        }
+        
+         html,html body
+         {
+             overflow: auto;
+             -webkit-overflow-scrolling:auto;
+         }
+         body
+         {
+             position:absolute;left:0;right:0;top:0;bottom:0;
+             margin:0;
+         }
+         .required:after { content:" *";  color: Red;font:bold;}
+              
+    </style>
+    
+    
+    <style type = "text/css">
+        .ct {text-align:center;}     
+    </style>
+
+    <script>
+        function Hidetext(ele) {
+            ele.value = '(xxx)xxx-xxxx';
+        }
+    </script>
+
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+
+   
+   <body>
+   
+     <div class="slds">
+                  <ul class="slds-list--vertical slds-has-dividers">
+                       <li class="slds-list__item slds-large-size">  
+                            <div class="slds-text-heading--large"><apex:image value="{!$Resource.LovesHeaderLogo}" /></div> 
+                       </li>
+                  </ul><br/>
+   
+   
+    <apex:form html-novalidate="novalidate">
+        <apex:outputPanel >
+          
+          <apex:pageBlock id="block">
+
+                                <!--*****************************************************  Client Contact List  *************************************************-->
+
+                         <div align="center" draggable="false" >
+   
+                               <b> <apex:commandButton value="Back" action="{!Back}" rendered="{!ShowClientContacts}"  styleClass="slds-button slds-button--neutral"/>
+                                <apex:commandButton value="Next" action="{!MIMethod}" rendered="{!ShowClientContacts}" styleClass="slds-button slds-button--neutral"/></b>
+
+                        </div>
+
+                                <apex:outputPanel rendered="{!ShowClientContacts}">
+                                    
+                                <br/><br/>
+                                   
+                                <div style="background-color:SteelBlue;color:white;width:92%;margin-left:3%;">
+                               <h3 class="slds-section-title"><b>&nbsp;Client Contact List</b></h3></div>
+                               
+                               <br/>
+
+                               <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:92%;margin-left:3%;">
+                                    <apex:pageMessages />
+                               </div> 
+                                   
+                                
+                                    
+                                     <apex:pageBlockTable value="{!CCWrapperList}" var="ClientContact" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked" style="width:92%;margin-left:3%;">
+                                            
+                                                <apex:column headerValue="Action" >
+                                                     
+                                                     <label class="slds-checkbox">
+                                                        
+                                                         <apex:inputCheckbox value="{!ClientContact.Contactselect}" />  
+                                                        <span class="slds-checkbox--faux"></span>
+                                                       
+                                                      </label>
+                                                     
+                                                </apex:column>
+                                                
+                                                <apex:column headerValue="Name" >
+                                                    <apex:outputField value="{!ClientContact.ClientConWrap.Name}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;"/>
+                                                </apex:column>
+                                            
+                                             </apex:pageBlockTable>
+                                    
+                                    
+                                    
+                                    <!--   <table style="width:100%" class="slds-table slds-table--bordered">
+                                           <tr  class="slds-text-heading--label">
+                                               <th style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><b>Action</b></th>
+                                               <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Name</b></th>
+                                               
+                                           </tr>
+                                           <apex:repeat value="{!CCWrapperList}" var="ClientContact">
+                                           <tr>
+                                               <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><apex:inputCheckbox value="{!ClientContact.Contactselect}" /></td>
+                                               <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><apex:outputField value="{!ClientContact.ClientConWrap.Name}" /></td>
+                                              
+                                           </tr>
+                                           </apex:repeat>
+                                       </table>-->
+                                    
+                                </apex:outputPanel>
+
+                                <!--*****************************************************  Material Item List  *************************************************-->
+                            
+                             <div align="center" draggable="false" >
+
+                               <b> <apex:commandButton value="Back" action="{!ConListBack}" rendered="{!ShowMaterialItems}" styleClass="slds-button slds-button--neutral"/>
+                                <apex:commandButton value="Next" action="{!CombinedMethod}" rendered="{!ShowMaterialItems}" styleClass="slds-button slds-button--neutral"/></b>
+                                
+                              </div>  
+                                
+                               <apex:outputPanel rendered="{!ShowMaterialItems}">
+                                    
+                                <br/><br/>
+                                   
+                                <div style="background-color:SteelBlue;color:white;width:92%;margin-left:3%;">
+                               <h3 class="slds-section-title"><b>&nbsp;Material Item List</b></h3></div>
+                               
+                               <br/>
+
+                               <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:92%;margin-left:3%;">
+                                    <apex:pageMessages />
+                               </div> 
+                                   
+                                    <apex:outputPanel rendered="{!ShowMaterialItems}">
+                                            <apex:outputText Value="Item Search" style="font-weight:bold;font-color:white;font-size:16px;width:92%;margin-left:3%;"></apex:outputText><br/><br/>
+                                            <apex:inputText value="{!MaterialItemNameString}" onkeyup="camname()" styleClass="slds-input" style="width:92%;margin-left:3%;">
+                                                <apex:actionFunction name="camname" action="{!ShowItems}" reRender="ajaxrequest"/>   
+                                            </apex:inputText>
+                                        </apex:outputPanel> <br/><br/>
+                                    <apex:outputPanel id="ajaxrequest"> 
+                                   <!--   <apex:pageBlockTable value="{!MIWrapperList}" var="MI" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked" style="width:92%;margin-left:3%;">
+                                                
+                                            <apex:column headerValue="Action">
+                                               
+                                                 <label class="slds-checkbox">
+                                                        <apex:inputCheckbox value="{!MI.MISelect}"/>   
+                                                        <span class="slds-checkbox--faux"></span>
+                                                 </label>
+                                                
+                                            </apex:column>
+                                            
+                                            <apex:column headerValue="Name"  >
+                                                <apex:outputField value="{!MI.MIWrap.Name}"/>
+                                            </apex:column>
+                                            
+                                            <apex:column headerValue="Description">
+                                                <apex:outputField value="{!MI.MIWrap.Description__c}"/>
+                                            </apex:column>
+                                            
+                                            <apex:column headerValue="Photo"  >
+                                                <apex:outputField value="{!MI.MIWrap.File_Photo__c}"/>
+                                            </apex:column>
+                                        
+                                     </apex:pageBlockTable>-->
+                                     
+                                     
+                                     <table style="width:92%;margin-left:3%;" class="slds-table slds-table--bordered">
+                                           <tr  class="slds-text-heading--label">
+                                               <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Photo</b></th>
+                                               <th style="width:40%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Item Description</b></th>
+                                               <th style="width:10%;text-align:left;padding-left:20px;" class="slds-truncate"><b>Action</b></th>
+                                           </tr>
+                                           <apex:repeat value="{!MIWrapperList}" var="MI">
+                                              <tr>
+                                              
+                                               <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"> <!--apex:outputField value="{!MI.MIWrap.File_Photo__c}" />-->
+                                                    <apex:image id="theImage2" value="/sfc/servlet.shepherd/version/download/{!MI.ContentVersionId}" width="200" height="30" alt="No Image"/>
+                                               </td>
+                                               <td style="width:40%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                                       <b> <apex:outputField value="{!MI.MIWrap.Name}"/> </b> <br/>
+                                                       <apex:outputField value="{!MI.MIWrap.Description__c}"/>
+                                               </td>
+                                               
+                                               <td style="width:10%;text-align:left;padding-left:20px;" class="slds-truncate">
+                                                    <label class="slds-checkbox">
+                                                          <apex:inputCheckbox value="{!MI.MISelect}"/>
+                                                          <span class="slds-checkbox--faux"></span>
+                                                   </label>
+                                               </td>
+                                              
+                                           </tr>
+                                              
+                                           </apex:repeat>
+                                       </table>
+                                     
+                                     
+                                     
+                                    
+                                     </apex:outputPanel> 
+                                    
+                                     <!--  <table style="width:100%" class="slds-table slds-table--bordered">
+                                           <tr  class="slds-text-heading--label">
+                                               <th style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><b>Action</b></th>
+                                               <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Name</b></th>
+                                               <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Photo</b></th>
+                                               
+                                           </tr>
+                                           <apex:repeat value="{!MIWrapperList}" var="MI">
+                                           <tr>
+                                               <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><apex:inputCheckbox value="{!MI.MISelect}"/></td>
+                                               <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><apex:outputField value="{!MI.MIWrap.Name}"/></td>
+                                               <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"> <apex:outputField value="{!MI.MIWrap.File_Photo__c}" /></td>
+                                              
+                                           </tr>
+                                           </apex:repeat>
+                                       </table>-->
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                <!--*****************************************************  Combined List  *************************************************-->
+
+                                <div align="center" draggable="false" >
+
+
+                                 <b>   <apex:commandButton value="Back" action="{!MIListBack}"  rendered="{!ShowCombinedData}" styleClass="slds-button slds-button--neutral"/>
+                                    <apex:commandButton value="Place Order" action="{!OrderMethod}" rendered="{!ShowCombinedData}" styleClass="slds-button slds-button--neutral"/></b>
+
+                                </div>
+                                <br/>
+                                <br/>
+                                
+                                <apex:outputPanel rendered="{!ShowCombinedData}">
+                                
+                                 <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:92%;margin-left:3%;">
+                                    <apex:pageMessages />
+                               </div> 
+                                <br/>
+                                  <div style="background-color:SteelBlue;color:white;width:92%;margin-left:3%;">
+                                     <h3 class="slds-section-title"><b>&nbsp;Trillium Sales Order List</b></h3>
+                                  </div>
+                                
+                                <br/>
+                                <!--  <div style="float:right;">
+                                     <apex:commandButton value="Edit Address" action="{!Editaddress}" style="float:right;" styleClass="slds-button slds-button--neutral" /> 
+                                  </div>
+                                -->
+                                     <br/>
+                                <apex:variable var="rowNumber" value="{!0}" id="rn" >
+                                    <apex:pageBlockTable value="{!CombinedWrapperList}" var="CWrap" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked  slds-truncate" id="sec" style="width:92%;margin-left:3%;">
+
+                                        <apex:column headerValue="Client Contact" styleClass="slds-cell-wrap slds-cell-shrink slds-truncate" style="word-wrap: break-word;vertical-align:top;width:15%;">
+                                            <apex:outputField value="{!CWrap.CombinedClientContact.name}" />
+                                        </apex:column>
+
+                                       <apex:column headerValue="Material Item" styleClass="slds-cell-wrap slds-cell-shrink  slds-truncate" style="word-wrap: break-word;vertical-align:top;width:50%;" headerClass="ct">
+                                                         <apex:pageBlockTable value="{!CWrap.itemsList}" var="eachItem" align="top">     
+                                                            <apex:column headerValue="Name" style="word-wrap: break-word;width:40%;"  styleClass="slds-cell-wrap slds-cell-shrink slds-truncate">
+                                                                <apex:outputtext value="{!eachItem.mItem.name}"/>
+                                                             </apex:column>
+                                                             
+                                                              <apex:column headerValue="Max Quantity" styleClass="slds-cell-wrap slds-cell-shrink slds-truncate" style="word-wrap: break-word;width:25%;" headerClass="ct">
+                                                                 <center>    <apex:outputtext value="{!eachItem.mItem.Max_Qty__c}" /> </center> 
+                                                                </apex:column>
+                                                             <apex:column headerValue="Qty" style="word-wrap: break-word;width:35%;" styleClass="slds-cell-wrap slds-cell-shrink slds-truncate">
+                                                                 <apex:outputPanel id="QtyPnl">
+                                                                     <apex:inputText value="{!eachItem.enteredQty}" maxlength="2" style="width:35%">
+                                                                        <apex:actionSupport event="onchange" action="{!eachItem.checkQty}" reRender="QtyPnl" status="qtyStatus"/>
+                                                                    </apex:inputText><br/>
+                                                                    <apex:actionStatus id="qtyStatus">
+                                                                        <apex:facet name="stop">
+                                                                            <apex:outputText rendered="{!eachItem.showQtyErrorMsg}"> <font style="color:red;"> {!eachItem.ErrMsg}</font></apex:outputText>
+                                                                        </apex:facet>
+                                                                        <apex:facet name="start">
+                                                                             <img src="/img/loading.gif" />&nbsp;&nbsp; <b> Loading....... </b>
+                                                                        </apex:facet>
+                                                                    </apex:actionStatus>
+                                                                    
+                                                                 </apex:outputPanel>
+                                                                
+                                                             </apex:column>
+                                                         </apex:pageBlockTable>
+                                                    </apex:column>
+
+                                        <apex:column headerValue="Shipping Address"   styleClass="slds-cell-wrap slds-cell-shrink " style="word-wrap: break-word;width:35%;" id="ren">
+                                            
+                                          
+                                          
+                                          <apex:outputPanel id="sec1">
+                                          
+                                             <apex:commandButton style="float:right;display:{!if(CWrap.editmode==True,'none','')}" onClick="if(!confirmEdit()) return false;" action="{!CWrap.Editaddress}"  value="Edit Address" styleClass="slds-button slds-button--neutral" rerender="sec1" /> 
+                                                  
+                                             <br/>
+                                          
+                                          
+                                          <apex:outputPanel rendered="{!!CWrap.editmode}" >
+                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>TO:/ATTN </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                      <apex:inputText value="{!CWrap.Attn}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Address </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                      <apex:outputText value="{!CWrap.CombinedClientContact.Shipping_Address__c}"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Address2 </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:outputText value="{!CWrap.CombinedClientContact.Shipping_Address_2__c}"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping City </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:outputText value="{!CWrap.CombinedClientContact.City__c}"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping state </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                 
+                                                 <apex:outputText value="{!CWrap.CombinedClientContact.State__c}" />
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Zipcode </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:outputText value="{!CWrap.CombinedClientContact.Zip__c}" />
+                                                 </div>
+                                             </div>
+                                             
+                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Promo Phone:</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputText value="{!CWrap.Phone}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                               <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label required" ><b> Billing Instructions</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.BillingInstru}" styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b> SAP </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.Sap}" styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>WBS</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.Wbs}" styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                         </apex:outputPanel> 
+                                         
+                                         
+                                         
+                                         
+                                         <apex:outputPanel rendered="{!CWrap.editmode}">
+                                         
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Do you want to update your default shipping address?</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                        <label class="slds-checkbox" >
+                                                                <apex:inputCheckbox value="{!CWrap.Acceptance}" />   
+                                                                <span class="slds-checkbox--faux"></span>
+                                                         </label>
+                                                 </div>
+                                             </div>
+                                         
+                                         
+                                         
+                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>TO:/ATTN </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                      <apex:inputText value="{!CWrap.Attn}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Address </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                      <apex:inputText value="{!CWrap.Address}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Address2 </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputText value="{!CWrap.Address2}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping City </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputText value="{!CWrap.City}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping state </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                 
+                                                 <apex:inputText value="{!CWrap.state}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Shipping Zipcode </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputText value="{!CWrap.Zipcode}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>Promo Phone:</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputText value="{!CWrap.Phone}"  styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label required" ><b> Billing Instructions</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.BillingInstru}" styleClass="slds-input" />
+                                                 </div>
+                                             </div> 
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b> SAP </b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.Sap}" styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                             
+                                              <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                 <label class="slds-form-element__label" ><b>WBS</b></label>
+                                                 <div class="slds-form-element__control" >
+                                                     <apex:inputTextarea value="{!CWrap.Wbs}" styleClass="slds-input"/>
+                                                 </div>
+                                             </div>
+                                         </apex:outputPanel> 
+                                         </apex:outputPanel>
+                                          <apex:variable var="rowNumber" value="{!rowNumber+1}" />
+                                         
+                                        </apex:column>
+                                       
+
+                                    </apex:pageBlockTable>
+                                      </apex:variable>
+
+                                    <br/>
+                                    <br/>
+
+                                </apex:outputPanel>
+
+                            </apex:pageBlock>
+
+                        
+
+        </apex:outputPanel>
+        <apex:outputPanel id="rgu">
+        </apex:outputPanel>
+                                                 
+    </apex:form>
+    <script type="text/javascript">
+        function confirmEdit() 
+        {
+          return confirm('Do you want to change Primary Address?');
+        }
+        
+        
+    </script>
+    </div>
+    </body>
+    </html>
+
+</apex:page>

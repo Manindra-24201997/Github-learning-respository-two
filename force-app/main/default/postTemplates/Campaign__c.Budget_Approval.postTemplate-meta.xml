@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PostTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <default>true</default>
+    <description>Approval process for the value of the budgeted cost greater that 75K.</description>
+    <fields>Name</fields>
+    <fields>Description__c</fields>
+    <fields>Dummy_Currency_1__c</fields>
+    <fields>CreatedBy</fields>
+    <label>Budget Approval</label>
+</PostTemplate>

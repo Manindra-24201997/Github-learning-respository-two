@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RV__c</fullName>
+    <externalId>false</externalId>
+    <label>RV</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>None</fullName>
+                <default>true</default>
+                <label>None</label>
+            </value>
+            <value>
+                <fullName>RV Hook Up</fullName>
+                <default>false</default>
+                <label>RV Hook Up</label>
+            </value>
+            <value>
+                <fullName>RV Stop</fullName>
+                <default>false</default>
+                <label>RV Stop</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

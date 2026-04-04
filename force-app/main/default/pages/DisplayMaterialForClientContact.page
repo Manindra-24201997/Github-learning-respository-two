@@ -1,0 +1,35 @@
+<apex:page controller="DisplayMaterialForClientContact" readOnly="true">
+ <apex:form >
+ <apex:pageBlock id="block" Title="Store Supplies">
+    <apex:pageMessages ></apex:pageMessages>
+    
+    <apex:pageBlockSection collapsible="false" columns="1" id="section" rendered="{!MaterialList.size >0}">
+          <apex:outputPanel layout="block" style="overflow:auto; height:500px; width:100%;" >    
+              <apex:pageblocktable value="{!MaterialList}" var="Item">
+                 <apex:column headerValue="{!$ObjectType.Material_Item__c.Fields.Name.Label}">
+                   <apex:outputLink title="" value="/{!Item.id}" style="font-weight:bold" target="New">{!Item.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!Item.Calc_Unit__c}"/>
+                  
+                  <apex:column value="{!Item.Package_Type__c}"/>
+                   <apex:column value="{!Item.Category__c}"/>
+                  
+                  
+                  </apex:pageblocktable>
+            </apex:outputPanel>  
+          </apex:pageBlockSection>
+    
+    <apex:pageBlockSection rendered="{!MaterialList.size <= 0}">
+               <apex:pageBlockSectionItem >
+                   <b>No records to display</b>
+               </apex:pageBlockSectionItem>              
+           </apex:pageBlockSection>
+    
+    
+    </apex:pageBlock>
+ 
+ </apex:form> 
+  
+  
+  
+</apex:page>

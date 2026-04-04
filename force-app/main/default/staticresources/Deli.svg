@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFEB00;}
+	.st1{fill:none;stroke:#233041;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st2{fill:#FFEB00;stroke:#233041;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{fill:#233041;}
+	.st4{fill:none;stroke:#233041;stroke-width:1.5;stroke-miterlimit:10;}
+	.st5{fill:none;stroke:#FFEB00;stroke-width:1.5901;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:#E9EB00;stroke-width:0.521;stroke-miterlimit:10;}
+	.st7{fill:none;stroke:#E9EB00;stroke-width:1.5;stroke-miterlimit:10;}
+	.st8{fill:none;stroke:#FAD103;stroke-miterlimit:10;}
+	.st9{fill:none;stroke:#233041;stroke-width:1.5038;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st10{fill:#FFEB00;stroke:#233041;stroke-width:1.5;stroke-miterlimit:10;}
+	.st11{fill:none;stroke:#FFEB00;stroke-width:0.5;stroke-miterlimit:10;}
+	.st12{fill:#233041;stroke:#233041;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st13{fill:none;stroke:#233041;stroke-width:1.4416;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="Layer_1">
+</g>
+<g id="circle">
+	<circle class="st0" cx="64" cy="64" r="64"/>
+</g>
+<g id="Layer_2">
+	<g>
+		<path class="st1" d="M90.75,80.4H37.24c-3.69,0-6.68-2.99-6.68-6.68V71.3h66.87v2.41C97.43,77.41,94.44,80.4,90.75,80.4z"/>
+		<path class="st2" d="M75.77,68.13c-12.79,9.44-23.86-0.08-23.86-0.08"/>
+		<g>
+			<line class="st1" x1="32.71" y1="64.81" x2="32.71" y2="71.25"/>
+			<line class="st1" x1="95.29" y1="64.81" x2="95.29" y2="71.25"/>
+		</g>
+		<polyline class="st2" points="72.65,64.7 82.29,74.3 91.92,64.67 		"/>
+		<polyline class="st2" points="36.14,64.73 45.73,74.3 55.36,64.67 		"/>
+		<path class="st2" d="M30.56,64.66L30.56,64.66l66.87,0v0c0-11.56-9.37-20.93-20.93-20.93H51.49
+			C39.93,43.73,30.56,53.1,30.56,64.66z"/>
+		<path class="st1" d="M58.23,43.82c0,0,2.54,1.81,2.31,5.84"/>
+		<path class="st1" d="M62.92,43.82c0,0,2.54,1.81,2.31,5.84"/>
+		<path class="st1" d="M67.37,43.82c0,0,2.54,1.81,2.31,5.84"/>
+	</g>
+</g>
+</svg>

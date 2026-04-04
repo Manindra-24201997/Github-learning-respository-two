@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Schedule Roles --></label>
+    <name>Schedule_Roles__c</name>
+    <picklistValues>
+        <masterLabel>Art Director</masterLabel>
+        <translation><!-- Art Director --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Art Manager</masterLabel>
+        <translation><!-- Art Manager --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CEO</masterLabel>
+        <translation><!-- CEO --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Client Contact</masterLabel>
+        <translation><!-- Client Contact --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Design Manager</masterLabel>
+        <translation><!-- Design Manager --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Designer</masterLabel>
+        <translation><!-- Designer --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Marketing Team</masterLabel>
+        <translation><!-- Marketing Team --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Production Manager</masterLabel>
+        <translation><!-- Production Manager --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Project Manager</masterLabel>
+        <translation><!-- Project Manager --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>SVP, Sales &amp; Marketing</masterLabel>
+        <translation><!-- SVP, Sales &amp; Marketing --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

@@ -1,0 +1,60 @@
+<apex:page controller="DisplayJobsforClientContact" readOnly="true">
+ <head>
+<style>
+  .hd{text-align:right;padding-right:20px!important;}
+ 
+.labelCol2{font-size:1.0em};
+</style>
+</head>
+ <apex:form >
+ <apex:pageBlock tabStyle="Job__c">
+    <table>
+          <tr>
+              <td> <apex:image url="{!$Resource.JobLogo}" width="25" height="25" /> </td>
+              <td>  <h1 class="mainTitle">Orders</h1> </td>
+          </tr>
+      </table>  
+     
+       <table ><tr><td  width="10%;">
+                             <b> <apex:outputLabel value="{!$ObjectType.Job__c.Fields.Status__c.Label}" /> </b>
+                            </td><td style="margin-right:15px;">&nbsp;&nbsp;  <apex:selectList id="StatusList" value="{!strStatus}" size="1" >                              
+                                          <apex:selectOptions value="{!StatusList}"/>
+                                          <apex:actionSupport event="onchange" rerender="pgt1" action="{!populateJobList}"/>
+                                 </apex:selectList></td>
+                                
+         </tr>
+         
+         </table>   <br/>  
+        <b> <apex:outputLabel value="You are Viewing recent thousand Jobs" rendered="{!joblist.size == 1000}"/> </b>  
+     
+     <apex:pageBlock id="pgt1" >
+    
+    <apex:pageBlockSection collapsible="false" columns="1" id="section" rendered="{!JobList.size >0}">
+          <apex:outputPanel layout="block" style="overflow:auto; height:500px; width:100%;" >    
+              <apex:pageblocktable value="{!JobList}" var="Item">
+                  <apex:column headerValue="{!$ObjectType.Job__c.Fields.Name.Label}">
+                   <apex:outputLink title="" value="https://loves-storefront--jobsuite.na63.visual.force.com/apex/JobListView?id={!Item.id}" style="font-weight:bold" target="New">{!Item.name}</apex:outputLink>
+                  </apex:column>
+                  <apex:column value="{!Item.JS_Client__c}"/>
+                  
+                  <apex:column value="{!Item.JS_Client_Contact__r.name}"/>
+                  
+                  
+                  </apex:pageblocktable>
+            </apex:outputPanel>  
+          </apex:pageBlockSection>
+    
+         <apex:pageBlockSection rendered="{!JobList.size <= 0}">
+               <apex:pageBlockSectionItem >
+                   <b>No records to display</b>
+               </apex:pageBlockSectionItem>              
+           </apex:pageBlockSection>
+    
+    </apex:pageBlock>
+    </apex:pageBlock>
+ 
+ </apex:form> 
+  
+  
+  
+</apex:page>

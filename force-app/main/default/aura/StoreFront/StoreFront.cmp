@@ -1,0 +1,666 @@
+<aura:component controller="StoreFrontComponentExt" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <!-- ********************* Main Form attributes ***********************************-->
+    
+    <!-- <aura:attribute name="StorerequestTypeValues" type="String[]" description="Shows List of Store Order Type values in main form"/>-->
+    <aura:attribute name="SelectedrequestTypeValue" type="String" description="Selected value from the Store Order Types"/>
+    <aura:attribute name="ShowStoreOrderValues" type="boolean" description="Show/Hide List of Store Order Type values in main form"/>
+    
+    <aura:attribute name="ShowDistrequestTypeValues" type="boolean" description="Show/Hide List of District/Division Order Type values in main form"/>
+    <aura:attribute name="SelectedDistrequestTypeValue" type="String" description="Selected value from the District/Division Order Type"/>
+    
+    <aura:attribute name="ShowCooperaterequestTypeValues" type="boolean" description="Show/Hide List of District/Division Order Type values in main form"/>
+    <aura:attribute name="CoprequestTypeValues" type="String[]" description="Shows List of Store Order Type values in main form"/>
+    <aura:attribute name="SelectedCoprequestTypeValue" type="String" description="Selected value from the Store Order Types"/>
+    
+    <!--********************* Billboard Repairs request form attributes ***********************************-->
+    <aura:attribute name="BBList" type="String[]" description="Shows List of Billboards based on client contact in Billboard Repairs request form"/>
+    <aura:attribute name="BBLocation" type="String[]" description="Shows List of Billboard Locations based on client contact in Billboard Repairs request form"/>
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    
+    <!--********************* Made To Order request form attributes ***********************************-->
+    <aura:attribute name="MtoItemsNeeded" type="object"/>   
+    <aura:attribute name="MtoItemsNeededpic" type="object"/>
+    
+    <!--********************* boolean attributes for form render ***********************************-->
+    <aura:attribute name="isFormOpen" type="boolean" default="true" description="Show/hide the Order forms"/>
+    <aura:attribute name="isStoreBusinessCard" type="boolean" default="false" description="Show/hide the Store Business Card request form"/>
+    <aura:attribute name="isStoreNameTag" type="boolean" default="false" description="Show/hide the Store Name Tag request form"/>
+    <aura:attribute name="isBBRepair" type="boolean" default="false" description="Show/hide the Billboard Repairs request form"/>
+    <aura:attribute name="isCustomOrder" type="boolean" default="false" description="Show/hide the Custom Order Request Form"/>
+    <aura:attribute name="isMadetoOrder" type="boolean" default="false" description="Show/hide the Made To Order Request Form"/>
+    
+    <aura:attribute name="isCopBusinessCard" type="boolean" default="false" description="Show/hide the Corporate Business Card request form"/>
+    <aura:attribute name="isCopNameTag" type="boolean" default="false" description="Show/hide the Corporate Name Tag request form"/>
+    <aura:attribute name="isCopOfficeName" type="boolean" default="false" description="Show/hide the Corporate Office Nameplate request form"/>
+    <aura:attribute name="isFleetSales" type="boolean" default="false" description="Show/hide the Fleet Sales Request Form"/>
+    <aura:attribute name="isTrilliumCNG" type="boolean" default="false" description="Show/hide the Trillium CNG Request Form"/>
+    
+    <aura:attribute name="StoreOrderoptions" type="List" default="[
+                                                                  {'label': 'Store Business Cards', 'value': 'Store Business Cards'},
+                                                                  {'label': 'Store Name Tag', 'value': 'Store Name Tag'},
+                                                                  {'label': 'Billboard/DOT Repair', 'value': 'Billboard Repairs'}, 
+                                                                  {'label': 'Store Supplies', 'value': 'Store Supplies'},
+                                                                  {'label': 'Custom Order', 'value': 'Custom Order'},
+                                                                  {'label': 'Made To Order', 'value': 'Made To Order'},
+                                                                  {'label': 'CMN', 'value': 'CMN'}                                                              
+                                                                  ]"/>
+    
+    
+    <aura:attribute name="DistrictOrderoptions" type="List" default="[
+                                                                     {'label': 'Division/District Order Form', 'value': 'Division/District Order Form'}
+                                                                     ]"/>
+    
+    
+    <aura:attribute name="StoreOrdervalue" type="String" default=""/>
+    <aura:attribute name="DistrictOrdervalue" type="String" default=""/>
+    <aura:attribute name="CopOrdervalue" type="String" default=""/>
+    
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    
+    <!--Declare Handlers
+    <aura:handler event="aura:waiting" action="{!c.handleShowSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.handleHideSpinner}"/>-->
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <!-- <div style="padding:2.5rem 3.5rem 2.5rem 3.5rem !important;background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgba(32, 92, 159, 0), rgb(32, 92, 159));">-->
+    
+    
+   <div class="showScroll">
+        <ui:scrollerWrapper class="scrollerSize">
+            <lightning:card title="" > 
+                <!--  <img src="{!$Resource.LovesHeaderLogo}" width="400" height="400"/>-->
+                
+                <!--*********************************** Page load Form picklist values ***************************************-->
+                
+                <aura:if isTrue="{!v.isFormOpen}">
+                    <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="OrderForms">
+                        <lightning:accordionSection name="OrderForms" label="Order Forms"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                
+                              <!--  <aura:if isTrue="{!v.ShowStoreOrderValues}"> --> 
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="3" largeDeviceSize="3" padding="around-small">    
+                                        <b>Store Order Type</b>
+                                        <lightning:radioGroup name="radioGroupRequired"
+                                                              label=""
+                                                              options="{!v.StoreOrderoptions}"
+                                                              value="{! v.StoreOrdervalue }"
+                                                              type="radio"
+                                                              onchange="{!c.RequestTypeChange}"
+                                                              aura:id="ReqType"/>
+                                    </lightning:layoutItem>
+                               <!-- </aura:if>  -->
+                                
+                                <aura:if isTrue="{!v.ShowDistrequestTypeValues}">  
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small"> 
+                                        <b>District/Division Order Type</b>
+                                        <lightning:radioGroup name="radioGroupRequired"
+                                                              label=""
+                                                              options="{!v.DistrictOrderoptions}"
+                                                              value="{!v.DistrictOrdervalue}"
+                                                              type="radio"
+                                                              onchange="{!c.DistDivTypeChange}"
+                                                              aura:id="DDorderType"/>
+                                    </lightning:layoutItem>
+                                </aura:if>   
+                                
+                                <aura:if isTrue="{!v.ShowCooperaterequestTypeValues}"> 
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small"> 
+                                        <b>Corporate Order Type</b>
+                                        <aura:iteration items="{!v.CoprequestTypeValues}" var="option" indexVar="idx"> 
+                                            
+                                            <lightning:input name="radioButtonGroup" 
+                                                             label="{!option}" 
+                                                             type="radio" 
+                                                             options="{!option}" 
+                                                             value="{!option}" 
+                                                             onchange="{!c.CopRequestTypeChange}"
+                                                             aura:id="COorderType"/>
+                                        </aura:iteration> 
+                                        
+                                    </lightning:layoutItem>
+                                </aura:if>  
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion>   
+                </aura:if>
+                
+                <!--******************************************** Buttons **********************************************************-->
+                
+                <aura:if isTrue="{!!v.isFormOpen}">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                        </aura:set>
+                        <aura:set attribute="actions">
+                            <lightning:button variant="neutral" 
+                                              label="Back"
+                                              title="Back"
+                                              disabled="{!v.isSpinner}"
+                                              onclick="{!c.BackForm}" class="buttonsclass"/>
+                            
+                            
+                            <lightning:button variant="brand" 
+                                              title="Save"
+                                              disabled="{!v.isSpinner}" 
+                                              label="Place Order" 
+                                              onclick="{!c.saveForm}" class="buttonsclass"/>
+                            
+                        </aura:set>
+                    </lightning:card>
+                </aura:if>
+                
+                <!--***************************************** Store Business Card Request Form ************************************************-->
+                
+                <aura:if isTrue="{!v.isStoreBusinessCard}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="StoreBC">
+                        <lightning:accordionSection name="StoreBC" label="Store Business Card Request Form"  class="slds-card" >
+                            <b>  Please note that these items require 2-3 weeks for production.</b>
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:input name="BusinessName" label="Name" required="true" aura:id="BN"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small" >  
+                                    <lightning:select aura:id="BusinessTitle" label="Title" name="Title">
+                                        <option value="General Manager">General Manager</option>
+                                        <option value="Operations Manager">Operations Manager</option>
+                                        <option value="Restaurant Manager">Restaurant Manager</option>
+                                        <option value="Restaurant Assistant Manager">Restaurant Assistant Manager</option>
+                                        <option value="Speedco Service Manager">Speedco Service Manager</option>
+                                        <option value="Truck Care Manager">Truck Care Manager</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">               
+                                    <lightning:select aura:id="BusinessLogo" label="Logo" name="Logo">
+                                        <option value="Store">Store</option>
+                                        <option value="Speedco">Speedco</option>
+                                        <option value="Restaurant Manager">Restaurant Manager</option>
+                                        <option value="Truck Care">Truck Care</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>
+                
+                <!--***************************************** Store Name Tag Request Form ************************************************-->
+                
+                <aura:if isTrue="{!v.isStoreNameTag}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="StoreNameTag">
+                        <lightning:accordionSection name="StoreNameTag" label="Store Name Tag Request Form" class="slds-card" >
+                            <b>  Please note that these items require 2-3 weeks for production.</b>
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:select aura:id="StoreNameTagTitle" label="Title" name="Title">
+                                        <!--Some values are removed on 24-06-22-->
+                                        <!--<option value="Area Merchandising Manager">Area Merchandising Manager</option>-->
+                                        <!--<option value="Area Restaurant Manager">Area Restaurant Manager</option>-->
+                                        <!--<option value="Area Truck Care Manager">Area Truck Care Manager</option>-->
+                                        <option value="Assistant Manager">Assistant Manager</option>
+                                        <!--<option value="District Manager">District Manager</option>-->
+                                        <!--<option value="Divisional Director">Divisional Director</option>-->
+                                        <option value="Fresh Food Coordinator">Fresh Food Coordinator</option>
+                                        <option value="Fresh Food Manager">Fresh Food Manager</option>
+                                        <option value="General Manager">General Manager</option>
+                                        <option value="Inventory Management Coordinator">Inventory Management Coordinator</option>
+                                        <option value="Maintenance">Maintenance</option>
+                                        <option value="Operations Manager">Operations Manager</option>
+                                        <option value="Restaurant General Manager">Restaurant General Manager</option>
+                                        <option value="Restaurant Manager">Restaurant Manager</option>
+                                        <option value="Restaurant Assistant Manager">Restaurant Assistant Manager</option>
+                                        <option value="Service Advisor">Service Advisor</option>
+                                        <option value="Service Manager">Service Manager</option>
+                                        <option value="Shift Leader">Shift Leader</option>
+                                        <option value="Team Member">Team Member</option>
+                                        <option value="Team Trainer">Team Trainer</option>
+                                        <option value="Truck Care Manager">Truck Care Manager</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>         
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:input name="First Name" label="First Name" aura:id="StoreNameTagFN"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input name="Last Name" label="Last Name" required="true" aura:id="StoreNameTagLN"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="Year of Hire" label="Year of Hire" required="true" aura:id="StoreNameTagYOH"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">      
+                                    <label class="slds-form-element__label frequired" for="text-input-id-1">Logos</label>
+                                    <select size="4" id="StoreNameTagLogo" multiple="true" name="Logos" class="slds-select">
+                                        <option value="Arby's ">Arby's </option>
+                                        <!--Some values are removed on 24-06-22-->
+                                        <!--<option value="Baskin Robbins ">Baskin Robbins </option>-->
+                                        <option value="Bojangle's">Bojangle's</option>
+                                        <option value="Carl's Jr">Carl's Jr</option>
+                                        <option value="Chester's">Chester's</option>
+                                        <option value="Dairy Queen ">Dairy Queen </option>
+                                        <!--<option value="Denny's">Denny's</option>-->
+                                        <!--<option value="Del Taco">Del Taco</option>-->
+                                        <!--<option value="Dunkin Donuts">Dunkin Donuts</option>-->
+                                        <!--<option value="Godfather's Pizza">Godfather's Pizza</option>-->
+                                        <!--<option value="Green Burrito">Green Burrito</option>-->
+                                        <option value="Hardee's">Hardee's </option>
+                                        <option value="Naf Naf Grill">Naf Naf Grill</option>
+                                        <option value="Loves">Loves</option>
+                                        <!--<option value="Sonic">Sonic</option>-->
+                                        <option value="Speedco">Speedco</option>
+                                        <option value="Subway">Subway</option>
+                                        <!--<option value="Taco Bell">Taco Bell</option>-->
+                                        <option value="Taco John's">Taco John's</option>
+                                    </select> 
+                                    
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                            
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>
+                
+                <!--***************************************** Billboard/Dot Service Request Form ************************************************-->
+                
+                <!--<aura:if isTrue="{!v.isBBRepair}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="BBRepair">
+                        <lightning:accordionSection name="BBRepair" label="Billboard/Dot Service Request Form"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:select aura:id="BBRLocation" label="Location" name="Location">
+                                        <option text="" value="None" />
+                                        <aura:iteration items="{!v.BBLocation}" var="option" >
+                                            <option text="{!option}" value="{!option}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">           
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Sign type</label>
+                                    <select size="2"  id="BBSignType" multiple="true" name="Sign type" class="slds-select">
+                                        <option value="Billboard">Billboard</option>
+                                        <option value="DOT">DOT</option>
+                                    </select> 
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <lightning:select aura:id="BBName" label="Billboard" name="Billboard">
+                                        <option text="" value="None" />
+                                        <aura:iteration items="{!v.BBList}" var="option" >
+                                            <option text="{!option}" value="{!option}" />
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:input name="Files" aura:id="BBRFileupload" type="file" label="File Storage" onchange="{! c.handleFilesChange }"/>
+                                    <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+                                </lightning:layoutItem> 
+                               
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Service Issues</label><br/>
+                                    <label class="slds-form-element__label" for="text-input-id-1" style="color:red;"> Select the below options that apply to the signage issues you are having.</label>
+                                    <select size="4"  id="BBRServiceIssue" multiple="true" name="Service Issues"  class="slds-select">
+                                        <option value="Faded/Weathered Facing">Faded/Weathered Facing</option>
+                                        <option value="Heart Issue">Heart Issue</option>
+                                        <option value="Incorrect Logos">Incorrect Logos</option>
+                                        <option value="Trim Trees/Brush">Trim Trees/Brush</option>
+                                        <option value="Needs White-Out/Taken Down(canceled)">Needs White-Out/Taken Down(canceled)</option>
+                                        <option value="Directional Information Incorrect">Directional Information Incorrect</option>
+                                    </select> 
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <lightning:input name="CurrentlyReads" label="Currently Reads" aura:id="BBCurReads"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:input name="ShouldRead" label="Should Read" aura:id="BBShRead"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">         
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Lighting<br/>
+                                        If you are experiencing a lighting failure.select below options for each light.
+                                    </label>
+                                    <select name="BBLight" size="4" class="slds-select" id="BBLight" multiple="true">
+                                        <option value="Light 1">Light 1</option>
+                                        <option value="Light 2">Light 2</option>
+                                        <option value="Light 3">Light 3</option>
+                                        <option value="Light 4">Light 4</option>
+                                    </select> 
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="whattime" label="What time(s) are the lights being reported out" aura:id="BBtime"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:input name="Notes" label="Notes" aura:id="BBNotes"/>
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>-->
+                
+                <!--*****************************************  Custom Order Request Form ************************************************-->
+                
+                <!--<aura:if isTrue="{!v.isCustomOrder}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="CustomOrder">
+                        <lightning:accordionSection name="CustomOrder" label=" Custom Order Request Form"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Notice </label><br/>
+                                    <label class="slds-form-element__label" for="text-input-id-1" style="color:red;">* NEW Custom Orders include a $150 Custom Project Fee and a turnaround time of at least 4 weeks.</label>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">           
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Items Needed </label>
+                                    <select size="4"  id="COItemsNeeded" multiple="true" name="Items Needed" class="slds-select">
+                                        <option value="Banner">Banner</option>
+                                        <option value="Decals (Stickers)">Decals (Stickers)</option>
+                                        <option value="Interior Signage">Interior Signage</option>
+                                        <option value="Exterior Signage">Exterior Signage</option>
+                                        <option value="Restaurant Signage">Restaurant Signage</option>
+                                        <option value="Metal Signs">Metal Signs</option>
+                                        <option value="Echo Hearts Logo">Echo Hearts Logo</option>
+                                        <option value="Other (Specify)">Other (Specify)</option>
+                                    </select> 
+                                    
+                                    <label class="slds-form-element__label" for="text-input-id-1">** To Select multiple Items, press ctrl, then click the items</label>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:input name="Files" aura:id="CustomOrderFileupload" type="file" label="Upload photo of installation area " onchange="{! c.handleFilesChange }" required="true"/>
+                                    <div class="slds-text-body_small slds-text-color_error">{!v.fileName} </div>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <lightning:select aura:id="COTurnTime" label="Turn-Time" name="Turn-Time">
+                                        <option text="4 Weeks" value="4 Weeks"/>
+                                        <option text="6 Weeks" value="6 Weeks"/>
+                                        <option text="8 Weeks" value="8 Weeks"/>
+                                    </lightning:select>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <lightning:textarea name="QuantityNeeded" label="Quantity Needed" aura:id="COQuantity"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:textarea name="ProvideHeightandWidthMeasurementsinInches" label="Provide Height and Width Measurements in Inches" aura:id="COHeightWidth"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <lightning:textarea name="Explainrequestindetail" label="Explain request in detail" aura:id="COExplainReq"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:textarea name="ExplainMore" label="Explain, in detail, what signs/banners/etc. need to say" aura:id="COExplainMore"/>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:textarea name="ExplainInstall" label="Explain, in detail, where items will be installed" aura:id="COExplainInstall"/>
+                                </lightning:layoutItem> 
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>-->
+                
+                <!--***************************************** Made To Order Request Form ************************************************-->
+                
+                <aura:if isTrue="{!v.isMadetoOrder}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="MadetoOrder">
+                        <lightning:accordionSection name="MadetoOrder" label=" Made To Order Request Form"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Notice </label><br/>
+                                    <label class="slds-form-element__label" for="text-input-id-1" style="color:red;">* Made To Order items are not kept in stock, but are made upon request with a turnaround time of at least 2 weeks. Made To Order items can be previewed in the Made To Order tab and come as displayed.</label>
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small">           
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Items Needed </label>
+                                    <select size="6"  id="MtoItemsNeeded" name="Items Needed" class="slds-select" onchange="{!c.MtoItemsNeeded}">
+                                        <option value="Banners">Banners</option>
+                                        <option value="Decals">Decals</option>
+                                        <option value="Metal Signs">Metal Signs</option>
+                                        <option value="Other Signs">Other Signs</option>
+                                    </select> 
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small"> 
+                                    <label class="slds-form-element__label" for="text-input-id-1">  </label>
+                                    <select size="6"  id="SelectedItems" name="Items Needed" class="slds-select" onchange="{!c.DispalyItemPic}">
+                                        <aura:iteration items="{!v.MtoItemsNeeded}" var="option">
+                                            <option text="{!option.value}" value="{!option.key}"/>
+                                        </aura:iteration>
+                                    </select> 
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="4" largeDeviceSize="4" padding="around-small">
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Item Preview </label><br/>
+                                    <img src="{!v.MtoItemsNeededpic[0]}" width="200" height="30" alt="No Image" class="loading"/>
+                                </lightning:layoutItem> 
+                                
+                                <label class="slds-form-element__label" for="text-input-id-1" style="color:red;">* 2 weeks minimum turn-around</label>
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                    <label class="slds-form-element__label" for="text-input-id-1"> Max Qty </label><br/>
+                                    {!v.MtoItemsNeededpic[1]}
+                                    <!--  <ui:outputText value="{!v.MtoItemsNeededpic[1]}"/>-->
+                                </lightning:layoutItem> 
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input type="number" label="Qty" aura:id="MtoQty" onchange="{!c.checkQty}"/>
+                                    <!--<input label="Qty" id="MtoQty" onchange="{!c.checkQty}"/> -->  
+                                    <!--   <ui:inputText label="Qty" aura:id="MtoQty" keyup="{!c.checkQty}"  updateOn="keyup"/>-->
+                                </lightning:layoutItem>
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                    <lightning:textarea name="SpecialDetails" label="Special Details" aura:id="MtoSpecialDetails"/>
+                                </lightning:layoutItem> 
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>
+                
+                <!--***************************************************  Corporate Order Types Starts ************************************************************-->
+                
+                <!--*****************************************  Corporate Name Tag Request Form ************************************************-->
+                
+                <aura:if isTrue="{!v.isCopNameTag}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="CorporateNameTag">
+                        <lightning:accordionSection name="CorporateNameTag" label="Corporate Name Tag Request Form" class="slds-card" >
+                            <b>  Please note that these items require 2-3 weeks for production.</b>
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:input name="Title" label="Title" aura:id="CopNameTagTitle"/>
+                                </lightning:layoutItem>        
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:input name="First Name" label="First Name" aura:id="CopNameTagFN"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input name="Last Name" label="Last Name" aura:id="CopNameTagLN"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="Year of Hire" label="Year of Hire" aura:id="CopNameTagYOH"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">      
+                                    <label class="slds-form-element__label" for="text-input-id-1">Logos</label>
+                                    <select size="4" id="CopNameTagLogo" multiple="true" name="Logos" class="slds-select">
+                                        <option value="Arby's ">Arby's </option>
+                                        <option value="Baskin Robbins ">Baskin Robbins </option>
+                                        <option value="Bojangle's">Bojangle's</option>
+                                        <option value="Carl's Jr">Carl's Jr</option>
+                                        <option value="Chester's">Chester's</option>
+                                        <option value="Dairy Queen ">Dairy Queen </option>
+                                        <option value="Denny's">Denny's</option>
+                                        <option value="Del Taco">Del Taco</option>
+                                        <option value="Dunkin Donuts">Dunkin Donuts</option>
+                                        <option value="Godfather's Pizza">Godfather's Pizza</option>
+                                        <option value="Green Burrito">Green Burrito</option>
+                                        <option value="Hardee's">Hardee's </option>
+                                        <option value="IHOP Express">IHOP Express</option>
+                                        <option value="Loves">Loves</option>
+                                        <option value="Sonic">Sonic</option>
+                                        <option value="Speedco">Speedco</option>
+                                        <option value="Subway">Subway</option>
+                                        <option value="Taco Bell">Taco Bell</option>
+                                        <option value="Taco John's">Taco John's</option>
+                                    </select> 
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                            
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>    
+                
+                <!--*****************************************  Corporate Office Nameplate Request Form ************************************************-->
+                
+                <aura:if isTrue="{!v.isCopOfficeName}">
+                    <lightning:accordion allowMultipleSectionsOpen="true" activeSectionName="CorporateOfficeNameplate">
+                        <lightning:accordionSection name="CorporateOfficeNameplate" label="Corporate Office Nameplate Request Form" class="slds-card" >
+                            <b>  Please note that these items require 2-3 weeks for production.</b>
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">      
+                                    <label class="slds-form-element__label" for="text-input-id-1">Name Plate Type</label>
+                                    <select size="2" id="CopOfficeNameType" multiple="true" name="Name Plate Type" class="slds-select">
+                                        <option value="Office">Office</option>
+                                        <option value="Cubicle">Cubicle</option>
+                                    </select> 
+                                </lightning:layoutItem>       
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:input name="Name" label="Name" aura:id="CopOfficeName"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input name="Title" label="Title" aura:id="CopOfficeTitle"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="Year of Hire" label="Year of Hire" aura:id="CopOfficeYOH"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">      
+                                    <lightning:select aura:id="CopOfficeBulid" label="Building" name="Building">
+                                        <option value="300">300</option>
+                                        <option value="Amarillo">Amarillo</option>
+                                        <option value="Annex">Annex</option>
+                                        <option value="Atrium Towers">Atrium Towers</option>
+                                        <option value="Choctaw">Choctaw</option>
+                                        <option value="Contact Center">Contact Center</option>
+                                        <option value="Guymon">Guymon</option>
+                                        <option value="Loves 50">Loves 50</option>
+                                        <option value="Loves South">Loves South</option>
+                                        <option value="Watonga">Watonga</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                            
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if> 
+                
+                <!-- ********************************************** Corporate Business Cards ****************************************************************-->
+                
+                <aura:if isTrue="{!v.isCopBusinessCard}">
+                    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="CorporateBusinessCard">
+                        <lightning:accordionSection name="CorporateBusinessCard" label="Corporate Business Card Request Form" class="slds-card" >
+                            <b>  Please note that these items require 2-3 weeks for production.</b>
+                            <lightning:layout multipleRows="true">  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:select aura:id="CopBCBulid" label="Business Unit" name="Business Unit">
+                                        <option value="Love's">Love's</option>
+                                        <option value="Gemini">Gemini</option>
+                                        <option value="Musket">Musket</option>
+                                        <option value="Trillium">Trillium</option>
+                                        <option value="Speedco">Speedco</option>
+                                        <option value="Financial">Financial</option>
+                                        <option value="Recruiting">Recruiting</option>
+                                        <option value="Truck Tire Care">Truck Tire Care</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>        
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:select aura:id="CopBCAddress" label="Address Selections" name="Address Selections">
+                                        <option value="10601 North Pennsylvania Ave.Oklahoma City,OK 73120">10601 North Pennsylvania Ave.Oklahoma City,OK 73120</option>
+                                        <option value="2929 Allen Parkway, Ste 4100 Houston, TX 77019">2929 Allen Parkway, Ste 4100 Houston, TX 77019</option>
+                                        <option value="Terminal 5101 Lone Star Blvd Fort Worth,TX 76106">Terminal 5101 Lone Star Blvd Fort Worth,TX 76106</option>
+                                        <option value="One Renaissance Square 2 North Central Ave Suite 1220 Phoenix, AZ 85004">One Renaissance Square 2 North Central Ave Suite 1220 Phoenix, AZ 85004</option>
+                                        <option value="3601 NW 63rd Street Oklahoma City, OK 73116">3601 NW 63rd Street Oklahoma City, OK 73116</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input name="Name" label="Name" aura:id="CopBCName"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="Title" label="Title" aura:id="CopBCTitle"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input type="tel" label="Phone" aura:id="CopBCPhone" name="Phone" placeholder="Enter the 10 digits Phone" maxlength="10" messageWhenTooLong="You have exceeded the limit of 10 numbers!"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input type="tel" name="Fax" label="Fax" aura:id="CopBCFax" placeholder="Enter the 10 digits Fax" maxlength="10" messageWhenTooLong="You have exceeded the limit of 10 numbers!"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">     
+                                    <lightning:input type="email" name="Email" placeholder="youraddress@company.com" label="Email" aura:id="CopBCEmail"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input type="tel" name="Mobile" label="Mobile" placeholder="Enter the 10 digits Mobile" aura:id="CopBCMobile" maxlength="10" messageWhenTooLong="You have exceeded the limit of 10 numbers!"/>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">   
+                                    <lightning:select aura:id="CopBCWeb" label="Web Site" name="Web Site">
+                                        <option value="www.loves.com">www.loves.com</option>
+                                        <option value="www.musketcorp.com">www.musketcorp.com</option>
+                                        <option value="www.loves.com/hotels">www.loves.com/hotels</option>
+                                        <option value="www.trilliumenergy.com">www.trilliumenergy.com</option>
+                                        <option value="www.loves.com/gemini">www.loves.com/gemini</option>
+                                        <option value="www.loves.com/speedco">www.loves.com/speedco</option>
+                                    </lightning:select>
+                                </lightning:layoutItem>  
+                                
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">       
+                                    <lightning:input name="ICE Chat" label="ICE Chat" aura:id="CopBCICEChat" maxlength="20"/>
+                                </lightning:layoutItem>  
+                                
+                            </lightning:layout>
+                            
+                        </lightning:accordionSection> 
+                    </lightning:accordion>
+                </aura:if>  
+                
+            </lightning:card>  
+       </ui:scrollerWrapper>
+    </div>
+    <!--</div>-->
+</aura:component>

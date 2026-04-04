@@ -1,0 +1,90 @@
+<template>
+
+    <!-- Media id : {mediaidisdep}
+     Schedule id : {scheduleidisselected}-->
+ 
+   <!-- Remove field : {isremovefield}
+     <b>*** Message received from publisher ***</b>  <lightning-formatted-text value={messageval}></lightning-formatted-text>--> 
+       
+         <div class="slds-form-element">
+             <div class="slds-form-element__control">
+                 
+                 <template if:false={isValueSelected}>
+                 <div class="slds-combobox_container" >
+                     <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                         <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                             <lightning-input onchange={handleKeyUp} type="search" autocomplete="off" label={label}
+                             placeholder = "Search Sch Templates Dep ..."></lightning-input>
+                         </div>
+                     </div>
+                 </div>
+             </template>
+     
+                 <template if:true={isValueSelected}>
+                     <label class="slds-form-element__label" for="combobox-id-5" id="combobox-label-id-35">{label}</label>
+                    
+                     <div tabindex="0" class="slds-combobox_container slds-has-selection">
+                         <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                             <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left-right"
+                                 role="none">
+                                 <span
+                                     class="slds-icon_container slds-icon-standard-account slds-combobox__input-entity-icon"
+                                     title="Account">
+                                     <lightning-icon icon-name={selectediconname} alternative-text={selectediconname}
+                                         size="x-small"></lightning-icon>
+                                 </span>
+                                 <button type="button"
+                                     class="slds-input_faux slds-combobox__input slds-combobox__input-value"
+                                     aria-labelledby="combobox-label-id-34 combobox-id-5-selected-value"
+                                     id="combobox-id-5-selected-value" aria-controls="listbox-id-5" aria-expanded="false"
+                                     aria-haspopup="listbox">
+                                   <span class="slds-truncate" id="combobox-value-id-20">{selectedName}</span>
+                                 </button>
+                                 <button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" type="button"
+                                     title="Remove selected option" onclick={handleremovedependentvalue} >
+                                     <lightning-icon icon-name="utility:close" alternative-text="Remove selected option" 
+                                         size="x-small"></lightning-icon>
+                                 </button>
+                             </div>
+                         </div>
+                     </div>
+                 </template>
+     
+                 <!--<template lwc:if={showlistbox}>
+                      show list of records : {showlistbox}
+                     </template>
+                     <template lwc:else>
+                       else  show list of records : {showlistbox}
+                     </template>-->
+ 
+                     <template if:true={showlistbox}>
+                         <div id="listbox-id-4" tabindex="0" 
+                             class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid" role="listbox">
+                             <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+         
+                                 <template  for:each={records}  for:item="record">
+                                     <li  role="presentation" class="slds-listbox__item"  key={record.Id}   onclick={handleOptionSelectDep}   data-id={record.Id}  data-name={record.Name}>
+                                         <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                             aria-selected="true"  id={record.Id} role="option" tabindex="0">
+                                             <span  class="slds-media__figure slds-listbox__option-icon">
+                                                 <span  class="slds-icon_container slds-icon-standard-account">
+                                                     <lightning-icon  icon-name={selectediconname}  alternative-text="Account"   small="x-small"></lightning-icon>
+                                                 </span>
+                                             </span>
+                                             <span class="slds-media__body">
+                                                 <span  class="slds-listbox__option-text slds-listbox__option-text_entity"  >{record.Name}</span>
+                                                 <span  class="slds-listbox__option-meta slds-listbox__option-meta_entity" >{record.Name}</span>
+                                             </span>
+                                         </div>
+                                     </li>
+                                 </template>
+                                 
+                             </ul>
+                         </div>
+                     </template>
+ 
+ 
+             </div>
+         </div>
+ 
+ </template>

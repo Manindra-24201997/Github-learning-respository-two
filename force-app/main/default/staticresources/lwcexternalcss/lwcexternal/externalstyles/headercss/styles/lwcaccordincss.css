@@ -1,0 +1,29 @@
+/*external css file with .css file extension */
+.custom-class{
+    font-size:20px;
+    color:red;
+    background-color:black;
+}
+
+.slds-accordion__summary-action {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+    line-height: 1.675rem  !important;
+    padding: 5px  !important;
+    font-size: 1.1em !important;
+    background: #e2e4e6  !important;
+    color: darkslategrey !important;
+}
+
+.slds-accordion__section {
+    padding: 0.65rem !important;
+}
+
+
+.slds-accordion__summary
+{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}

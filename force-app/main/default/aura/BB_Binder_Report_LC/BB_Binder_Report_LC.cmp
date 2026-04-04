@@ -1,0 +1,218 @@
+<aura:component controller="Custom_Reports_LC_Class" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="ClientRec" type="String[]" description="It stores the All Client records"/>
+    <aura:attribute name="BBTypeRec" type="String[]" description="It stores the All Active Client records"/>
+    <aura:attribute name="IlluminationVal" type="String[]" description="It stores the All Active Media Type records"/>
+    <aura:attribute name="DistrictVal" type="String[]" description="It stores the All Active Schedule Template records"/>
+    <aura:attribute name="VendorRec" type="String[]" description="It stores the All Client records"/>
+    <aura:attribute name="BBStatus" type="String[]" description="It stores the All Client records"/>
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    <aura:attribute name="ResultsList" type="object"/>    
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    <aura:registerEvent name="vfEvent" type="c:LcToVfEvent"/>   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+    </aura:if> 
+    <div id="search">
+        <lightning:card>   
+            <aura:set attribute="title">
+                <lightning:icon iconName="standard:lead_list" size="medium"/>
+                <label  style="font-size:20px !important;font-weight:bold !important;margin-top:70px !important;margin-left: 5px;">BB Binder Report</label>
+            </aura:set>
+        </lightning:card>
+        
+        <lightning:card>          
+            <aura:set attribute="title">          
+            </aura:set>
+            <div>
+                <lightning:layout multipleRows="true">  
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Billboard#" name="BB#" label="BB#" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Title" name="Title" label="Title" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="BillboardStatus" name="Billboard_Status" label="Billboard Status" >
+                            <option value="">--None--</option> 
+                            <aura:iteration items="{!v.BBStatus}" var="option">
+                                <option text="{!option}" value="{!option}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="ClientName" name="Client_Name" label="Client Name" >
+                            <option value="">--None--</option>                        
+                            <aura:iteration items="{!v.ClientRec}" var="option" indexVar="key">
+                                <option text="{!option.value}" value="{!option.key}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="BBVendor" name="BB Vendor" label="BB Vendor" >
+                            <option value="">--None--</option> 
+                            <aura:iteration items="{!v.VendorRec}" var="option">
+                                <option text="{!option}" value="{!option}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="BBType" name="Billboard Type" label="Billboard Type" >
+                            <aura:iteration items="{!v.BBTypeRec}" var="option">
+                                <option text="{!option}" value="{!option}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="District" name="District" label="District" >
+                            <option value="">--None--</option> 
+                            <aura:iteration items="{!v.DistrictVal}" var="option">
+                                <option text="{!option}" value="{!option}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Location" name="Location" label="Location" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Size" name="Size" label="Size" />
+                    </lightning:layoutItem>
+                    
+                   <!-- <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:select aura:id="Illumination" name="Illumination" label="Illumination" >
+                            <option value="">None</option> 
+                            <aura:iteration items="{!v.IlluminationVal}" var="option">
+                                <option text="{!option}" value="{!option}" />
+                            </aura:iteration>
+                        </lightning:select>                    
+                    </lightning:layoutItem>  -->              
+                    
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="ExpDateFrom" type="date" name="Expiration Date From" label="Expiration Date From" dateStyle="short"/>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="ExpDateTo" type="date" name="Expiration Date To" label="Expiration Date To"  dateStyle="short"/>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="PMT" name="PMT" label="PMT" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Latitude" name="Latitude" label="Latitude" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <lightning:input aura:id="Longitude" name="Longitude" label="Longitude" />
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="12" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="2" padding="horizontal-small">
+                        <!--lightning:input aura:id="Illumination" type="checkbox" name="Illumination" label="Illumination"/>-->
+                        <ui:inputCheckbox aura:id="Illumination" label="Illumination" class="slds-form-element__label"/>
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem class="slds-align_absolute-center" size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">
+                        <lightning:button variant="brand" label="Search" title="Search" onclick="{! c.handleSearch }" />
+                    </lightning:layoutItem>
+                    
+                </lightning:layout>
+            </div>
+            
+        </lightning:card>
+    </div>
+    <div id="data" style="padding-top:10px;">
+        <lightning:card>          
+            <aura:set attribute="title">          
+                
+            </aura:set> 
+            <aura:set attribute="actions">  
+                <aura:if isTrue="{!!empty(v.ResultsList)}">
+                    <lightning:button label="Print to PDF" onclick="{!c.downloadPdf}"/>
+                </aura:if>
+            </aura:set>
+            <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="Results">   
+                <lightning:accordionSection name="Results" label="Results"  class="slds-card" >
+                    <table width="100%" class="slds-table slds-no-row-hover slds-table_cell-buffer">
+                        <thead >
+                        </thead>
+                        <tbody id="tbodyResults">
+                            <aura:iteration items="{!v.ResultsList}" var="item">
+                                <aura:iteration items="{!item.CNWrapper}" var="cnw" >
+                                    <tr>
+                                        <div style="padding-bottom:5px;padding-left:var(--lwc-spacingLarge,1.5rem);">
+                                            <b style="font-size:18px;font-weight:bold;">{!item.strClientDist} </b>
+                                        </div>                                   
+                                        <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/>   
+                                    </tr>
+                                    <tr>
+                                        <div style="padding-bottom:5px;padding-left:var(--lwc-spacingLarge,1.5rem);">
+                                            <b style="font-size:14.5px;font-weight:bold;padding-bottom:10px;"> {!cnw.strClientName}</b> , <b style="font-size:14.5px;font-weight:bold;"> {!cnw.strClientCode} </b>
+                                        </div>
+                                        <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+                                    </tr>
+                                    <tr>
+                                        <aura:iteration  items="{!cnw.BWrapper}" var="itembw">
+                                            <tr>
+                                                <div style="padding-bottom:5px;padding-left:var(--lwc-spacingLarge,1.5rem);">
+                                                    <b style="font-size:14.5px;font-weight:bold;padding-bottom:10px;"> {!itembw.BB.Title__c}</b> 
+                                                </div>
+                                                
+                                            </tr>
+                                            <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+                                            <table>
+                                                <tr style="vertical-align:top;" width="25%" >   
+                                                    <td style="font-weight:bold;font-size:13px;padding-bottom:10px;">
+                                                        Vendor : {!itembw.BB.BB_Vendor__r.Name}<br/><br/> 
+                                                        PMT : {!itembw.BB.PMT__c}<br/><br/> 
+                                                        Expiration Date :
+                                                        <aura:if isTrue="{!itembw.BB.Expiration_Date__c !=null}">
+                                                            <lightning:formattedDateTime value="{!itembw.BB.Expiration_Date__c}" year="numeric" month="numeric" day="numeric"/>
+                                                        </aura:if>                        
+                                                        <br/><br/> 
+                                                        Location : {!itembw.BB.Location__c}<br/> <br/> 
+                                                       <!-- Illumination : {!itembw.BB.Illumination__c} <br/>  <br/>
+                                                        Illumination : {!itembw.BB.Illumination__c} <br/>  <br/> -->
+                                                        Illumination : <ui:outputCheckbox value="{!itembw.BB.Illumination__c}"/><br/>  <br/>
+                                                        Latitude : {!itembw.BB.Latitude__c}<br/>  <br/> 
+                                                        Longitude : {!itembw.BB.Longitude__c}<br/>  
+                                                    </td>
+                                                    <td width="30%">
+                                                        <!-- <aura:if isTrue="{!!(empty(itembw.BB.Photo_1_New__c))}">
+                                                           {!itembw.BB.Photo_1_New__c}-->
+                                                        <img src="{!v.prefixURL + itembw.ContentVersionId}" width="200" height="30" alt=" "/>
+                                                        <!-- </aura:if>-->
+                                                        <br/>
+                                                    </td>
+                                                    <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+                                                </tr>   
+                                                
+                                            </table>
+                                            <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+                                        </aura:iteration>
+                                    </tr>
+                                </aura:iteration>
+                            </aura:iteration>
+                        </tbody>
+                    </table>  
+                      <aura:if isTrue="{!!empty(v.ResultsList)}">
+                    <lightning:button label="Print to PDF" class="slds-float_right margins" onclick="{!c.downloadPdf}"/>
+               <br/> </aura:if>
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </lightning:card>
+    </div>
+</aura:component>

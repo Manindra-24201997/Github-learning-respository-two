@@ -1,0 +1,10 @@
+<template>
+<lightning-card title="Showing Reference Fields Data in Lightning Datatable">
+    <lightning-datatable columns={columns} 
+                        data={data} 
+                        key-field="id"
+                        hide-checkbox-column="true"
+                        show-row-number-column="true"></lightning-datatable>
+                        <lightning-button label="refresh" onclick={refreshbutton}></lightning-button>
+</lightning-card>
+</template>

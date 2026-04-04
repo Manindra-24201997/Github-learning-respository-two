@@ -1,0 +1,223 @@
+<!-- This page is used to display Work Order. -->
+<apex:page standardController="Campaign__c" showHeader="false" sidebar="false" standardStylesheets="false" extensions="CampaignWorkorderExt" renderAs="pdf" >
+    
+    
+    <!---------------------------------------------------- Logo and Title Details ---------------------------------------------------------->
+    
+    <table width="100%">
+        <tr>
+            <td style="width:50%">
+                <apex:image id="JS_logo" value="{!$Resource.JSCloudLogo}" rendered="{!imageNotFound == True}"/>
+                <apex:image url="{!imageBody}" rendered="{!imageNotFound == False}"/>
+            </td>
+            <td style="width:50%;padding-right:10px;text-align:right;font-size:11px;font-family: sans-serif;">
+                <b> <apex:outputText value="CAMPAIGN WORK ORDER" style="font-size:13pt; font-family: sans-serif;"/> </b> <br/><br />
+            </td>
+        </tr>
+        
+    </table>
+    
+    <!---------------------------------------------------- End of Logo and Title Details ---------------------------------------------------------->    
+    
+    <!---------------------------------------------------- Details ---------------------------------------------------------->
+    
+    <table width="100%" style="padding-top:5px;">
+        
+        <tr>
+            <td align="left">
+                <hr color="black" />
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <table width="100%" style = "background-color:#EEEEEE;margin-bottom:-10px;">
+                    <tr style="page-break-inside: avoid;">
+                        <td width = "20%">
+                            <b> <apex:outputText value="DETAILS" style="font-family: sans-serif;font-size:11pt;font-weight:bold;font-color:#0000FF;"/>  </b>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+        <br/>
+        
+        <tr width="100%">
+            <td width="100%" align="left" style="padding-left:20px;font-size:10pt;">
+                <table width="110%" align="left">
+                    
+                    <tr width="100%">
+                        
+                        <td width="20%" valign="top">
+                            <apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.Name.Label}" style="font-family: sans-serif;font-weight: bold;"/>
+                        </td>
+                        <td width="30%" valign="top">
+                            <apex:outputText value="{!Campaign__c.Name}" style="font-family: sans-serif;"/> 
+                        </td>
+                        <td width="20%" valign="top">
+                            <apex:outputLabel value="{!$ObjectType.Campaign__c.Fields.End_Date__c.Label}" style="font-family: sans-serif;font-weight: bold;"/>
+                        </td>
+                        <td width="30%" valign="top">
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="font-family: sans-serif;"> <apex:param value="{!Campaign__c.End_Date__c}"  /> </apex:outputText> 
+                        </td>
+                    </tr>
+                    
+                    <tr width="100%">
+                        
+                        <td width="20%" valign="top">
+                            <apex:outputText value="Created By" style="font-weight: bold;font-family: sans-serif;"/>
+                        </td>
+                        <td width="30%" valign="top">
+                            <apex:outputText value="{!Campaign__c.createdby.name}" style="font-family: sans-serif;"/>
+                        </td>
+                        <td width="20%" valign="top">
+                            <apex:outputText value="{!$ObjectType.Campaign__c.Fields.CreatedDate.Label}" style="font-weight: bold;font-family: sans-serif;"/>
+                        </td>
+                        <td width="30%" valign="top">
+                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}" style="font-family: sans-serif;"> <apex:param value="{!Campaign__c.createddate}"  /> </apex:outputText>
+                        </td>
+                    </tr>
+                    
+                    <!--     <tr width="100%">
+<td  width="20%" valign="top">
+</td>
+<td  width="30%" valign="top">
+</td>
+
+</tr>-->
+                    
+                </table>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    
+    
+    <!---------------------------------------------------- End of Details ---------------------------------------------------------->
+    
+    <!---------------------------------------------------- Description ---------------------------------------------------------->
+    
+    <table width="100%">
+        
+        <tr width="100%">
+            <td align="left">
+                <hr color="black" width="100%"/>
+            </td>
+        </tr>
+        
+        <tr width="100%">
+            <td width="100%">
+                <table width="100%" style = "background-color:#EEEEEE;margin-bottom:-10px;">
+                    <tr style="page-break-inside: avoid;">
+                        <td width="100%">
+                            <b> <apex:outputText value="{!upper($ObjectType.Campaign__c.Fields.Campaign_Description__c.Label)}" style="font-family: sans-serif;font-size:11pt;font-weight:bold;font-color:#0000FF;"/>  </b>
+                        </td>
+                        
+                    </tr>
+                </table>
+            </td>
+        </tr> <br/>
+        <tr>
+            <td align="left" width="100%" style="padding-left:20px;font-family: sans-serif;font-size:10pt;">
+                <apex:outputField value="{!Campaign__c.Campaign_Description__c}" style="font-family: sans-serif;font-size:10pt;"/> 
+            </td>
+        </tr>
+        
+    </table> 
+    
+    
+    <!---------------------------------------------------- End of Description ---------------------------------------------------------->
+    <apex:outputPanel rendered="{!jobWrapperList.size>0}">
+        <table width="100%"  style="page-break-inside:avoid;">
+            <tr>
+                <td align="left">
+                    <hr color="black" />
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <table width="100%" style = "background-color:#EEEEEE;margin-bottom:-10px;">
+                        <tr style="page-break-inside: avoid;">
+                            <td width = "20%">
+                                <b> <apex:outputText value="{!Status} Jobs" style="font-family: sans-serif;font-size:11pt;font-weight:bold;font-color:#0000FF;"/>  </b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <br/>
+            
+            <apex:dataTable value="{!jobWrapperList}" var="j" width="100%">
+                <apex:column >
+                    <table style="page-break-inside:avoid;">
+                        <tr>
+                            <td>
+                                <table width="98%" style="margin-left:2%;">
+                                    <tr>
+                                        <td width="60%">
+                                            <table width="100%" style="float:left;padding-left:5px;font-size:10pt;font-family:sans-serif;">
+                                                <tr>
+                                                    <td style="width:100%;vertical-align:top;">
+                                                        <b>
+                                                            <apex:outputText value="{!j.job.Job_Auto_Number__c} {!j.job.Name}" style="font-family:sans-serif;font-size:11pt;font-weight: bold;"/><br/>
+                                                            <apex:outputText style="font-size:10pt;font-family:sans-serif;" value="Client Contact: "/> </b> <apex:outputText value="{!j.job.JS_Client_Contact__r.name}" style="font-family:sans-serif;font-size:10pt;"/><br/>
+                                                        <b>  <apex:outputText value="{!j.lstStaff}" style="font-size:10pt;font-family:sans-serif;"/><apex:outputLabel style="font-size:10pt;font-family:sans-serif;"  ></apex:outputLabel>
+                                                        </b>
+                                                        <br/>
+                                                        <span>
+                                                            <apex:outputtext value="{!j.job.Creative_Overview__c}" escape="false" />
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    
+                                    <td width="40%" style="vertical-align:top;">
+                                        <table width="100%">
+                                            <tr>
+                                                <td width="100%">
+                                                    <apex:repeat value="{!j.jobTasks}" var="TSL">
+                                                        <div style="width:89px;float:left;" align="center">
+                                                            <b>  <apex:outputText style="width:100%;float:left;font-size:10pt;font-family:sans-serif;" value="{!TSL.name}" rendered="{!if(TSL.name !=null,true,false)}"/></b>
+                                                        </div>
+                                                    </apex:repeat>
+                                                    <br/>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td width="100%">
+                                                    <apex:repeat value="{!j.jobTasks}" var="TSL">
+                                                        
+                                                        
+                                                        <div style="width:89px;float:left;" align="center">
+                                                            <apex:outputText style="width:100%;float:left;font-size:12px;font-family:sans-serif;" value="{0,date,MM'/'dd}" rendered="{!if(TSL.Revised_Due_Date__c !=null,true,false)}">
+                                                                <apex:param value="{!if(TSL.Revised_Due_Date__c !=null,TSL.Revised_Due_Date__c,'-')}" /> 
+                                                            </apex:outputText>
+                                                            <apex:outputText style="width:100%;float:right; align:center;font-size:10pt;font-family:sans-serif;" value=" - - " rendered="{!if(TSL.Revised_Due_Date__c == null,true,false)}"></apex:outputText>
+                                                        </div>
+                                                    </apex:repeat>
+                                                    
+                                                </td>
+                                            </tr>
+                                            
+                                        </table>
+                                    </td>
+                                    
+                                </table><hr/>
+                            </td>
+                        </tr> 
+                    </table>
+                    
+                </apex:column>
+                
+            </apex:dataTable>
+            
+        </table>
+    </apex:outputPanel>  
+    
+</apex:page>
+<!-- End of Page -->

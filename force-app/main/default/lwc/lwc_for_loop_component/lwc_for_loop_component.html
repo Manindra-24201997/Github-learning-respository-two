@@ -1,0 +1,68 @@
+<template >
+  <div class="styleclass">
+
+
+<p>/****** For each to array **********/</p>
+<template for:each={fruits} for:item=m for:index="index">
+  <p key={m} >{index} - {m}</p><!--It will print in new line with  spaces-->
+<!--  {m} --> <!--It will print in same line with out spaces-->
+</template>
+
+
+<p>/****** Iterator to array **********/</p>
+<template iterator:item = {fruits}>
+<p key={item.value}>{item.value}</p>
+</template>
+
+/* custom example 1 */
+<template for:each={arraydatacustom} for:item=c>
+<p key={c.id}>{c.name}</p>
+<p key={c.id}>{c.age}</p>
+<p key={c.id}>{c.developer}</p>
+</template>
+
+/* custom example 2  only for single javascript object*/
+<br/>
+{obj.name}<br/>
+{obj.age}<br/>
+{obj.city}<br/>
+
+/* custom example 3  only for single json string object*/
+<br/>
+{objjson.name}<br/>
+{objjson.age}<br/>
+{objjson.city}<br/>
+
+/* custom example 4   for json string literal*/
+<br/>
+{objjsonstring}
+<br/>
+
+/* custom example 5  only for array of json object*/
+<template iterator:item={arrayofobj}>
+  <p key={item.value.name} >{item.value.name}</p>
+  <p key={item.value.age}>{item.value.age}</p>
+<p key = {item.value.city}>{item.value.city}</p>
+</template>
+
+/* custom example 6 only for iterator item */
+<lightning-card class="myfont">
+     <b class="myTitle">Iterator item List :</b>
+    <template iterator:it={contacts}>
+   <div key={it.value.Id} class="mypad">
+   <div if:true={it.first} class="changeFirst">
+       This is first -  Name : {it.value.Name}
+   </div>
+   Index : {it.index}
+         Id : {it.value.Id},<br/>
+         Name : {it.value.Name},<br/>
+         Website : {it.value.Website}
+   <div if:true={it.last} class="changeLast">
+          This is last -  Name : {it.value.Name}
+   </div>
+     </div>
+    </template>
+   </lightning-card>
+
+</div>
+</template>

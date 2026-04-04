@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <description>https://www.youtube.com/watch?v=mR-D7RBkRcI&amp;list=PLFvtFJBXOZ7UPFikk9NInK3qUeuPXBb6t&amp;pp=iAQB</description>
+    <interviewLabel>First Screen Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>First Screen Flow get and update record</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Fetched lead records based on first and last name.</description>
+        <name>Get_lead_records</name>
+        <label>Get lead records</label>
+        <locationX>400</locationX>
+        <locationY>337</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Screen_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>FirstName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>First_Name_Flow</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>LastName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Last_Name_Flow</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Lead</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordUpdates>
+        <description>Update lead email</description>
+        <name>Update_lead_email</name>
+        <label>Update lead email</label>
+        <locationX>754</locationX>
+        <locationY>335</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_lead_records.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Email</field>
+            <value>
+                <elementReference>Email_field_flow.value</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Lead</object>
+    </recordUpdates>
+    <screens>
+        <description>Lead_Details</description>
+        <name>Screen_2</name>
+        <label>Screen 2</label>
+        <locationX>572</locationX>
+        <locationY>333</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Update_lead_email</targetReference>
+        </connector>
+        <fields>
+            <name>Display_name_with_phone_number</name>
+            <fieldText>&lt;p&gt;The phone neumber of : {!Get_lead_records.Name} is {!Get_lead_records.Phone}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Please_enter_email_flow</name>
+            <fieldText>&lt;p&gt;Please enter a new email for your lead&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Email_field_flow</name>
+            <extensionName>flowruntime:email</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>label</name>
+                <value>
+                    <stringValue>Email field flow</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <description>Test screen 1</description>
+        <name>Test_screen_1</name>
+        <label>Test screen 1</label>
+        <locationX>171</locationX>
+        <locationY>340</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_lead_records</targetReference>
+        </connector>
+        <fields>
+            <name>First_Name_Flow</name>
+            <dataType>String</dataType>
+            <fieldText>First Name Flow</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Last_Name_Flow</name>
+            <dataType>String</dataType>
+            <fieldText>Last Name Flow</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Test_screen_1</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+</Flow>

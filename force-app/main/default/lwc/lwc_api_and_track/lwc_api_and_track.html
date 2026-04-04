@@ -1,0 +1,11 @@
+<template>
+<lightning-card title="Differences between @api and @track i.e,Decorators">
+<lightning-input label="Name" value={namevalue} onchange={namechange}></lightning-input>
+<lightning-input label="age" value={agevalue} onchange={agechange}></lightning-input>
+<lightning-input label="city" value={cityvalue} onchange={citychange}></lightning-input>
+<lightning-button label="Click" onclick={buttonclicked}></lightning-button>
+
+<c-lwc_api_and_track_child chnameapi={valname} chageapi={valage} chcityapi={valcity} chnametrack={valname} chagetrack={valage} chcitytrack={valcity}></c-lwc_api_and_track_child>
+
+</lightning-card>   
+</template>

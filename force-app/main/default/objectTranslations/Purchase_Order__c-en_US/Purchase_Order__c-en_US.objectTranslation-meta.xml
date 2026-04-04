@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Purchase Order</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Purchase Orders</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- PO FieldSets --></label>
+        <name>PO_FieldSets</name>
+    </fieldSets>
+    <quickActions>
+        <label><!-- Delete --></label>
+        <name>Delete</name>
+    </quickActions>
+    <recordTypes>
+        <description><!-- When PO Status Is Sent PO Record Will Be Read Only --></description>
+        <label><!-- When PO Status is Sent --></label>
+        <name>When_PO_Status_is_Sent</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- Due date must be greater than Issue Date --></errorMessage>
+        <name>Issue_Date_must_be_less_than_Due_Date</name>
+    </validationRules>
+</CustomObjectTranslation>

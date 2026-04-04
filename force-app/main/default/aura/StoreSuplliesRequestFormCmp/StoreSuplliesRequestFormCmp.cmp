@@ -1,0 +1,990 @@
+<aura:component controller="StoreSuppliesLightingCmpCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global" >
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!-- create 2 aura handler with waiting and donewaiting events-->
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <!--create a component attributs -->
+    <aura:attribute name="Loading" type="boolean" default="false"/>
+    
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:attribute name="isStoreSupplies" type="boolean" default="true"/>
+    <aura:attribute name="ShowCartSection" type="boolean" default="false"/>
+    
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    <aura:attribute name="MaterialItems" type="object"/>    
+    <aura:attribute name="isMobile" type="boolean" />
+    <aura:attribute name="MaterialItemsInCart" type="object"/> 
+    <aura:attribute name="MaterialItemsInCartagain" type="object"/> 
+    <aura:attribute name="MaterialType" type="list"/>
+    <aura:attribute name="slectedPickListValue" type="string" />
+    <aura:attribute name="enteredInputSearch" type="string" />
+    <aura:attribute name="stockLables" type="list" />
+    <!--<aura:attribute name="results" type="Integer[]" default="[1,2,3,4,5,6,7,8,9,10,11]"/>-->
+    <aura:attribute name="boolval" type="boolean" default="false" />
+    <aura:attribute name="carthold" type="boolean" default="false" />
+    <aura:attribute name="showbackbtn" type="boolean" default="true" />
+    <aura:attribute name="showmaterialitems" type="boolean" default="false" />
+    <aura:attribute name="cancelitems" type="boolean" default="false" />
+    <aura:attribute name="cancelplaceditems" type="boolean" default="false" />
+    <aura:attribute name="showmicategory" type="boolean" default="true"/>
+    
+    <aura:attribute name="StoredMaterialItems" type="object"/>    
+    <aura:attribute name="cartitemids" type="list"/> 
+    
+    <ltng:require  styles="{!$Resource.LtngStyles + '/LCmpModalandChart/Styles/ModalHederFooterStyles.css'}"/>
+    
+    <aura:attribute name="homepagesearchvaluefrom" type="string" default=""/>
+    <aura:attribute name="showhomepagesearchvalueitems" type="boolean" default="false"/>
+    <aura:attribute name="showhomepagesearchbox" type="boolean" default="true"/>
+    <aura:attribute name="showhomepagesearchvalueitemscarthold" type="boolean" default="false"/>
+    <aura:attribute name="showhomepagesearchvalueitemscartholdgrid" type="boolean" default="false"/>
+    
+    <aura:attribute name="eventMessage" type="String" /> 
+    <aura:method name="refreshcart" action="{!c.refreshcartfunction}" access="public">
+    </aura:method>
+    
+    
+    <!--===========================================*Search criteria Layout*=====================================-->
+    
+    <aura:if isTrue="{!v.Loading}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <lightning:card title="">
+        <aura:if isTrue="{!v.isStoreSupplies}">
+            <div class="showScroll">
+                <ui:scrollerWrapper class="scrollerSize">
+                    <!--Modal Header--> 
+                    
+                    <lightning:card>
+                        
+                        <!--End of Modal Footer-->    
+                        <aura:set attribute="title">
+                            <aura:if isTrue="{!!v.isMobile}">
+                                <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/>
+                                <br/>
+                                <aura:if isTrue="{!v.showhomepagesearchbox}">
+                                    <lightning:input aura:id="enter-search"
+                                                     name="enter-search"
+                                                     placeholder="Item Search"
+                                                     label=""
+                                                     type="search"
+                                                     onchange="{!c.onMiSelectHomePageSearch}"/>
+                                    
+                                </aura:if>
+                            </aura:if>
+                        </aura:set>  
+                        <aura:set attribute="actions">
+                            
+                            <aura:if isTrue="{!v.showbackbtn}">
+                                
+                                <lightning:button label="View Cart" title="View Cart" class="buttonClass" onclick="{!c.goToCart}"/><lightning:button variant="neutral"
+                                                                                                                                                     label="Back"
+                                                                                                                                                     title="Back"
+                                                                                                                                                     onclick="{!c.backToStoreFront}"
+                                                                                                                                                     class="buttonClass"/>
+                                <aura:set attribute="else">
+                                    <lightning:button label="View Cart" title="View Cart" class="buttonClass" onclick="{!c.goToCart}"/><lightning:button variant="neutral"
+                                                                                                                                                         label="Back"
+                                                                                                                                                         title="Back"
+                                                                                                                                                         onclick="{!c.DisplayItemCategory}"
+                                                                                                                                                         class="buttonClass"/>
+                                </aura:set>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isMobile}">
+                                <lightning:button label="Add To Cart"
+                                                  title="Add To Cart"
+                                                  class="buttonClass"
+                                                  onclick="{!c.addItemToCart}"/>
+                                <aura:if isTrue="{!v.MaterialItemsInCart.length>0}">
+                                    <div>
+                                        <lightning:button label="View Cart"
+                                                          title="View Cart"
+                                                          class="buttonClass"
+                                                          onclick="{!c.goToCart}"/>
+                                    </div>
+                                </aura:if>
+                            </aura:if>
+                        </aura:set>
+                        
+                    </lightning:card>
+                    <lightning:accordion  activeSectionName=" Store Supply Order Request Form" >
+                        <lightning:accordionSection name=" Store Supply Order Request Form" label=" Store Supply Order Request Form ">
+                            
+                            <!-- The below if is new logic -->
+                            
+                            <aura:if isTrue="{!empty(v.MaterialItems)}">
+                                <aura:if isTrue="{!!v.isMobile}">
+                                    <aura:if isTrue = "{!v.showmicategory}">
+                                        
+                                        <div class="slds-grid slds-gutters slds-wrap" style="margin-top:45px;margin-left:40px;">
+                                            <aura:iteration items="{!v.MaterialType}" var="items" indexVar="idx">
+                                                <div class="slds-col slds-size_2-of-12" >
+                                                    <br/>
+                                                    <aura:if isTrue="{!items == 'Banners'}">
+                                                        <img src="{!$Resource.Banners}" onclick="{!c.onMiSelect}" id="{!items}"  class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 20px;white-space:nowrap;align:center;" id="{!idx}"> Banners</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Cigarette POP Materials'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Cigarette POP Materials </label><br/><br/>
+                                                        
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'CMN'}" >
+                                                        <img src="{!$Resource.CMNPromo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 30px;white-space: nowrap;align:center;" id="{!idx}">CMN</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'CNG'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">CNG</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Coffee'}" >
+                                                        <img src="{!$Resource.Coffee}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 25px;white-space: nowrap;align:center;" id="{!idx}">Coffee</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Cooler'}" >
+                                                        <img src="{!$Resource.Cooler}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 24px;white-space: nowrap;align:center;" id="{!idx}">Cooler</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Customer Commitments'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Customer Commitments</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Decals'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Decals</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Deli'}" >
+                                                        
+                                                        <img src="{!$Resource.Deli}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left:34px;white-space:nowrap;" id="{!idx}">Deli</label><br/><br/>
+                                                        
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Diesel Desk'}" >
+                                                        <img src="{!$Resource.DieselGasDesk}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Diesel Desk</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Facilities'}" >
+                                                        <img src="{!$Resource.Facilities}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space:nowrap;align:center;" id="{!idx}">Facilities</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Finished Goods'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Finished Goods</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Forms'}" >
+                                                        <img src="{!$Resource.Forms}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 28px;white-space: nowrap;align:center;" id="{!idx}">Forms</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Fountain'}" >
+                                                        <img src="{!$Resource.Fountain}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 21px;white-space: nowrap;align:center;" id="{!idx}">Fountain</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Fuel Pumps'}" >
+                                                        <img src="{!$Resource.FuelPump}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 5px;white-space: nowrap;align:center;" id="{!idx}">Fuel Pumps</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Gas Desk'}" >
+                                                        <img src="{!$Resource.DieselGasDesk}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Gas Desk</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Literature'}" >
+                                                        <img src="{!$Resource.Literature}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 15px;white-space: nowrap;align:center;" id="{!idx}">Literature</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Loss Prevention'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Loss Prevention</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Loyalty'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Loyalty</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Laundry'}" >
+                                                        <img src="{!$Resource.Laundry}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Laundry</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Merchandising'}" >
+                                                        <img src="{!$Resource.Merchandising}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: -3px;white-space: nowrap;align:center;" id="{!idx}">Merchandising</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Office'}" >
+                                                        <img src="{!$Resource.office}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left:20px;white-space: nowrap;align:center;" id="{!idx}">Office</label><br/><br/>
+                                                    </aura:if>                    
+                                                    
+                                                    
+                                                    <aura:if isTrue="{!items == 'Other Signs'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Other Signs</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Posters'}" >
+                                                        <img src="{!$Resource.Posters}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Posters</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Propane'}" >
+                                                        <img src="{!$Resource.Propane}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 21px;white-space: nowrap;align:center;" id="{!idx}">Propane</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Pump Toppers'}" >
+                                                        <img src="{!$Resource.PumpTopper}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: -3px;white-space: nowrap;align:center;" id="{!idx}">Pump Toppers</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Recruiting'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Recruiting</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Restaurant'}" >
+                                                        <img src="{!$Resource.Restaurant}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 10px;white-space: nowrap;align:center;" id="{!idx}">Restaurant</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Restrooms'}" >
+                                                        <img src="{!$Resource.Restroom}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Restrooms</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Roller Grill'}" >
+                                                        <img src="{!$Resource.RollerGrill}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 10px;white-space: nowrap;align:center;" id="{!idx}">Roller Grill</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Shelf Communication'}" >
+                                                        <img src="{!$Resource.ShelfCommunication}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left:-47px;white-space: nowrap;align:center;" id="{!idx}">Shelf Communication</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Safety'}" >
+                                                        <img src="{!$Resource.Safety}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 27px;white-space: nowrap;align:center;" id="{!idx}">Safety</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    
+                                                    
+                                                    <aura:if isTrue="{!items == 'Showers'}" >
+                                                        <img src="{!$Resource.Showers}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Showers</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'SNAP'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">SNAP</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Speedco'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Speedco</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'TirePass'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">TirePass</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Trillium CNG'}" >
+                                                        <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Trillium CNG</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                    <aura:if isTrue="{!items == 'Truck Care'}" >
+                                                        <img src="{!$Resource.TruckCare}" onclick="{!c.onMiSelect}" id="{!items}" class= "fitimage"/><br/>
+                                                        <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Truck Care</label><br/><br/>
+                                                    </aura:if>
+                                                    
+                                                </div>
+                                            </aura:iteration>
+                                        </div>
+                                    </aura:if>
+                                </aura:if>
+                            </aura:if>
+                            <!-- Ends Here -->
+                            
+                            <aura:if isTrue="{!v.showhomepagesearchvalueitems}">
+                                <lightning:button label="Add To Cart 1" title="Add To Cart 1" class="keyInput" onclick="{!c.addItemToCart}" disabled="{!empty(v.MaterialItems)}"/>
+                                <br/>  
+                                <div class="slds-grid slds-gutters slds-wrap" style="margin-top: 45px;">
+                                    <aura:iteration items="{!v.MaterialItems}" var="item">  
+                                        <div class="slds-col slds-size_3-of-12" >
+                                            <br/>  
+                                            <span >
+                                                <aura:if isTrue="{!empty(item.value.ContentVersionId)}">
+                                                    <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                                    <aura:set attribute = "else">    
+                                                        <br/> <img src="{!v.prefixURL + item.value.ContentVersionId}" class="slds-truncate" width="200" height="30" alt="No Image"/><br/>
+                                                    </aura:set>
+                                                </aura:if>
+                                                <span style = "word-wrap:break-word;white-space:pre-wrap;">
+                                                    <b style="{!'color:' + item.value.greycolor}">{!item.value.MI.Name}</b><br/>
+                                                    {!item.value.MI.Description__c}<br/>
+                                                    <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c}">
+                                                        <b style="color:red;">{!v.stockLables[0]} </b><br/>
+                                                        <b>{!v.stockLables[1]} : </b><lightning:formattedDateTime value="{!item.value.MI.Re_Stocking__c}" year="numeric" month="numeric" day="numeric"/>
+                                                    </aura:if>
+                                                </span>
+                                                <aura:if isTrue="{!item.value.MI.Out_of_Stock__c==false}">
+                                                    <div class="slds-checkbox" >
+                                                        <label class="slds-checkbox">
+                                                            <ui:inputCheckbox value="{!item.value.checked}"  change="{!c.onCheck}"/>
+                                                            <span class="slds-checkbox--faux" />                                
+                                                        </label>
+                                                    </div>
+                                                </aura:if>
+                                            </span>
+                                            <br/>
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                                <lightning:button label="Add To Cart 2" title="Add To Cart 2" class="slds-float_right margins" onclick="{!c.addItemToCart}" disabled="{!empty(v.MaterialItems)}"/>
+                                <br/><br/>
+                            </aura:if>
+                            
+                            <!-- New Logic added on 18 - 08 - 2022 for back functionality and cart holding -->
+                            <aura:if isTrue = "{!v.carthold}">
+                                <div class="slds-grid slds-gutters slds-wrap" style="margin-top: 45px;margin-left:40px;">
+                                    
+                                    <aura:iteration items="{!v.MaterialType}" var="items" indexVar="idx">
+                                        <div class="slds-col slds-size_2-of-12" >
+                                            <br/>
+                                            
+                                            <aura:if isTrue="{!items == 'Banners'}">
+                                                <img src="{!$Resource.Banners}" onclick="{!c.onMiSelectCarthold}" id="{!items}"  class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 20px;white-space:nowrap;align:center;" id="{!idx}"> Banners</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Cigarette POP Materials'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Cigarette POP Materials </label><br/><br/>
+                                                
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'CMN'}" >
+                                                <img src="{!$Resource.CMNPromo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 30px;white-space: nowrap;align:center;" id="{!idx}">CMN</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'CNG'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">CNG</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Coffee'}" >
+                                                <img src="{!$Resource.Coffee}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 25px;white-space: nowrap;align:center;" id="{!idx}">Coffee</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Cooler'}" >
+                                                <img src="{!$Resource.Cooler}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 24px;white-space: nowrap;align:center;" id="{!idx}">Cooler</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Customer Commitments'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Customer Commitments</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Decals'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space:nowrap;align:center;" id="{!idx}">Decals</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Deli'}" >
+                                                
+                                                <img src="{!$Resource.Deli}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left:34px;white-space:nowrap;" id="{!idx}">Deli</label><br/><br/>
+                                                
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Diesel Desk'}" >
+                                                <img src="{!$Resource.DieselGasDesk}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Diesel Desk</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Facilities'}" >
+                                                <img src="{!$Resource.Facilities}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space:nowrap;align:center;" id="{!idx}">Facilities</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Finished Goods'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Finished Goods</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Forms'}" >
+                                                <img src="{!$Resource.Forms}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 28px;white-space: nowrap;align:center;" id="{!idx}">Forms</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Fountain'}" >
+                                                <img src="{!$Resource.Fountain}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 21px;white-space: nowrap;align:center;" id="{!idx}">Fountain</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Fuel Pumps'}" >
+                                                <img src="{!$Resource.FuelPump}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 5px;white-space: nowrap;align:center;" id="{!idx}">Fuel Pumps</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Gas Desk'}" >
+                                                <img src="{!$Resource.DieselGasDesk}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Gas Desk</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Literature'}" >
+                                                <img src="{!$Resource.Literature}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 15px;white-space: nowrap;align:center;" id="{!idx}">Literature</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Loss Prevention'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Loss Prevention</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Loyalty'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Loyalty</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Laundry'}" >
+                                                <img src="{!$Resource.Laundry}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Laundry</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Merchandising'}" >
+                                                <img src="{!$Resource.Merchandising}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: -3px;white-space: nowrap;align:center;" id="{!idx}">Merchandising</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Office'}" >
+                                                <img src="{!$Resource.office}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left:20px !important;white-space: nowrap;align:center;" id="{!idx}">Office</label><br/><br/>
+                                            </aura:if>                    
+                                            
+                                            <aura:if isTrue="{!items == 'Other Signs'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Other Signs</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Posters'}" >
+                                                <img src="{!$Resource.Posters}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Posters</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Propane'}" >
+                                                <img src="{!$Resource.Propane}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 21px;white-space: nowrap;align:center;" id="{!idx}">Propane</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Pump Toppers'}" >
+                                                <img src="{!$Resource.PumpTopper}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: -3px;white-space: nowrap;align:center;" id="{!idx}">Pump Toppers</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Recruiting'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Recruiting</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Restaurant'}" >
+                                                <img src="{!$Resource.Restaurant}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 10px;white-space: nowrap;align:center;" id="{!idx}">Restaurant</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Restrooms'}" >
+                                                <img src="{!$Resource.Restroom}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Restrooms</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Roller Grill'}" >
+                                                <img src="{!$Resource.RollerGrill}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 10px;white-space: nowrap;align:center;" id="{!idx}">Roller Grill</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Shelf Communication'}" >
+                                                <img src="{!$Resource.ShelfCommunication}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left:-47px;white-space: nowrap;align:center;" id="{!idx}">Shelf Communication</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Safety'}" >
+                                                <img src="{!$Resource.Safety}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 27px;white-space: nowrap;align:center;" id="{!idx}">Safety</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Showers'}" >
+                                                <img src="{!$Resource.Showers}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Showers</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'SNAP'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">SNAP</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Speedco'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Speedco</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'TirePass'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">TirePass</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Trillium CNG'}" >
+                                                <img src="{!$Resource.JS_Logo}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 23px;white-space: nowrap;align:center;" id="{!idx}">Trillium CNG</label><br/><br/>
+                                            </aura:if>
+                                            
+                                            <aura:if isTrue="{!items == 'Truck Care'}" >
+                                                <img src="{!$Resource.TruckCare}" onclick="{!c.onMiSelectCarthold}" id="{!items}" class= "fitimage"/><br/>
+                                                <label class="slds-form-element__label"  style=" margin-left: 13px;white-space: nowrap;align:center;" id="{!idx}">Truck Care</label><br/><br/>
+                                            </aura:if>
+                                            
+                                        </div>
+                                    </aura:iteration>
+                                </div>
+                            </aura:if>
+                            
+                            <!-- The below aura if commented on 25 - 08 - 2022 because of getting in unnecessary place i.e., at item categories -->
+                            <!--  <aura:if isTrue="{!!v.isMobile}">
+                                <lightning:button label="A To Cart" title="Add To Cart" class="slds-float_right margins" onclick="{!c.addItemToCart}"/>
+                                
+                          <aura:if isTrue="{!v.MaterialItemsInCart.length>0}">
+                                    <div>
+                                        <lightning:button label="View Cart" title="View Cart" class="slds-float_right margins" onclick="{!c.goToCart}"/>
+                                    </div>
+                                </aura:if>
+                                <br/>
+                            </aura:if>-->
+                            
+                            <aura:if isTrue="{!v.showmaterialitems}">
+                                <aura:if isTrue="{!!v.isMobile}">
+                                    <!--<aura:if isTrue="{!empty(v.MaterialItems)}">
+                                      <aura:if isTrue="{!v.boolval}">
+                                            <p style="margin:2rem 4rem;"><b>No records found for the search criteria entered</b></p>
+                                        </aura:if>
+                                        <aura:set attribute="else">-->
+                                    <aura:if isTrue="{!!v.isMobile}">
+                                        <lightning:input aura:id="MaterialItemNameString" name="ItemSearch" label=""  style = "float:left;" placeholder="Item Search" class="" onchange="{!c.onMisearchname}" type="search"/>  
+                                        <br/> <br/> <br/> 
+                                        <b style="color:red;font-size:15px;">Search within category</b>
+                                        <lightning:button label="Add To Cart 3" title="Add To Cart 3" class="keyInput" onclick="{!c.addItemToCart}" disabled="{!empty(v.MaterialItems)}"/>
+                                    </aura:if>
+                                    <br/>  
+                                    <div class="slds-grid slds-gutters slds-wrap" style="margin-top: 45px;">
+                                        <aura:iteration items="{!v.MaterialItems}" var="item">  
+                                            
+                                            <div class="slds-col slds-size_3-of-12" >
+                                                <br/>  
+                                                <span >
+                                                    <aura:if isTrue="{!empty(item.value.ContentVersionId)}">
+                                                        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                                        <aura:set attribute = "else">    
+                                                            <br/> <img src="{!v.prefixURL + item.value.ContentVersionId}" class="slds-truncate" width="200" height="30" alt="No Image"/><br/>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                    <span style = "word-wrap:break-word;white-space:pre-wrap;">
+                                                        <b style="{!'color:' + item.value.greycolor}">{!item.value.MI.Name}</b><br/>
+                                                        {!item.value.MI.Description__c}<br/>
+                                                        <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                        <aura:if isTrue="{!item.value.MI.Out_of_Stock__c}">
+                                                            <b style="color:red;">{!v.stockLables[0]} </b><br/>
+                                                            <b>{!v.stockLables[1]} : </b><lightning:formattedDateTime value="{!item.value.MI.Re_Stocking__c}" year="numeric" month="numeric" day="numeric"/>
+                                                        </aura:if>
+                                                    </span>
+                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c==false}">
+                                                        <div class="slds-checkbox" >
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox value="{!item.value.checked}"  change="{!c.onCheck}"/>
+                                                                <span class="slds-checkbox--faux" />                                
+                                                            </label>
+                                                        </div>
+                                                    </aura:if>
+                                                </span>
+                                                <br/>
+                                            </div>
+                                        </aura:iteration>
+                                    </div>
+                                    
+                                    <aura:if isTrue="{!!v.isMobile}">
+                                        <lightning:button label="Add To Cart 4" title="Add To Cart 4" class="slds-float_right margins" onclick="{!c.addItemToCart}" disabled="{!empty(v.MaterialItems)}"/>
+                                    </aura:if>
+                                    <br/><br/>
+                                    
+                                    <!--  <lightning:layout horizontalAlign="spread" verticalAlign="center" multipleRows="true">
+        <aura:iteration items="{!v.results}" var="item" indexVar="itemNo" >
+            <aura:if isTrue = "{!itemNo % 4 ==1}">
+                <lightning:layoutItem flexibility="no-flex"  alignmentBump="right"  size="12" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="3">
+                    <div class="slds-grid slds-gutters slds-col">align me left! {!item}</div>
+                </lightning:layoutItem>      
+                <aura:set attribute="else">
+                    <lightning:layoutItem flexibility="no-flex"   size="12" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="3">
+                        <div class="slds-grid slds-gutters slds-col">mod of index = {!itemNo % 3}  item {!item}</div>
+                    </lightning:layoutItem>
+                </aura:set>
+            </aura:if>          
+        </aura:iteration>
+    </lightning:layout>-->
+                                    <!-- <lightning:layout horizontalAlign="space"  multipleRows="true">
+    <aura:iteration items="{!v.results}" var="v">
+        <lightning:layoutItem flexibility="auto" size="12" smallDeviceSize="4" mediumDeviceSize="4" largeDeviceSize="4">
+            {!v}
+        </lightning:layoutItem>
+    </aura:iteration>
+</lightning:layout>   -->
+                                    
+                                    <!-- <div class="showScroll" style="margin-top:45px;">
+                                        <lightning:layout  multipleRows="true" >
+                                            <aura:iteration items="{!v.MaterialItems}" var="item">                
+                                                <lightning:layoutItem  size="4" flexibility="auto" padding="horizontal-medium">
+                                                    <br/>
+                                                    <div class="slds-grid">
+                                                      <span>
+                                                          <aura:if isTrue="{!empty(item.value.ContentVersionId)}">
+                                                             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                                          <aura:set attribute = "else">    
+                                                      <img src="{!v.prefixURL + item.value.ContentVersionId}" class="slds-truncate" width="200" height="30" alt="No Image"/><br/>
+                                                     </aura:set>
+                                                              </aura:if>
+                                                              <span style = "word-wrap:break-word;white-space:pre-wrap;">
+                                                          <b>{!item.value.MI.Name}</b><br/>
+                                                                    {!item.value.MI.Description__c}<br/>
+                                                                    <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c}">
+                                                                        <b style="color:red;">{!v.stockLables[0]} </b><br/>
+                                                                        <b>{!v.stockLables[1]} :
+                                                                            <lightning:formattedDateTime value="{!item.value.MI.Re_Stocking__c}" year="numeric" month="numeric" day="numeric"/>
+                                                                        </b>
+                                                                    </aura:if></span>
+                                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c==false}">
+                                                                        <div class="slds-checkbox" >
+                                                                            <label class="slds-checkbox">
+                                                                                <ui:inputCheckbox value="{!item.value.checked}"  />
+                                                                                                               
+                                                                            </label>
+                                                                        </div>
+                                                          </aura:if>
+                                                      </span>
+                                                    </div>
+                                                </lightning:layoutItem>
+                                                <br/>
+                                            </aura:iteration>                                        
+                                        </lightning:layout>
+                                        </div>-->
+                                    
+                                    <!--This code is oiginal code
+
+<div class="showScroll" style="margin-top:45px;">
+                                            <ui:scrollerWrapper class="scrollerSize">                                        
+                                                <table class="slds-table slds-table_cell-buffer slds-table_fixed-layout slds-table_bordered " >
+                                                    <thead >
+                                                        <tr>
+                                                            <th class="slds-truncate"><b>Photo</b></th>
+                                                            <th  class="slds-truncate"  style="word-wrap:break-word;white-space:pre-wrap;"><b>Item Description</b></th>
+                                                            <th  class="slds-truncate slds-text-align_center"><b>Select</b></th>  
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                        <aura:iteration items="{!v.MaterialItems}" var="item">                
+                                                            <tr>
+                                                                <td class="slds-truncate" ><img src="{!v.prefixURL + item.value.ContentVersionId}" width="200" height="30" alt="No Image"/></td>
+                                                               
+                                                                <td style="word-wrap:break-word;white-space:pre-wrap;"  >
+                                                                    <b>{!item.value.MI.Name}</b><br/>
+                                                                    {!item.value.MI.Description__c}<br/>
+                                                                    <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c}">
+                                                                        <b style="color:red;">{!v.stockLables[0]} </b><br/>
+                                                                        <b>{!v.stockLables[1]} :
+                                                                            <lightning:formattedDateTime value="{!item.value.MI.Re_Stocking__c}" year="numeric" month="numeric" day="numeric"/>
+                                                                        </b>
+                                                                    </aura:if>
+                                                                </td>
+                                                                <td class="slds-text-align_center">
+                                                                    <aura:if isTrue="{!item.value.MI.Out_of_Stock__c==false}">
+                                                                        <div class="slds-checkbox" >
+                                                                            <label class="slds-checkbox">
+                                                                                <ui:inputCheckbox value="{!item.value.checked}"  />
+                                                                          <span class="" />                        
+                                                                            </label>
+                                                                        </div>
+                                                                    </aura:if>
+                                                                </td>
+                                                            </tr>
+                                                        </aura:iteration>
+                                                    </tbody>
+                                                </table>
+                                            </ui:scrollerWrapper>
+                                        </div>-->
+                                    
+                                    <!-- </aura:set>
+                                    </aura:if>-->
+                                </aura:if>
+                            </aura:if>
+                            
+                            <aura:if isTrue="{!v.isMobile}">
+                                <aura:if isTrue="{!empty(v.MaterialItems)}">
+                                    <p style="margin:2rem 4rem;"><b>No records found for the search criteria entered</b></p>
+                                    <aura:set attribute="else">
+                                        <hr style="display: block;margin: 1rem 0 1rem 0;border-top: 1px solid rgb(221, 219, 218);"/>
+                                        <div class="showScroll" style="margin-top:45px;">
+                                            <ui:scrollerWrapper class="scrollerSizemob">
+                                                <aura:iteration items="{!v.MaterialItems}" var="item">
+                                                    <table>
+                                                        <tr>
+                                                            <td colspan="2" width="80%">
+                                                                <img src="{!v.prefixURL + item.value.ContentVersionId}" width="150" height="30" alt="No Image"/>
+                                                                <br/><b>{!item.value.MI.Name}</b><br/>
+                                                                {!item.value.MI.Description__c}<br/>
+                                                                <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                                <aura:if isTrue="{!item.value.MI.Out_of_Stock__c}">
+                                                                    <b style="color:red;">{!v.stockLables[0]} </b><br/>
+                                                                    <b>{!v.stockLables[1]} : </b><lightning:formattedDateTime value="{!item.value.MI.Re_Stocking__c}" year="numeric" month="numeric" day="numeric"/>
+                                                                </aura:if><br/>
+                                                            </td>
+                                                            <td width="20%" class="slds-text-align_center" style="vertical-align: top;">
+                                                                <aura:if isTrue="{!item.value.MI.Out_of_Stock__c==false}">
+                                                                    <div class="slds-checkbox" style=" padding-top: 35px;">
+                                                                        <label class="slds-checkbox">
+                                                                            <ui:inputCheckbox value="{!item.value.checked}"  />
+                                                                            <span class="slds-checkbox--faux" />                                
+                                                                        </label>
+                                                                    </div>
+                                                                </aura:if>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </table>
+                                                    <hr style="display: block;margin: 0 0 1rem 0;border-top: 1px solid rgb(221, 219, 218);"/>
+                                                </aura:iteration>
+                                            </ui:scrollerWrapper>
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+                            </aura:if>
+                        </lightning:accordionSection>
+                        
+                    </lightning:accordion>
+                </ui:scrollerWrapper>
+            </div>
+            
+        </aura:if>
+        <!--===========================================*End of Search criteria Layout*=====================================-->
+        
+        <!--===========================================*ViewCartSection*=====================================-->
+        <aura:if isTrue="{!v.ShowCartSection}">
+            <lightning:card>
+                <aura:set attribute="title">
+                    <aura:if isTrue="{!!v.isMobile}">
+                        <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/>
+                    </aura:if>
+                </aura:set>  
+                <aura:set attribute="actions">
+                    <lightning:button variant="neutral"
+                                      label="Continue Shopping"
+                                      disabled="{!v.isSpinner}"
+                                      title="Continue Shopping"
+                                      onclick="{!c.continueShopping}" class="buttonClass"/>
+                    
+                    
+                    <lightning:button variant="neutral"
+                                      label="Cancel Order"
+                                      title="Cancel Order"
+                                      disabled="{!v.isSpinner}"
+                                      onclick="{!c.cancelorder}" class="buttonClass"/>
+                    
+                    <lightning:button variant="brand"
+                                      label="Place Order"
+                                      disabled="{!v.isSpinner}"
+                                      title="Place Order"
+                                      onclick="{!c.placeOrder}" class="buttonClass"/>
+                </aura:set>
+            </lightning:card>                
+            <lightning:accordion activeSectionName="Shopping Cart" >
+                <lightning:accordionSection name="Shopping Cart" label="Shopping Cart">
+                    <div class="showScroll">
+                        <ui:scrollerWrapper class="scrollerSizecart">
+                            <aura:if isTrue="{!!v.isMobile}">
+                                <table class="slds-table slds-table_cell-buffer slds-table_fixed-layout slds-table_bordered" >
+                                    <thead >
+                                        <tr>
+                                            <th class="slds-truncate"><b>Photo</b></th>
+                                            <th  style="white-space:pre-wrap;"><b>Item Description</b></th>
+                                            <th style="white-space:pre-wrap;" class="slds-text-align_center"><b> Max Qty</b></th>
+                                            <th class="slds-truncate"><b>Qty</b></th>
+                                            <th class="slds-truncate slds-text-align_center"><b>Delete</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.MaterialItemsInCart}" var="item"  indexVar="rowIndex">
+                                            <tr>
+                                                <td class="slds-truncate" ><img src="{!v.prefixURL + item.value.ContentVersionId}" width="200" height="30" alt="No Image"/></td>
+                                                
+                                                <td style="white-space:pre-wrap;"  >
+                                                    <b>{!item.value.MI.Name}</b><br/>                                        
+                                                    <b>Package Type:</b> {!item.value.MI.Package_Type__c}<br/>
+                                                    <aura:if isTrue = "{!item.value.MI.Out_of_Stock__c}">
+                                                        <b style="color:red;">Currently this item is out of stock</b>
+                                                    </aura:if>
+                                                </td>
+                                                <td class="slds-truncate slds-text-align_center" id="{!rowIndex+'maxQty'}">
+                                                    {!item.value.MI.Max_Qty__c}
+                                                </td>
+                                                <td>
+                                                    <aura:if isTrue = "{!!item.value.MI.Out_of_Stock__c}">
+                                                        <div id="{!rowIndex+'qty'}" >
+                                                            <ui:inputText value="{!item.value.quantity}" class="slds-input inputstyle" labelClass="{!rowIndex}" updateOn="change" change="{!c.checkQuantity}" maxlength="2"/>
+                                                        </div>
+                                                        <b class="slds-wrap" wdith="25%;" id="{!rowIndex+'erMsg'}" style="display:none;">The Quantity must be less than Max Quantity of Material Item</b>
+                                                        <aura:set attribute="else">
+                                                            <ui:outputText value="{!item.value.quantity}"/>
+                                                        </aura:set>
+                                                    </aura:if>
+                                                </td>
+                                                <td class="slds-text-align_center">
+                                                    <a  onclick="{!c.RemoveFromCartSection}" data-value="{!rowIndex}">
+                                                        <lightning:icon  iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="Remove"/>
+                                                        <span class="slds-assistive-text">Delete Icon</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </aura:if>
+                            <aura:if isTrue="{!v.isMobile}">
+                                <aura:iteration items="{!v.MaterialItemsInCart}" var="item"  indexVar="rowIndex">
+                                    <table>
+                                        <tr>
+                                            <td  width="60%">
+                                                <img src="{!v.prefixURL + item.value.ContentVersionId}" width="150" height="30" alt="No Image"/>
+                                                <br/>      
+                                                <b><p style="">{!item.value.MI.Name}</p></b>                                    
+                                                <b>Package Type:</b> {!item.value.MI.Package_Type__c}
+                                                <tr><td width="40%" ><b>Max Qty:</b></td>
+                                                    <td width="60%" ><p id="{!rowIndex+'maxQty'}">
+                                                        {!item.value.MI.Max_Qty__c}
+                                                        </p></td>
+                                                </tr>
+                                            </td>
+                                            <td  style="padding-left: 30px;">
+                                                <p>
+                                                    <div id="{!rowIndex+'qty'}">
+                                                        Qty:<br/> <ui:inputText  value="{!item.value.quantity}" class="inputstyle slds-input" labelClass="{!rowIndex}" updateOn="change" change="{!c.checkQuantity}" maxlength="2"/>
+                                                    </div>
+                                                    <b class="slds-wrap"  id="{!rowIndex+'erMsg'}" style="display:none;">The Quantity must be less than Max Quantity of Material Item</b>
+                                                </p>
+                                                <lightning:button name="{!rowIndex}" class="btninput" variant="destructive" label="Remove" title="Destructive action" onclick="{! c.RemoveFromCartSection }"/>
+                                                <!--a  onclick="{!c.RemoveFromCartSection}" data-value="{!rowIndex}">
+                                                        <lightning:icon  iconName="utility:delete" class="slds-icon slds-icon_small" size="small" alternativeText="Remove"/>
+                                                        <span class="slds-assistive-text">Delete Icon</span>
+                                                    </a-->  
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <hr style="display: block;margin: 1rem 0 1rem 0;border-top: 1px solid rgb(221, 219, 218);"/>
+                                </aura:iteration>
+                            </aura:if>
+                        </ui:scrollerWrapper>
+                        <lightning:card>
+                            <aura:set attribute = "actions">
+                                <lightning:button variant="neutral"
+                                                  label="Continue Shopping"
+                                                  disabled="{!v.isSpinner}"
+                                                  title="Continue Shopping"
+                                                  onclick="{!c.continueShopping}" class="buttonClass"/>
+                                
+                                <lightning:button variant="neutral"
+                                                  label="Cancel Order"
+                                                  title="Cancel Order"
+                                                  disabled="{!v.isSpinner}"
+                                                  onclick="{!c.cancelorder}" class="buttonClass"/>
+                                
+                                <lightning:button variant="brand"
+                                                  label="Place Order"
+                                                  disabled="{!v.isSpinner}"
+                                                  title="Place Order"
+                                                  onclick="{!c.placeOrder}" class="buttonClass"/>
+                                
+                            </aura:set>
+                        </lightning:card>
+                    </div>
+                </lightning:accordionSection>
+            </lightning:accordion>
+            
+            <!--**********************************************End of ViewCartSection****************************-->
+        </aura:if>
+        <br/>
+        <br/>
+        <br/>
+        <aura:if isTrue="{!v.cancelitems}">
+            
+            <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+                <form class="slds-form--stacked">
+                    <b>To cancel this order and empty your cart click "Continue" or go "Back to Cart"</b> 
+                </form> <br/>
+            </div>
+            <!--End of Modal Body--> 
+            <!--Modal Footer-->  
+            <div class="modal-footer slds-modal__footer slds-size_1-of-1"> 
+                <lightning:button variant="brand" label="Continue" title="Continue" onclick="{!c.backTohomepage}"/>
+                <lightning:button variant="Neutral" class="slds-button" label="Back" onclick="{!c.backToexistedpage}"/>
+            </div>
+            
+        </aura:if>
+        
+        <aura:if isTrue="{!v.cancelplaceditems}">
+            
+            <div class="slds-modal__content slds-p-around--x-small slds-align_absolute-center slds-size_1-of-1 slds-is-relative">
+                <form class="slds-form--stacked">
+                    <b>To cancel this order and empty your cart click "Continue" or go "Back to Cart"</b> 
+                </form> <br/>
+            </div>
+            <!--End of Modal Body--> 
+            <!--Modal Footer-->  
+            <div class="modal-footer slds-modal__footer slds-size_1-of-1"> 
+                <lightning:button variant="brand" label="Continue" title="Continue" onclick="{!c.continuebackToStoreFrontforplaceorder}"/>
+                <lightning:button variant="Neutral" class="slds-button" label="Back" onclick="{!c.backToexistedcartpage}"/>
+            </div>
+            
+        </aura:if>
+        
+        
+    </lightning:card>
+    
+</aura:component>

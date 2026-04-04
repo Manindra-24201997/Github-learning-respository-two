@@ -1,0 +1,26 @@
+<apex:page controller="Controller">
+    <apex:form >
+        <apex:actionFunction name="af1" action="{!setToWinter}"/>
+        
+        <!-- <apex:outputPanel id="displaySeason">
+<apex:outputText value="{!season}"/>
+</apex:outputPanel>-->
+        
+        <br/><br/>
+        <apex:commandButton value="Call ActionFunction" rerender="displaySeason" onclick="af1()"/>
+        
+        <br/><br/>
+        <apex:commandButton value="Call Javascript function" onclick="displaySeasonJS();"/>
+        
+    </apex:form>
+    
+    <script>
+    var theSeasonIs = '{!season}';
+    alert('in Javascript onload, theSeasonIs is - ' + theSeasonIs);
+    
+    function displaySeasonJS()
+    {
+        alert('in Javascript function displaySeasonJS() - theSeasonIs is - ' + theSeasonIs);
+    }
+    </script>
+</apex:page>

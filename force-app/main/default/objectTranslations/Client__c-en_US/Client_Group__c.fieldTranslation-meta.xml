@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Client Group --></label>
+    <name>Client_Group__c</name>
+    <picklistValues>
+        <masterLabel>AccuDate</masterLabel>
+        <translation><!-- AccuDate --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Advantage</masterLabel>
+        <translation><!-- Advantage --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Alabama</masterLabel>
+        <translation><!-- Alabama --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>All Shops</masterLabel>
+        <translation><!-- All Shops --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>All Stores</masterLabel>
+        <translation><!-- All Stores --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arby&apos;s</masterLabel>
+        <translation><!-- Arby&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arizona</masterLabel>
+        <translation><!-- Arizona --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arkansas</masterLabel>
+        <translation><!-- Arkansas --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>B18</masterLabel>
+        <translation><!-- B18 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>B5</masterLabel>
+        <translation><!-- B5 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>BBQ</masterLabel>
+        <translation><!-- BBQ --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>BTC</masterLabel>
+        <translation><!-- BTC --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Baskets</masterLabel>
+        <translation><!-- Baskets --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Biodisel</masterLabel>
+        <translation><!-- Biodisel --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Bump Bar</masterLabel>
+        <translation><!-- Bump Bar --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CMN Footballs</masterLabel>
+        <translation><!-- CMN Footballs --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CNG</masterLabel>
+        <translation><!-- CNG --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CS/TS/Speedco</masterLabel>
+        <translation><!-- CS/TS/Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>California</masterLabel>
+        <translation><!-- California --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Carls&apos; Jr.</masterLabel>
+        <translation><!-- Carls&apos; Jr. --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Chester&apos;s</masterLabel>
+        <translation><!-- Chester&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Colorado</masterLabel>
+        <translation><!-- Colorado --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Country Stores</masterLabel>
+        <translation><!-- Country Stores --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Curtis</masterLabel>
+        <translation><!-- Curtis --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>DM Only</masterLabel>
+        <translation><!-- DM Only --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Deposit Bag Dual</masterLabel>
+        <translation><!-- Deposit Bag Dual --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Deposit Bag Single</masterLabel>
+        <translation><!-- Deposit Bag Single --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1901</masterLabel>
+        <translation><!-- District 1901 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1902</masterLabel>
+        <translation><!-- District 1902 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1903</masterLabel>
+        <translation><!-- District 1903 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1904</masterLabel>
+        <translation><!-- District 1904 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1905</masterLabel>
+        <translation><!-- District 1905 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1906</masterLabel>
+        <translation><!-- District 1906 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1907</masterLabel>
+        <translation><!-- District 1907 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1911</masterLabel>
+        <translation><!-- District 1911 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1912</masterLabel>
+        <translation><!-- District 1912 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1913</masterLabel>
+        <translation><!-- District 1913 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1914</masterLabel>
+        <translation><!-- District 1914 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1915</masterLabel>
+        <translation><!-- District 1915 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1916</masterLabel>
+        <translation><!-- District 1916 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1917</masterLabel>
+        <translation><!-- District 1917 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1918</masterLabel>
+        <translation><!-- District 1918 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1921</masterLabel>
+        <translation><!-- District 1921 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1922</masterLabel>
+        <translation><!-- District 1922 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1923</masterLabel>
+        <translation><!-- District 1923 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1924</masterLabel>
+        <translation><!-- District 1924 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1925</masterLabel>
+        <translation><!-- District 1925 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1926</masterLabel>
+        <translation><!-- District 1926 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1927</masterLabel>
+        <translation><!-- District 1927 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1928</masterLabel>
+        <translation><!-- District 1928 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1931</masterLabel>
+        <translation><!-- District 1931 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1932</masterLabel>
+        <translation><!-- District 1932 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1933</masterLabel>
+        <translation><!-- District 1933 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1934</masterLabel>
+        <translation><!-- District 1934 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1935</masterLabel>
+        <translation><!-- District 1935 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1936</masterLabel>
+        <translation><!-- District 1936 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1937</masterLabel>
+        <translation><!-- District 1937 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1938</masterLabel>
+        <translation><!-- District 1938 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1939</masterLabel>
+        <translation><!-- District 1939 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1941</masterLabel>
+        <translation><!-- District 1941 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1942</masterLabel>
+        <translation><!-- District 1942 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1943</masterLabel>
+        <translation><!-- District 1943 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1944</masterLabel>
+        <translation><!-- District 1944 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1945</masterLabel>
+        <translation><!-- District 1945 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1946</masterLabel>
+        <translation><!-- District 1946 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1947</masterLabel>
+        <translation><!-- District 1947 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1948</masterLabel>
+        <translation><!-- District 1948 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1951</masterLabel>
+        <translation><!-- District 1951 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1952</masterLabel>
+        <translation><!-- District 1952 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1953</masterLabel>
+        <translation><!-- District 1953 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1954</masterLabel>
+        <translation><!-- District 1954 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1955</masterLabel>
+        <translation><!-- District 1955 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1956</masterLabel>
+        <translation><!-- District 1956 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1957</masterLabel>
+        <translation><!-- District 1957 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1958</masterLabel>
+        <translation><!-- District 1958 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1961</masterLabel>
+        <translation><!-- District 1961 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1962</masterLabel>
+        <translation><!-- District 1962 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1963</masterLabel>
+        <translation><!-- District 1963 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1964</masterLabel>
+        <translation><!-- District 1964 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1965</masterLabel>
+        <translation><!-- District 1965 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1966</masterLabel>
+        <translation><!-- District 1966 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1967</masterLabel>
+        <translation><!-- District 1967 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1968</masterLabel>
+        <translation><!-- District 1968 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1971</masterLabel>
+        <translation><!-- District 1971 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1972</masterLabel>
+        <translation><!-- District 1972 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1973</masterLabel>
+        <translation><!-- District 1973 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1974</masterLabel>
+        <translation><!-- District 1974 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1975</masterLabel>
+        <translation><!-- District 1975 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1976</masterLabel>
+        <translation><!-- District 1976 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1977</masterLabel>
+        <translation><!-- District 1977 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1978</masterLabel>
+        <translation><!-- District 1978 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1981</masterLabel>
+        <translation><!-- District 1981 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1982</masterLabel>
+        <translation><!-- District 1982 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1983</masterLabel>
+        <translation><!-- District 1983 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1984</masterLabel>
+        <translation><!-- District 1984 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1985</masterLabel>
+        <translation><!-- District 1985 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1986</masterLabel>
+        <translation><!-- District 1986 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1987</masterLabel>
+        <translation><!-- District 1987 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 1988</masterLabel>
+        <translation><!-- District 1988 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4901</masterLabel>
+        <translation><!-- District 4901 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4902</masterLabel>
+        <translation><!-- District 4902 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4903</masterLabel>
+        <translation><!-- District 4903 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4904</masterLabel>
+        <translation><!-- District 4904 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4905</masterLabel>
+        <translation><!-- District 4905 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>District 4906</masterLabel>
+        <translation><!-- District 4906 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1900</masterLabel>
+        <translation><!-- Division 1900 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1910</masterLabel>
+        <translation><!-- Division 1910 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1920</masterLabel>
+        <translation><!-- Division 1920 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1930</masterLabel>
+        <translation><!-- Division 1930 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1940</masterLabel>
+        <translation><!-- Division 1940 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1950</masterLabel>
+        <translation><!-- Division 1950 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1960</masterLabel>
+        <translation><!-- Division 1960 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1970</masterLabel>
+        <translation><!-- Division 1970 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Division 1980</masterLabel>
+        <translation><!-- Division 1980 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Dog Park</masterLabel>
+        <translation><!-- Dog Park --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>EBT</masterLabel>
+        <translation><!-- EBT --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Empanada</masterLabel>
+        <translation><!-- Empanada --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Encore</masterLabel>
+        <translation><!-- Encore --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Encore S</masterLabel>
+        <translation><!-- Encore S --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Fleet Sales</masterLabel>
+        <translation><!-- Fleet Sales --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Florida</masterLabel>
+        <translation><!-- Florida --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Funnels</masterLabel>
+        <translation><!-- Funnels --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Georgia</masterLabel>
+        <translation><!-- Georgia --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Godfather&apos;s</masterLabel>
+        <translation><!-- Godfather&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hardee&apos;s</masterLabel>
+        <translation><!-- Hardee&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hardee&apos;s Midwest</masterLabel>
+        <translation><!-- Hardee&apos;s Midwest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hot to Go</masterLabel>
+        <translation><!-- Hot to Go --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hotels</masterLabel>
+        <translation><!-- Hotels --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Iced Coffee</masterLabel>
+        <translation><!-- Iced Coffee --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Idaho</masterLabel>
+        <translation><!-- Idaho --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Illinois</masterLabel>
+        <translation><!-- Illinois --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Indiana</masterLabel>
+        <translation><!-- Indiana --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Iowa</masterLabel>
+        <translation><!-- Iowa --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 10</masterLabel>
+        <translation><!-- Junge - 10 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 6</masterLabel>
+        <translation><!-- Junge - 6 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 8</masterLabel>
+        <translation><!-- Junge - 8 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Kansas</masterLabel>
+        <translation><!-- Kansas --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Kentucky</masterLabel>
+        <translation><!-- Kentucky --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Laundry</masterLabel>
+        <translation><!-- Laundry --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Light Mechanical</masterLabel>
+        <translation><!-- Light Mechanical --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Louisiana</masterLabel>
+        <translation><!-- Louisiana --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Love&apos;s Subs</masterLabel>
+        <translation><!-- Love&apos;s Subs --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Lunchable</masterLabel>
+        <translation><!-- Lunchable --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Michigan</masterLabel>
+        <translation><!-- Michigan --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Minnesota</masterLabel>
+        <translation><!-- Minnesota --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Mississippi</masterLabel>
+        <translation><!-- Mississippi --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Missouri</masterLabel>
+        <translation><!-- Missouri --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Musket</masterLabel>
+        <translation><!-- Musket --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Nebraska</masterLabel>
+        <translation><!-- Nebraska --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Nevada</masterLabel>
+        <translation><!-- Nevada --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>New Jersey</masterLabel>
+        <translation><!-- New Jersey --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>New Mexico</masterLabel>
+        <translation><!-- New Mexico --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>New York</masterLabel>
+        <translation><!-- New York --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>North Carolina</masterLabel>
+        <translation><!-- North Carolina --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>North Dakota</masterLabel>
+        <translation><!-- North Dakota --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Ohio</masterLabel>
+        <translation><!-- Ohio --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oil Change</masterLabel>
+        <translation><!-- Oil Change --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oil Play</masterLabel>
+        <translation><!-- Oil Play --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oklahoma</masterLabel>
+        <translation><!-- Oklahoma --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oregon</masterLabel>
+        <translation><!-- Oregon --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pennsylvania</masterLabel>
+        <translation><!-- Pennsylvania --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pocket Task List</masterLabel>
+        <translation><!-- Pocket Task List --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Power Wings</masterLabel>
+        <translation><!-- Power Wings --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Prep Table</masterLabel>
+        <translation><!-- Prep Table --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Propane</masterLabel>
+        <translation><!-- Propane --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>RV Dump</masterLabel>
+        <translation><!-- RV Dump --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Retread</masterLabel>
+        <translation><!-- Retread --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Roller Grill</masterLabel>
+        <translation><!-- Roller Grill --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Scanner</masterLabel>
+        <translation><!-- Scanner --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Soft Serve</masterLabel>
+        <translation><!-- Soft Serve --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>South Carolina</masterLabel>
+        <translation><!-- South Carolina --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>South Dakota</masterLabel>
+        <translation><!-- South Dakota --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Speedco</masterLabel>
+        <translation><!-- Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Subway</masterLabel>
+        <translation><!-- Subway --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>TS/Speedco</masterLabel>
+        <translation><!-- TS/Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Table Cards</masterLabel>
+        <translation><!-- Table Cards --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Taco</masterLabel>
+        <translation><!-- Taco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tamales</masterLabel>
+        <translation><!-- Tamales --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tennessee</masterLabel>
+        <translation><!-- Tennessee --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Texas</masterLabel>
+        <translation><!-- Texas --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>TirePass</masterLabel>
+        <translation><!-- TirePass --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tobacco ID</masterLabel>
+        <translation><!-- Tobacco ID --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Travel Stops</masterLabel>
+        <translation><!-- Travel Stops --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Trillium</masterLabel>
+        <translation><!-- Trillium --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Truck Care</masterLabel>
+        <translation><!-- Truck Care --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 18</masterLabel>
+        <translation><!-- Under 18 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 19</masterLabel>
+        <translation><!-- Under 19 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 21</masterLabel>
+        <translation><!-- Under 21 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Utah</masterLabel>
+        <translation><!-- Utah --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Virginia</masterLabel>
+        <translation><!-- Virginia --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Warmer</masterLabel>
+        <translation><!-- Warmer --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Washington</masterLabel>
+        <translation><!-- Washington --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wayne</masterLabel>
+        <translation><!-- Wayne --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>West Virginia</masterLabel>
+        <translation><!-- West Virginia --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wheel Club</masterLabel>
+        <translation><!-- Wheel Club --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Conventional Diesel</masterLabel>
+        <translation><!-- Winter Additive - Conventional Diesel --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Extreme Weather</masterLabel>
+        <translation><!-- Winter Additive - Extreme Weather --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Junge</masterLabel>
+        <translation><!-- Winter Additive - Junge --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Splash</masterLabel>
+        <translation><!-- Winter Additive - Splash --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wisconsin</masterLabel>
+        <translation><!-- Wisconsin --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wyoming</masterLabel>
+        <translation><!-- Wyoming --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

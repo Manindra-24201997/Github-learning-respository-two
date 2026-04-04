@@ -1,0 +1,205 @@
+<apex:page controller="DisplayJobsforClientContact" tabStyle="Job__c" readOnly="true" sidebar="false" docType="html-5.0" applyBodyTag="False" standardStylesheets="true" applyHtmlTag="False"  showHeader="False">
+
+
+
+    <head>
+        <style>
+            .hd {
+                text-align: right;
+                padding-right: 20px!important;
+            }
+            
+            .labelCol2 {
+                font-size: 1.0em
+            }
+            
+            ;
+      
+        .customImage{ height: 10px; width: 10px; }
+         #rcorners1 {
+                        border-radius:0%;
+                        border: 1px solid #cccccc;
+                        padding: 0px; 
+                        width: 100%;
+                        height: 0%;
+                    }
+        #pagemessage
+                    {
+                        color:blue;
+                    }
+       .required:after { content:" *";  color: Red;font:bold;}
+       
+                   .slds table
+                   {
+                        height: 50px;
+                   }
+                   body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons
+                   {
+                        margin-top: -19px; 
+                   }
+                   .detailPage .bPageBlock, .editPage .bPageBlock
+                   {
+                      border-top-width: 0px;
+                   }
+                  
+                   .slds .slds-text-heading--large
+                   {
+                           font-size: 27px;
+                   }
+                   
+                    .pbHeader
+                   {
+                       background: white !important;
+                   }
+                   
+                   
+                   body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+                   {
+                       background: white;
+                   }
+                  
+                   .slds .slds-list--vertical.slds-has-dividers > .slds-list__item
+                   {
+                       border:none;
+                   }
+                   
+                   body .bEditBlock .pbBottomButtons, body .apexp .bPageBlock.apexDefaultPageBlock .pbBottomButtons
+                   {
+                       border:none;
+                   }
+                  
+                   
+                 html,html body
+                 {
+                     overflow: auto;
+                     -webkit-overflow-scrolling:auto;
+                 }
+                 body
+                 {
+                     position:absolute;left:0;right:0;top:0;bottom:0;
+                     margin:0;
+                 }
+       
+       
+        </style>  
+        
+        
+        
+        
+     </head>
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+       
+     
+           <body>
+     
+             <!-- REQUIRED SLDS WRAPPER -->
+              <div class="slds" style="width:99%;">
+                 
+                 
+                  <ul class="slds-list--vertical slds-has-dividers">
+                       <li class="slds-list__item slds-large-size">  
+                            <div class="slds-text-heading--large"> <apex:image url="{!$Resource.JobLogo}" width="25" height="25" /> Orders</div> 
+                       </li>
+                  </ul>
+    
+
+    
+    <apex:form html-novalidate="novalidate">
+      
+  
+        
+           <div class="slds-grid slds-wrap">
+                                 
+                             <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12" >
+                                            
+                                             <div class="slds-grid slds-wrap" style="width:99%;">  
+                                  
+                                                        <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                             <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                                 <label class="slds-form-element__label" ><b>{!$ObjectType.Job__c.Fields.Status__c.Label}</b></label>
+                                                                 <div class="slds-form-element__control" >
+                                                                  <apex:selectList id="StatusList" value="{!strStatus}" size="1" styleClass="slds-input">
+                                                                        <apex:selectOptions value="{!StatusList}" />
+                                                                        <apex:actionSupport event="onchange" rerender="pgt1" action="{!populateJobList}" />
+                                                                    </apex:selectList>
+                                                                 </div>
+                                                             </div>
+                                                        </aside>
+                                                        <br/><br/><br/>
+                                                        
+                                                        
+                                                        
+                                              <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+                                                 <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                                 
+                                                            <apex:outputPanel id="pgt1">
+                                                            
+                                                            
+                                               <!--  <apex:pageBlockTable value="{!JobList}" var="Item" styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked" id="pgt1" width="80%">
+                                                       
+                                                        <apex:column html-data-label="{!$ObjectType.Job__c.Fields.Name.Label}" headerValue="{!$ObjectType.Job__c.Fields.Name.Label}"  styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;">
+                                                              <apex:outputLink title="" value="/{!Item.id}" style="font-weight:bold" target="New">{!Item.name}</apex:outputLink>
+                                                        </apex:column> 
+                                                        
+                                                        
+                                                        <apex:column html-data-label="Client" headerValue="Client" value="{!Item.JS_Client__c}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;"/>
+                                                             
+                                                        <apex:column html-data-label="Client Contact" value="{!Item.JS_Client_Contact__r.name}" styleClass="slds-cell-wrap slds-cell-shrink" style="word-wrap: break-word;"/>
+                                                       
+                                                   </apex:pageBlockTable>-->
+                                                            
+                                                            
+                                                            
+                                                                   <table class="slds-table slds-table--bordered" style="display:{!IF(JobList.size >0, 'block','none')};border:none;" width="99%">
+                                                                       <tr  class="slds-text-heading--label">
+                                                                           <th style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate"><b>{!$ObjectType.Job__c.Fields.Name.Label}</b></th>
+                                                                            <th style="width:10%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Client</b></th>
+                                                                           <th style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate"><b>Name</b></th>
+                                                                           
+                                                                       </tr>
+                                                                       <apex:repeat value="{!JobList}" var="Item">
+                                                                       <tr>
+                                                                           <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate">
+                                                                              <apex:outputLink title="" value="/{!Item.id}" style="font-weight:bold" target="New">{!Item.name}</apex:outputLink>
+                                                                           
+                                                                           </td>
+                                                                           <td style="width:10%;text-align:left;padding-left:25px;" class="slds-truncate">
+                                                                              <apex:outputField value="{!Item.JS_Client__c}"/>
+                                                                           </td>
+                                                                           <td style="width:20%;text-align:left;padding-left:25px;" class="slds-truncate">{!Item.JS_Client_Contact__r.name}</td>
+                                                                       </tr>
+                                                                       </apex:repeat>
+                                                                   </table>
+                                                                  
+                                                                   
+                                                                   
+                                                                    <table class="slds-table slds-table--bordered"  style="display:{!IF(JobList.size <= 0, 'block','none')};border:none;width:99%;">
+                                                                      
+                                                                       <tr>
+                                                                           <td style="width:10%;text-align:left;padding-left:5px;" class="slds-truncate">
+                                                                            <b>No records to display</b>
+                                                                           </td>
+                                                                         
+                                                                       </tr>
+                                                                   </table>
+                                                               </apex:outputPanel>        
+                                                                   
+                                                             </div>
+                                                        </aside>
+                                         
+                                                        
+                                                        
+                                                        
+                                        </div> 
+                                 </main>
+                              </div>
+   
+
+    </apex:form>
+ </div>      
+              </body>
+       </html>
+        
+</apex:page>

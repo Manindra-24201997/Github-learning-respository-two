@@ -1,0 +1,126 @@
+<apex:page standardController="Job__c" extensions="CMNFormTemplateController" showHeader="false" applyHtmlTag="false" applyBodyTag="false">
+    <script>
+        window.onload = function() {
+            window.print();
+        }
+    </script>
+
+    <html>
+
+    <head>
+
+        <!--div style="padding-left:38%;padding-top:20px;"-->
+
+        <style type="text/css">
+@font-face {
+                font-family: AGBookTTBol;
+                src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTBol.ttf')
+            }
+            
+            );
+        }
+        @font-face {
+            font-family: AGBookTTIta;
+            src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTIta.ttf')
+        }
+        );
+    }
+    @font-face {
+        font-family: AGBookTTLig;
+        src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTLig.ttf')
+    }
+    );
+}
+@font-face {
+    font-family: AGBookTTMed;
+    src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTMed.ttf')
+}
+);
+
+}
+@font-face {
+    font-family: AGBookTTReg;
+    src: url({!URLFOR($Resource.CMNFonts, 'CMNFonts/AGBookTTReg.ttf')
+}
+);
+
+}
+        </style>
+
+    </head>
+
+    <body>
+       
+       <div style="border:3px solid black;">
+                   <div style="width:99%;background:white;page-break-after:always;">
+                                                            <div style="padding-left:6px;padding-top:7px;">
+                                                                <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerHeaders.PNG')}" width="100%" height="60%" />
+                                                            </div>
+
+                                                            <div style="padding-left:6px;width:100%;padding-right:5px;">
+                                                                <span id="name" style="font-family: AGBookTTBol;font-size:52pt;color:#57585A;line-height:1">{!SpecsMap['Flyers Name of Event']}</span>
+                                                                <br/>
+                                                                <span id="Date" style="font-family: AGBookTTBol;font-size:32pt;color:#FECD08;line-height:2"><b>{!SpecsMap['Flyers Date']}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span id="Time" style="font-family: AGBookTTBol;font-size:32pt;color:#FECD08;"><b>{!SpecsMap['Flyers Time']}</b></span >    
+                                                                <br/>
+                                                                 <span id="Event" style="font-family:AGBookTTBol;font-size:16pt;color:#57585A;"><b>{!SpecsMap['Flyers Event Details']}</b></span >                 
+                                                            </div>
+                                                            <br/>
+
+                                                            <div style="padding-left:6px;width:100%;">
+
+                                                                <font style="font-family:AGBookTTReg;font-size:10.3pt;color:black;">  Proceeds benefit Children’s Miracle Network Hospitals® </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTReg;font-size:10.9pt;color:black;">     For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                                </font>
+                                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;" />
+                                                                <font style="font-family:AGBookTTIta;font-size:9.3pt;color:black;">        Not responsible for any accidents.</font>
+                                                            </div>
+
+                                                            <div style="padding-left:6px;padding-top:15px;width:100%;">
+                                                               <table  width="100%">
+                                                               <tr>
+                                                                   <td style="font-family:AGBookTTBol;font-size:12pt;color:black;width:35%">
+                                                                      <b>    <apex:outputText value="{!Job.JS_Client__r.name}  {!Job.JS_Client__r.Client_Code__c}"/><br/>
+                                                                                     <apex:outputText value="{!Job.JS_Client__r.Billing_Street__c }"/><br/>
+                                                                                     <apex:outputText value=" {!Job.JS_Client__r.Billing_City__c}, "/>
+                                                                                     <apex:outputText value=" {!Job.JS_Client__r.Billing_State__c}"/>
+                                                                                     <apex:outputText value=" {!Job.JS_Client__r.Billing_Postal_Code__c}"/><br/>
+                                                                                     <apex:outputText value=" {!Job.JS_Client__r.Phone__c}"/>
+                                                                       </b>
+                                                                   </td>
+                                                                   <td>
+                                                                       <apex:image url="{!URLFOR($Resource.CMNForm, 'CMNFlyerFooters.PNG')}" style="float:right;width:65%" />
+                                                                   </td>
+                                                               </tr>
+                                                               </table>
+
+                                                            </div>
+                                                             </div>
+          </div>
+                                 <br/>
+
+                                     <div class="slds-form-element__control"   style="background-image:url('{!URLFOR($Resource.BannerCMNForm, 'BannerCMNForm.PNG')}');background-repeat:round;height:240pt; width:540pt;">
+
+                                         <div style="padding-left:207px;padding-top:2px;">
+                                            <div style="padding-left:19px;">
+                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:30pt;color:#57585A;line-height:1.2;"><b>{!SpecsMap['Banner Name of Event']}</b></span>
+                                            </div>
+
+                                            <div style="padding-top:5.9px;position: absolute;padding-left:21px;">
+                                                <span id="DateB" style="font-family: AGBookTTBol;font-size:20pt;color:#FECD08;line-height:1;"><b>{!SpecsMap['Banner Date']}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span id="TimeB" style="font-family: AGBookTTBol;font-size:20pt;color:#FECD08;"><b>{!SpecsMap['Banner Time']}</b></span >
+                                            </div>
+
+                                            <div style="padding-top:44px;padding-left:25px;">
+                                                <span id="EventB" style="font-family: AGBookTTBol;font-size:11pt;color:#57585A;"><b>{!SpecsMap['Banner Event Details']}</b></span >                  
+                                            </div>
+
+                                        </div>  
+                                    </div>
+
+    </body>
+
+    </html>
+
+</apex:page>

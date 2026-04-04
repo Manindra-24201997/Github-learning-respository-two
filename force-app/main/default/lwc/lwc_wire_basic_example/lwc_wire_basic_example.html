@@ -1,0 +1,18 @@
+<template>
+<lightning-card title="Showing Reference Fields Data With Hyperlink In Lightning Datatable Another Example">
+<lightning-input label="Enter serach" onchange={handlesearch}></lightning-input>
+<br/>
+<lightning-datatable onrowaction={handleRowAction} columns={columns} data={recordsdata} 
+key-field="id" hide-checkbox-column="true" show-row-number-column="true"></lightning-datatable>
+<br/>
+
+/ ***    for loop  *** /
+<template for:each={recordsdata} for:item="rcd">
+    <p key = {rcd.id}>{rcd.Name}</p>
+    </template> 
+ <lightning-button 
+            label="Refresh" 
+            onclick={refreshbutton}>
+        </lightning-button>
+</lightning-card>
+</template>

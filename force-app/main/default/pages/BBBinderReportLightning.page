@@ -1,0 +1,366 @@
+<apex:page controller="BBBinderReportController"  sidebar="true" docType="html-5.0" standardStylesheets="true" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+ 
+    <apex:slds />
+   <apex:form html-novalidate="novalidate">
+   
+        <style>
+             .rotate {
+                  float:left;
+                  width: 50px;
+                  height: 95px
+                  top: 300px;
+                  border-style: none;
+                  valign : bottom;
+    
+                /* Safari */
+                -webkit-transform: rotate(-90deg);
+                
+                /* Firefox */
+                -moz-transform: rotate(-90deg);
+                
+                /* IE */
+                -ms-transform: rotate(-90deg);
+                
+                /* Opera */
+                -o-transform: rotate(-90deg);
+                
+                /* Internet Explorer */
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+                 margin: 20px 20px 20px 20px !important;
+            }
+            
+                 body
+            {
+                background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+                // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+                //background-image:none !important;
+                //background-color:#D7D7D7 !important;
+                background-repeat: repeat-x;
+                background-position: left top;
+                background-attachment: fixed; 
+                margin:0px !important;
+            }
+       
+         
+          .customImage{ height: 10px; width: 10px; }
+          
+        
+           .pbHeader
+           {
+               background: white !important;
+           }
+           
+           body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+           {
+               background: white;
+           }
+         
+        
+         
+        .bPageBlock 
+        {
+            border-top: 0px;
+        }
+    
+        </style>
+        
+        <meta charset="utf-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <title>jQuery UI Datepicker - Default functionality</title>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+          <link rel="stylesheet" href="/resources/demos/style.css"/>
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        
+        <div class="slds"> 
+      
+        <div style="background-color:#F3F2F2;height:40px; padding-top:14px; color:#333;font-size:18px;font-weight:bold;padding-left:10px;">
+            <h3 class="slds-section-title"><b>&nbsp;BB Binder Report</b></h3>
+        </div>
+      
+      
+        <apex:pageblock title="Search">
+           <table width="100%" border="0">
+                <tr>
+                    <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.name.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strBBname}"/>
+                    </td>
+                    
+                    
+                   <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Title__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strTitle}"/>
+                    </td>
+                    
+                    <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Billboard_Status__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="bbstatus" value="{!BBStatusString }" multiselect="true" size="2">
+                           <apex:selectOptions value="{!BBStatus}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+                     
+                </tr>
+              
+               <tr>
+               
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Client_Name__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="clint" value="{!strBBClientName}" size="1" >
+                           <apex:selectOptions value="{!Clients}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+                    
+                    
+              <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.BB_Vendor__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="vendor" value="{!strBBVendorName}" size="1" >
+                           <apex:selectOptions value="{!vendors}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>       
+               
+              <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Billboard_Type__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="bbtype" value="{!strBBtype}" size="1" >
+                           <apex:selectOptions value="{!BBType}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+               
+               
+               </tr>
+              
+               
+              <tr>
+              
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Client__c.Fields.Dummy_Picklist_1__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="district" value="{!strDistrict}" size="1" >
+                           <apex:selectOptions value="{!District}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Location__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strBBlocation}"/>
+              </td>
+              
+              <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Size__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strSize}"/>
+              </td>
+              
+              
+              
+             </tr>
+              
+              <tr>
+              
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Illumination__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:selectList id="illu" value="{!strIllumination}" size="1" >
+                           <apex:selectOptions value="{!Illumination}"></apex:selectOptions>
+                        </apex:selectList>  
+                    </td>  
+               
+                
+               <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Expiration_Date__c.Label} From
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputfield value="{!dat.Expiration_Date__c}"  /> 
+                    </td>  
+               
+                 <td style="font-weight: bold;width:120px;white-space:nowrap">
+                        {!$ObjectType.Billboard__c.Fields.Expiration_Date__c.Label} To
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                       <apex:inputfield value="{!dat2.Expiration_Date__c}"  /> 
+                    </td>  
+               
+              
+             </tr>
+              
+               <tr>
+                 
+                 <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.PMT__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strPMT}"/>
+                </td>
+                 
+                 
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Latitude__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strLat}"/>
+                </td>
+                
+              
+                <td style="font-weight: bold; align: left; valign: bottom;width:120px;">
+                        {!$ObjectType.Billboard__c.Fields.Longitude__c.Label}
+                    </td>
+                    <td style="width: 280px;white-space:nowrap">
+                        <apex:inputText value="{!strLong}"/>
+                </td>
+              
+               </tr>
+              
+              
+              <tr>
+               
+                    <td colspan="3" style="text-align: right; padding-top: 20px;">
+                        <apex:commandbutton value="Search" action="{!searchbillboards}" rerender="results" tabindex="10" status="status" />
+                       
+                        
+                        
+                    </td>
+                   <!-- <td colspan="3" style="text-align: left; padding-top: 20px;">
+                        <apex:commandbutton value="Clear" onclick="clearFields();" rerender="results,selectMediaList,selectList,selectSList,selectVList" action="{!clearForm}"
+                            tabindex="11" />
+                    </td> -->
+                </tr>
+              
+                
+       
+       </table>
+        </apex:pageblock>
+
+      <apex:pageBlock id="results" title="Results">
+
+            <div width="100%" align="right">
+                <apex:commandbutton value="Print Report" action="{!PrintReport}" style="align:right;" styleClass="slds-button slds-button--neutral"/>
+            </div>
+            
+          
+            
+            
+            <br/>
+
+         <apex:repeat value="{!CDWrapper}" var="cdw">
+          
+       
+         <apex:repeat value="{!cdw.CNWrapper}" var="cnw" >
+         
+         <div class="header">
+         
+         <div style="width:100%;font-weight: bolder;width:100%;">
+              
+                <b> <apex:outputText value="{!cdw.strClientDist}"   style="font-size:18px;font-weight:bold;"/> </b> 
+           
+              </div> <br/>
+              
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+              
+              <div style="width:100%;font-weight: bolder;width:100%">
+                 <b> <apex:outputText value="{!cnw.strClientName}"   style="font-size:14.5px;font-weight:bold;"/> </b> , <b> <apex:outputText value="{!cnw.strClientcode}"   style="font-size:14.5px;font-weight:bold;"/> </b>
+               </div> <br/>        
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/> 
+               
+             
+             </div> <br/>
+         
+        
+           <apex:repeat value="{!cnw.BWrapper}" var="item">
+            
+           <b> <apex:outputText value="{!item.bb.Title__c}"   style="font-size:14px;font-weight:bold;"/> </b> 
+           <br/>  <br/>        
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/>  <br/>  
+           
+             <div> 
+             
+               <table>
+               
+                  <tr style="vertical-align:top;" width="25%" >   
+                    
+                    <td style="font-weight:bold;font-size:13px">
+               <!--     Title :{!item.bb.Title__c} <br/>
+                   
+                    BB#:{!item.bb.name}<br/>
+                    
+                    
+                    Client :{!item.bb.Client_Name__r.name}<br/> -->
+                    
+                    Vendor :{!item.bb.BB_Vendor__r.name}<br/><br/> 
+                    
+                    PMT :{!item.bb.PMT__c}<br/><br/> 
+                    
+                    Expiration Date :
+                        <apex:outputText value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(item.bb.Expiration_Date__c !=null,true,false)}">
+                        <apex:param value="{!if(item.bb.Expiration_Date__c !=null,item.bb.Expiration_Date__c,'-')}"/> </apex:outputText>
+                        <apex:outputText value=" " rendered="{!if(item.bb.Expiration_Date__c == null,true,false)}" ></apex:outputText> 
+                       <br/><br/> 
+                         
+                     
+                     
+                    
+                    Location :{!item.bb.Location__c}<br/> <br/> 
+                    
+                    Illumination :{!item.bb.Illumination__c} <br/>  <br/> 
+                    
+                    Latitude :{!item.bb.Latitude__c}<br/>  <br/> 
+                     
+                    Longitude :{!item.bb.Longitude__c}<br/>  
+                       
+                    
+                     
+                   </td>
+                   
+                    <td width="30%">
+                   
+                     <apex:outputfield value="{!item.bb.Photo_1_New__c}" style="height:10px;width:10px;" rendered="{!Not(IsBlank(item.bb.Attachment_ID__c ))}"></apex:outputfield>
+                   <br/>
+                   </td>
+                   
+                  </tr>    
+                  
+               </table><hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+             
+             </div> 
+             
+           </apex:repeat>
+    
+         </apex:repeat>
+         
+         </apex:repeat>
+           <div width="100%" align="right">
+                <apex:commandbutton value="Print Report" action="{!PrintReport}" style="align:right;" styleClass="slds-button slds-button--neutral"/>
+            </div>
+       
+    </apex:pageblock>   
+    
+    
+
+    
+    
+     </div>
+  </apex:form>
+</apex:page>

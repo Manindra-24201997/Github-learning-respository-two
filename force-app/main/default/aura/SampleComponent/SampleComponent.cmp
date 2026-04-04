@@ -1,0 +1,31 @@
+<!--SampleComponent.cmp-->
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" access="global">
+    <aura:attribute name="bool" type="boolean" default="false"/>
+    <!--Declare Attributes-->
+    <aura:attribute name="vfMsgMethod" type="object" description="this attribute is for visualforce page javascript method"/>
+    
+    <!--Component Start-->
+    <div class="slds-m-around_xx-large">
+        <lightning:button variant="Brand" class="slds-button" label="Submit" onclick="{!c.doAction}"/>
+    </div>
+    <!--Component End-->
+    
+    <aura:if isTrue="{!v.bool}">
+        <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open slds-modal_large">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse">
+                    
+                    <span class="slds-assistive-text">Cancel and close</span>
+                </button>
+                
+                <div class="slds-modal__header">
+                    <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Calling vf page and passing record id from aura</h1>
+                </div>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <iframe src="{! 'https://manindra2-dev-ed--c.vf.force.com/apex/Samplevf?id='+'a028c00000pdWC8AAM'}" width="100%" height="500px;" frameBorder="0"/>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </aura:if>
+</aura:component>

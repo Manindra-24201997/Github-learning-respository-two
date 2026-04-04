@@ -1,0 +1,50 @@
+<aura:component controller="Job_Detail_Section_Tab" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <!-- Integration -->
+    <aura:attribute name="orginfo" type="boolean" default="false"/>
+    <aura:attribute name="showlink" type="boolean" default="false"/>
+    <aura:attribute name="customfieldList" type="Object"/>
+    <aura:handler name="init" value="{!this}" action="{!c.myAction}"/>
+    
+    
+    <lightning:accordion allowMultipleSectionsOpen="true"  activeSectionName="Connect to Apps">      
+        <lightning:accordionSection name="Integration" label="Connect to Apps"  class="slds-card" >
+            <aura:if isTrue = "{!empty(v.customfieldList)}">
+                <br/>
+                <a onclick="{!c.redirectToApp}">Connect to Asana</a>
+                &nbsp;<lightning:button variant="brand" label="Fetch Custom Fields" onclick="{!c.getCustomFields}"></lightning:button>
+                <br/>
+                <aura:set attribute="else">
+                    <table style = "overflow:auto;margin-top:10px;line-height:30px;" class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout slds-table_striped" aria-labelledby="element-with-table-label other-element-with-table-label">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th  class="" scope="col"><div class="slds-truncate" >Name</div></th>
+                                <th  class="" scope="col"><div class="slds-truncate" >Type</div></th>
+                                <th  class="" scope="col"><div class="slds-truncate" >Custom Field(Gid)</div></th>
+                                <th  class="" scope="col"><div class="slds-truncate" >resource subtype</div></th>
+                                <th  class="" scope="col"><div class="slds-truncate" >Options</div></th>
+                            </tr>
+                        </thead>
+                        <aura:iteration items="{!v.customfieldList}" var="rec">
+                            <tbody>
+                                <tr class="slds-hint-parent">
+                                    <td><div class="slds-truncate">{!rec.name}</div></td>
+                                    <td><div class="slds-truncate">{!rec.type}</div></td>
+                                    <td><div class="slds-truncate">{!rec.gid}</div></td>  
+                                    <td><div class="slds-truncate">{!rec.resource_subtype}</div></td> 
+                                    <td>
+                                        <aura:iteration items="{!rec.enum_options}" var="rec1">
+                                            Name:{!rec1.name},
+                                            Value :{!rec1.gid} 
+                                            <br/>
+                                        </aura:iteration>  
+                                    </td>    
+                                </tr>
+                            </tbody>
+                        </aura:iteration>   
+                        
+                    </table>
+                </aura:set>
+            </aura:if>
+        </lightning:accordionSection>
+    </lightning:accordion>    
+</aura:component>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Client Group --></label>
+    <name>Store_Type__c</name>
+    <picklistValues>
+        <masterLabel>AccuDate</masterLabel>
+        <translation><!-- AccuDate --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Advantage</masterLabel>
+        <translation><!-- Advantage --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>All Shops</masterLabel>
+        <translation><!-- All Shops --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>All Stores</masterLabel>
+        <translation><!-- All Stores --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Arby&apos;s</masterLabel>
+        <translation><!-- Arby&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>B18</masterLabel>
+        <translation><!-- B18 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>B5</masterLabel>
+        <translation><!-- B5 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>BBQ</masterLabel>
+        <translation><!-- BBQ --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>BTC</masterLabel>
+        <translation><!-- BTC --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Baskets</masterLabel>
+        <translation><!-- Baskets --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Beer Draft</masterLabel>
+        <translation><!-- Beer Draft --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>BioDiesel</masterLabel>
+        <translation><!-- BioDiesel --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Bump Bar</masterLabel>
+        <translation><!-- Bump Bar --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CMN Footballs</masterLabel>
+        <translation><!-- CMN Footballs --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CNG</masterLabel>
+        <translation><!-- CNG --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>CS/TS/Speedco</masterLabel>
+        <translation><!-- CS/TS/Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>California</masterLabel>
+        <translation><!-- California --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Carl&apos;s Jr.</masterLabel>
+        <translation><!-- Carl&apos;s Jr. --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Chester&apos;s</masterLabel>
+        <translation><!-- Chester&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Country Stores</masterLabel>
+        <translation><!-- Country Stores --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Curtis</masterLabel>
+        <translation><!-- Curtis --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>DEF</masterLabel>
+        <translation><!-- DEF --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>DM Only</masterLabel>
+        <translation><!-- DM Only --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Deposit Bag Dual</masterLabel>
+        <translation><!-- Deposit Bag Dual --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Deposit Bag Single</masterLabel>
+        <translation><!-- Deposit Bag Single --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Dog Park</masterLabel>
+        <translation><!-- Dog Park --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>EBT</masterLabel>
+        <translation><!-- EBT --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>EM Production</masterLabel>
+        <translation><!-- EM Production --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Empanada</masterLabel>
+        <translation><!-- Empanada --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Encore</masterLabel>
+        <translation><!-- Encore --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Fleet Sales</masterLabel>
+        <translation><!-- Fleet Sales --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Florida</masterLabel>
+        <translation><!-- Florida --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Funnels</masterLabel>
+        <translation><!-- Funnels --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Godfather&apos;s</masterLabel>
+        <translation><!-- Godfather&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hardee&apos;s</masterLabel>
+        <translation><!-- Hardee&apos;s --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hardee&apos;s Midwest</masterLabel>
+        <translation><!-- Hardee&apos;s Midwest --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hot to Go</masterLabel>
+        <translation><!-- Hot to Go --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Hotels</masterLabel>
+        <translation><!-- Hotels --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>I-10</masterLabel>
+        <translation><!-- I-10 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Iced Coffee</masterLabel>
+        <translation><!-- Iced Coffee --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Illinois</masterLabel>
+        <translation><!-- Illinois --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Indiana</masterLabel>
+        <translation><!-- Indiana --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Iowa</masterLabel>
+        <translation><!-- Iowa --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 10</masterLabel>
+        <translation><!-- Junge - 10 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 6</masterLabel>
+        <translation><!-- Junge - 6 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Junge - 8</masterLabel>
+        <translation><!-- Junge - 8 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Laundry</masterLabel>
+        <translation><!-- Laundry --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Light Mechanical</masterLabel>
+        <translation><!-- Light Mechanical --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Love&apos;s Subs</masterLabel>
+        <translation><!-- Love&apos;s Subs --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Mississippi</masterLabel>
+        <translation><!-- Mississippi --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Missouri</masterLabel>
+        <translation><!-- Missouri --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oil Change</masterLabel>
+        <translation><!-- Oil Change --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oil Play</masterLabel>
+        <translation><!-- Oil Play --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Oklahoma</masterLabel>
+        <translation><!-- Oklahoma --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pocket Task List</masterLabel>
+        <translation><!-- Pocket Task List --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Power Wings</masterLabel>
+        <translation><!-- Power Wings --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Prep Table</masterLabel>
+        <translation><!-- Prep Table --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Propane</masterLabel>
+        <translation><!-- Propane --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>RV Dump</masterLabel>
+        <translation><!-- RV Dump --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Retread</masterLabel>
+        <translation><!-- Retread --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Roller Grill</masterLabel>
+        <translation><!-- Roller Grill --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Scanner</masterLabel>
+        <translation><!-- Scanner --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Soft Serve</masterLabel>
+        <translation><!-- Soft Serve --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Speedco</masterLabel>
+        <translation><!-- Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Subway</masterLabel>
+        <translation><!-- Subway --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>TS/Speedco</masterLabel>
+        <translation><!-- TS/Speedco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Table Cards</masterLabel>
+        <translation><!-- Table Cards --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Taco</masterLabel>
+        <translation><!-- Taco --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tennessee</masterLabel>
+        <translation><!-- Tennessee --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Texas</masterLabel>
+        <translation><!-- Texas --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>TirePass</masterLabel>
+        <translation><!-- TirePass --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Tobacco ID</masterLabel>
+        <translation><!-- Tobacco ID --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Travel Stops</masterLabel>
+        <translation><!-- Travel Stops --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Trillium</masterLabel>
+        <translation><!-- Trillium --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Truck Care</masterLabel>
+        <translation><!-- Truck Care --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 18</masterLabel>
+        <translation><!-- Under 18 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 19</masterLabel>
+        <translation><!-- Under 19 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under 21</masterLabel>
+        <translation><!-- Under 21 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Virginia</masterLabel>
+        <translation><!-- Virginia --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Warmer</masterLabel>
+        <translation><!-- Warmer --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wayne</masterLabel>
+        <translation><!-- Wayne --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Wheel Club</masterLabel>
+        <translation><!-- Wheel Club --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Conventional Diesel</masterLabel>
+        <translation><!-- Winter Additive - Conventional Diesel --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Extreme Weather</masterLabel>
+        <translation><!-- Winter Additive - Extreme Weather --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Junge</masterLabel>
+        <translation><!-- Winter Additive - Junge --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Winter Additive - Splash</masterLabel>
+        <translation><!-- Winter Additive - Splash --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

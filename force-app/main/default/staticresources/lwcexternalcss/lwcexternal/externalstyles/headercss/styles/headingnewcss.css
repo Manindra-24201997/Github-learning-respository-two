@@ -1,0 +1,37 @@
+/*external css file with .css file extension */
+ .custom-class{
+     font-size:20px;
+     color:red;
+     background-color:black;
+}
+
+@media (min-width: 48em){
+    .slds-modal__container {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 90rem !important;
+        min-width: 30rem !important;
+    }
+}
+
+ .slds-textarea{
+    height:115px !important;
+}
+ .slds-rich-text-area__content{
+    height:150px !important;
+}
+
+
+ .slds-p-horizontal_x-small{
+    /*added for edit layout fields alignment*/
+    padding-left:0px !important;
+    padding-right:0px !important;
+}
+ .slds-p-around_small{
+    /*added for edit layout fields alignment*/
+    padding: 0 10px 0 10px !important;
+}
+
+.slds-modal__close {
+    display: none !important;
+}

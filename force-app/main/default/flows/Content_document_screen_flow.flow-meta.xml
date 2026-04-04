@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <collectionProcessors>
+        <description>Fetch V Type Record</description>
+        <name>Fetch_V_Type_Record</name>
+        <elementSubtype>FilterCollectionProcessor</elementSubtype>
+        <label>Fetch V Type Record</label>
+        <locationX>619</locationX>
+        <locationY>614</locationY>
+        <assignNextValueToReference>currentItem_Fetch_V_Type_Record</assignNextValueToReference>
+        <collectionProcessorType>FilterCollectionProcessor</collectionProcessorType>
+        <collectionReference>Collection_document_list_records</collectionReference>
+        <conditionLogic>and</conditionLogic>
+        <conditions>
+            <leftValueReference>currentItem_Fetch_V_Type_Record.ShareType</leftValueReference>
+            <operator>EqualTo</operator>
+            <rightValue>
+                <stringValue>V</stringValue>
+            </rightValue>
+        </conditions>
+        <connector>
+            <targetReference>loop_v_record</targetReference>
+        </connector>
+    </collectionProcessors>
+    <decisions>
+        <description>Check content document link records</description>
+        <name>Check_content_document_link_records</name>
+        <label>Check content document link records</label>
+        <locationX>575</locationX>
+        <locationY>398</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>checksize</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Collection_document_list_records</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Iterate_loop_for_content_document_link</targetReference>
+            </connector>
+            <label>checksize</label>
+        </rules>
+    </decisions>
+    <description>Content document screen flow i.e., Display linked entity name for a file in detail page
+Poc for chumash and self learning.</description>
+    <interviewLabel>Content document screen flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Content document screen flow</label>
+    <loops>
+        <description>Iterate loop for content document link</description>
+        <name>Iterate_loop_for_content_document_link</name>
+        <label>Iterate loop for content document link</label>
+        <locationX>443</locationX>
+        <locationY>506</locationY>
+        <collectionReference>Collection_document_list_records</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Fetch_V_Type_Record</targetReference>
+        </nextValueConnector>
+    </loops>
+    <loops>
+        <name>loop_v_record</name>
+        <label>loop v record</label>
+        <locationX>619</locationX>
+        <locationY>722</locationY>
+        <collectionReference>Fetch_V_Type_Record</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>Get_campaign_name</targetReference>
+        </nextValueConnector>
+    </loops>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Flow</processType>
+    <recordLookups>
+        <description>Get campaign name</description>
+        <name>Get_campaign_name</name>
+        <label>Get campaign name</label>
+        <locationX>707</locationX>
+        <locationY>830</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Display_name</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>loop_v_record.LinkedEntityId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Campaign__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Name</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <description>Get content document link records</description>
+        <name>Get_content_document_link_records</name>
+        <label>Get content document link records</label>
+        <locationX>575</locationX>
+        <locationY>290</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_content_document_link_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ContentDocumentId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_content_document_record.Id</elementReference>
+            </value>
+        </filters>
+        <object>ContentDocumentLink</object>
+        <outputReference>Collection_document_list_records</outputReference>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>LinkedEntityId</queriedFields>
+        <queriedFields>ShareType</queriedFields>
+        <queriedFields>Visibility</queriedFields>
+    </recordLookups>
+    <recordLookups>
+        <description>Get content document record</description>
+        <name>Get_content_document_record</name>
+        <label>Get content document record</label>
+        <locationX>572</locationX>
+        <locationY>182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Get_content_document_link_records</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ContentDocument</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <screens>
+        <name>Display_name</name>
+        <label>Display name</label>
+        <locationX>707</locationX>
+        <locationY>938</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>Display_Record</name>
+            <fieldText>&lt;p&gt;{!Get_campaign_name.Name}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <start>
+        <locationX>449</locationX>
+        <locationY>48</locationY>
+        <connector>
+            <targetReference>Get_content_document_record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <variables>
+        <description>Campaignid</description>
+        <name>Campaignid</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Collection document list records resource variable</description>
+        <name>Collection_document_list_records</name>
+        <dataType>SObject</dataType>
+        <isCollection>true</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+        <objectType>ContentDocumentLink</objectType>
+    </variables>
+    <variables>
+        <name>currentItem_Fetch_V_Type_Record</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocumentLink</objectType>
+    </variables>
+    <variables>
+        <name>currentItemFromSourceCollection</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>ContentDocumentLink</objectType>
+    </variables>
+    <variables>
+        <name>recordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

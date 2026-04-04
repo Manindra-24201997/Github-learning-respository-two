@@ -1,0 +1,644 @@
+<aura:component controller="CMNFormComponentExt" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="CMNFlyerNameofEvent" type="String"/>
+    <aura:attribute name="CMNFlyerDate" type="String"/>
+    <aura:attribute name="CMNFlyerTime" type="String"/>
+    <aura:attribute name="CMNFlyerEventDetails" type="String"/>
+    <aura:attribute name="CMNFlyerSpecialDetails" type="String"/>
+    
+    <aura:attribute name="CMNBannerNameofEvent" type="String"/>
+    <aura:attribute name="CMNBannerDate" type="String"/>
+    <aura:attribute name="CMNBannerTime" type="String"/>
+    <aura:attribute name="CMNBannerEventDetails" type="String"/>
+    <aura:attribute name="CMNBannerSpecialDetails" type="String"/>
+    
+    <aura:attribute name="clientCon" type="Object"/>
+    
+    <aura:attribute name="CMNFlyer" type="boolean" default="true" description="Show/hide the CMN Flyer form"/>
+    <aura:attribute name="CMNBanner" type="boolean" default="false" description="Show/hide the CMN Banner form"/>
+    <aura:attribute name="CMNFinalApprove" type="boolean" default="false" description="Show/hide the CMN form"/>
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:attribute name="isMobile" type="boolean" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    
+    <!-- ************************************************** CMN Flyer **********************************************************************-->
+    
+    <aura:if isTrue="{!v.CMNFlyer}">
+        <aura:if isTrue="{!!v.isMobile}">
+            <div class="showScroll">
+                <ui:scrollerWrapper class="scrollerSize">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                        </aura:set>
+                        <aura:set attribute="actions">
+                            <lightning:button variant="neutral" 
+                                              label="Back"
+                                              title="Back"
+                                              onclick="{!c.FlyerBackForm}" class="buttonsclass"/>
+                            <lightning:button variant="brand" 
+                                              label="Next"
+                                              title="Next"
+                                              onclick="{!c.FlyerNextMethod}" class="buttonsclass"/>
+                        </aura:set>
+                        
+                        <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="CMNOrderForms">
+                            <lightning:accordionSection name="CMNOrderForms" label="CMN Flyer"  class="slds-card" >
+                                <lightning:layout multipleRows="true">  
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small">  
+                                        <lightning:layout multipleRows="true">  
+                                            
+                                          <!--  <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <label class="slds-form-element__label" for="text-input-id-1"> Media Type : </label><br/>
+                                                <ui:outputText value="Print"/>	
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <label class="slds-form-element__label" for="text-input-id-1"> Job Type : </label><br/>
+                                                <ui:outputText value=""/>	
+                                            </lightning:layoutItem>
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                First you will configure your event Flyer. Once you have entered your details you will then enter the details for your Banner on the next page.
+                                                <br/> If you do not want a Flyer for your event, please type "No Flyer" in the fields.
+                                                <br/> Items marked with an asterisk (*) are required.
+                                            </lightning:layoutItem> --> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerNameofEvent" value="{!v.CMNFlyerNameofEvent}" maxlength="36" required="true" placeholder="36 Characters with spaces" label="Name of Event:" aura:id="CMNFlyName"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerDate" value="{!v.CMNFlyerDate}" maxlength="26" required="true" placeholder="26 Characters with Spaces" label="Date:" aura:id="CMNFlyDate"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerTime" value="{!v.CMNFlyerTime}" placeholder="12:00 p.m. – 5:30 p.m." required="true" label="Time:" aura:id="CMNFlyTime"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerEventDetails" value="{!v.CMNFlyerEventDetails}" maxlength="170" placeholder="A short description of your event, if needed. 170 characters with spaces." label="Event Details:" aura:id="CMNFlyEvent"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:textarea name="CMNFlyerSpecialDetails" value="{!v.CMNFlyerSpecialDetails}" placeholder="Communicate details or questions about your request here. This content does not appear on your item." label="Special Details:" aura:id="CMNFlySpecial"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <b>NOTICE:</b> EchoMedia will include the following statement regarding funds raised for your event: "All donations benefit our local CMN hospital."
+                                                <br/>
+                                                <br/> All flyers and banners will feature the Love's logo and CMN Hospitals logo. Flyers will display important event details including a brief description of the event.
+                                            </lightning:layoutItem> 
+                                        </lightning:layout>
+                                    </lightning:layoutItem> 
+                                    
+                                    
+                                    <lightning:layoutItem size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small"> 
+                                        <b>Item Preview :</b>
+                                        <div style="width:99%;background:white;border:3px solid black;">
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                <img src="{!$Resource.CMNForm + '/CMNFlyerHeaders.PNG'}" width='900'/>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span id="name" style="font-family: AGBookTTBol;font-size:4vw;color:#57585A;line-height:1"><b>{!v.CMNFlyerNameofEvent}</b></span>
+                                                <br/>
+                                                <span id="Date" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;line-height:2"><b>{!v.CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span id="Time" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;"><b>{!v.CMNFlyerTime}</b></span >    
+                                                <br/>
+                                                <span id="Event" style="font-family:AGBookTTBol;font-size:2vw;color:#57585A;"><b>{!v.CMNFlyerEventDetails}</b></span >                 
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span style="font-family:AGBookTTReg;font-size:0.85vw;color:black;"> 
+                                                    Proceeds benefit Children’s Miracle Network Hospitals® 
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTReg;font-size:0.85vw;color:black;">    
+                                                    For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTIta;font-size:0.8vw;color:black;">       
+                                                    Not responsible for any accidents.
+                                                </span>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                <table  width="100%">
+                                                    <tr>
+                                                        <td style="font-family:AGBookTTBol;font-size:1vw;color:black;width:35%">
+                                                            <b> {!v.clientCon[0].Client__r.Name}  {!v.clientCon[0].Client__r.Client_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_Street__c }<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_City__c},
+                                                                {!v.clientCon[0].Client__r.Billing_State__c}
+                                                                {!v.clientCon[0].Client__r.Billing_Postal_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Phone__c}</b>
+                                                        </td>
+                                                        <td>
+                                                            <img src="{!$Resource.CMNForm + '/CMNFlyerFooters.PNG'}" style="float:right;width:65%" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </lightning:layoutItem> 
+                                </lightning:layout>
+                            </lightning:accordionSection>
+                        
+                         <lightning:card>
+                            <aura:set attribute="actions">
+                            <lightning:button variant="neutral" 
+                                              label="Back"
+                                              title="Back"
+                                              onclick="{!c.FlyerBackForm}" class="buttonsclass"/>
+                            <lightning:button variant="brand" 
+                                              label="Next"
+                                              title="Next"
+                                              onclick="{!c.FlyerNextMethod}" class="buttonsclass"/>
+                        </aura:set>
+                              </lightning:card>
+                        </lightning:accordion>
+                   
+                    </lightning:card>
+                    
+                </ui:scrollerWrapper>
+            </div>
+        </aura:if>
+        
+        <!--************************************************** CMN Flyer MOBILE LAYOUT  **************************************************-->
+        
+        <aura:if isTrue="{!v.isMobile}">
+            
+            <div class="showScroll">
+                <ui:scrollerWrapper class="scrollerSizeMobile">
+                    <lightning:card>
+                        <aura:set attribute="title">
+                            <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                        </aura:set>
+                        <aura:set attribute="actions">
+                            <lightning:button variant="neutral" 
+                                              label="Back"
+                                              title="Back"
+                                              onclick="{!c.FlyerBackForm}" class="buttonsclass"/>
+                            <lightning:button variant="brand" 
+                                              label="Next"
+                                              title="Next"
+                                              onclick="{!c.FlyerNextMethod}" class="buttonsclass"/>
+                        </aura:set><br/>
+                        
+                        <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="CMNOrderForms">
+                            <lightning:accordionSection name="CMNOrderForms" label="CMN Flyer"  class="slds-card" >
+                                <lightning:layout multipleRows="true">  
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="around-small">  
+                                        <lightning:layout multipleRows="true">  
+                                            
+                                        <!--    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <label class="slds-form-element__label" for="text-input-id-1"> Media Type : </label><br/>
+                                                <ui:outputText value="Print"/>	
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <label class="slds-form-element__label" for="text-input-id-1"> Job Type : </label><br/>
+                                                <ui:outputText value=""/>	
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                First you will configure your event Flyer. Once you have entered your details you will then enter the details for your Banner on the next page.
+                                                <br/> If you do not want a Flyer for your event, please type "No Flyer" in the fields.
+                                                <br/> Items marked with an asterisk (*) are required.
+                                            </lightning:layoutItem> -->
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerNameofEvent" value="{!v.CMNFlyerNameofEvent}" maxlength="36" required="true" placeholder="36 Characters with spaces" label="Name of Event:" aura:id="CMNFlyName"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerDate" value="{!v.CMNFlyerDate}" maxlength="26" required="true" placeholder="26 Characters with Spaces" label="Date:" aura:id="CMNFlyDate"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerTime" value="{!v.CMNFlyerTime}" placeholder="12:00 p.m. – 5:30 p.m." required="true" label="Time:" aura:id="CMNFlyTime"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:input name="CMNFlyerEventDetails" value="{!v.CMNFlyerEventDetails}" maxlength="170" placeholder="A short description of your event, if needed. 170 characters with spaces." label="Event Details:" aura:id="CMNFlyEvent"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                                <lightning:textarea name="CMNFlyerSpecialDetails" value="{!v.CMNFlyerSpecialDetails}" placeholder="Communicate details or questions about your request here. This content does not appear on your item." label="Special Details:" aura:id="CMNFlySpecial"/>
+                                            </lightning:layoutItem> 
+                                            
+                                            <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                                <b>NOTICE:</b> EchoMedia will include the following statement regarding funds raised for your event: "All donations benefit our local CMN hospital."
+                                                <br/>
+                                                <br/> All flyers and banners will feature the Love's logo and CMN Hospitals logo. Flyers will display important event details including a brief description of the event.
+                                            </lightning:layoutItem> 
+                                        </lightning:layout>
+                                    </lightning:layoutItem> 
+                                    
+                                    
+                                    <lightning:layoutItem size="6" smallDeviceSize="6" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small"> 
+                                        <b>Item Preview :</b>
+                                        <div style="width:221%;background:white;border:3px solid black;">
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                <img src="{!$Resource.CMNForm + '/CMNFlyerHeaders.PNG'}" width='900'/>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span id="name" style="font-family: AGBookTTBol;font-size:6vw;color:#57585A;line-height:1"><b>{!v.CMNFlyerNameofEvent}</b></span>
+                                                <br/>
+                                                <span id="Date" style="font-family: AGBookTTBol;font-size:3.5vw;color:#FECD08;line-height:2"><b>{!v.CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span id="Time" style="font-family: AGBookTTBol;font-size:3.5vw;color:#FECD08;"><b>{!v.CMNFlyerTime}</b></span >    
+                                                <br/>
+                                                <span id="Event" style="font-family:AGBookTTBol;font-size:3.5vw;color:#57585A;"><b>{!v.CMNFlyerEventDetails}</b></span >                 
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span style="font-family:AGBookTTReg;font-size:2.25vw;color:black;"> 
+                                                    Proceeds benefit Children’s Miracle Network Hospitals® 
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTReg;font-size:2.25vw;color:black;">    
+                                                    For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTIta;font-size:2.25vw;color:black;">       
+                                                    Not responsible for any accidents.
+                                                </span>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                <table  width="100%">
+                                                    <tr>
+                                                        <td style="font-family:AGBookTTBol;font-size:2.75vw;color:black;width:35%">
+                                                            <b> {!v.clientCon[0].Client__r.Name}  {!v.clientCon[0].Client__r.Client_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_Street__c }<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_City__c},
+                                                                {!v.clientCon[0].Client__r.Billing_State__c}
+                                                                {!v.clientCon[0].Client__r.Billing_Postal_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Phone__c}</b>
+                                                        </td>
+                                                        <td>
+                                                            <img src="{!$Resource.CMNForm + '/CMNFlyerFooters.PNG'}" style="float:right;width:65%" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </lightning:layoutItem> 
+                                </lightning:layout>
+                            </lightning:accordionSection>
+                        </lightning:accordion>
+                    </lightning:card>
+                    
+                </ui:scrollerWrapper>
+            </div>
+            
+        </aura:if>
+        
+    </aura:if>
+    
+    <!--*********************************************************** CMN BANNER *************************************************************-->
+    
+    <aura:if isTrue="{!v.CMNBanner}"> 
+        <div class="showScroll">
+            <ui:scrollerWrapper class="scrollerSize">
+                <lightning:card>
+                    <aura:set attribute="title">
+                        <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                    </aura:set>
+                    <aura:set attribute="actions">
+                        <lightning:button variant="neutral" 
+                                          label="Back"
+                                          title="Back"
+                                          onclick="{!c.BannerBackForm}" class="buttonsclass"/>
+                        <lightning:button variant="brand" 
+                                          label="Next"
+                                          title="Next"
+                                          onclick="{!c.BannerNextMethod}" class="buttonsclass"/>
+                    </aura:set><br/>
+                    <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="CMNBanner">
+                        <lightning:accordionSection name="CMNBanner" label="CMN Banner"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="5" padding="around-small">  
+                                    <lightning:layout multipleRows="true">  
+                                        
+                                    <!--    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                            <label class="slds-form-element__label" for="text-input-id-1"> Media Type : </label><br/>
+                                            <ui:outputText value="Print"/>	
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                            <label class="slds-form-element__label" for="text-input-id-1"> Job Type : </label><br/>
+                                            <ui:outputText value=""/>	
+                                        </lightning:layoutItem>
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                            If you do not want a Banner for your event, please type "No Banner" in the fields.
+                                            <br/> Items marked with an asterisk (*) are required.
+                                        </lightning:layoutItem>  -->
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                            <lightning:input name="CMNBannerNameofEvent" value="{!v.CMNBannerNameofEvent}" maxlength="36" required="true" placeholder="36 Characters with spaces" label="Name of Event:" aura:id="CMNBNName"/>
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                            <lightning:input name="CMNBannerTime" value="{!v.CMNBannerTime}" placeholder="12:00 p.m. – 5:30 p.m." required="true" label="Time:" aura:id="CMNBNTime"/>
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                            <lightning:input name="CMNBannerDate" value="{!v.CMNBannerDate}" maxlength="26" required="true" placeholder="26 Characters with Spaces" label="Date:" aura:id="CMNBNDate"/>
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                            <lightning:input name="CMNBannerEventDetails" value="{!v.CMNBannerEventDetails}" maxlength="60" placeholder="A short description of your event, if needed. 60 characters with spaces." label="Event Details:" aura:id="CMNBNEvent"/>
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">  
+                                            <lightning:textarea name="CMNBannerSpecialDetails" value="{!v.CMNBannerSpecialDetails}" placeholder="Communicate details or questions about your request here. This content does not appear on your item." label="Special Details:" aura:id="CMNBNSpecial"/>
+                                        </lightning:layoutItem> 
+                                        
+                                        <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="12" padding="around-small">        
+                                            <b>NOTICE:</b> EchoMedia will include the following statement regarding funds raised for your event: "All donations benefit our local CMN hospital."
+                                            <br/>
+                                            <br/> All flyers and banners will feature the Love's logo and CMN Hospitals logo. Flyers will display important event details including a brief description of the event.
+                                        </lightning:layoutItem> 
+                                    </lightning:layout>
+                                </lightning:layoutItem> 
+                                
+                                <aura:if isTrue="{!!v.isMobile}">
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="7" padding="around-small">
+                                        <b>Item Preview :</b>
+                                        <div class="slds-form-element__control CMNBannerCls">
+                                            
+                                            <div style="padding-left:16.55vw;padding-top:0.8vw;">
+                                                <div style="position: absolute;">
+                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:3vw;color:#57585A;line-height:2.5vw;"><b>{!v.CMNBannerNameofEvent}</b></span>
+                                                </div>
+                                                
+                                                <div style="padding-top:5.5vw;position: absolute;">
+                                                    <span id="DateB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;line-height:2vmin;"><b>{!v.CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;
+                                                    <span id="TimeB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;"><b>{!v.CMNBannerTime}</b></span >
+                                                </div>
+                                                
+                                                <div style="padding-top:7.9vw;position: absolute;">
+                                                    <span id="EventB" style="font-family: AGBookTTBol;font-size:1.1vw;color:#57585A;"><b>{!v.CMNBannerEventDetails}</b></span >                  
+                                                </div>
+                                                
+                                            </div>  
+                                        </div>
+                                        
+                                    </lightning:layoutItem> 
+                                </aura:if>
+                                
+                                <!--************************************************** MOBILE LAYOUT  **************************************************-->
+                                
+                                <aura:if isTrue="{!v.isMobile}">
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="7" padding="around-small">
+                                        <b>Item Preview :</b>
+                                        <div class="slds-form-element__control CMNBannerCls"  style="height:400vw;width:93vw;">
+                                            <div style="padding-left:16.55vw;padding-top:0.8vw;">
+                                                <div style="position: absolute;padding-left:59px;">
+                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:4.5vw;color:#57585A;"><b>{!v.CMNBannerNameofEvent}</b></span>
+                                                </div>
+                                                
+                                                <div style="padding-top:10vw;position: absolute;">
+                                                    <span id="DateB" style="font-family: AGBookTTBol;font-size:2.25vw;color:#FECD08;padding-left:59px;"><b>{!v.CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;
+                                                    <span id="TimeB" style="font-family: AGBookTTBol;font-size:2.25vw;color:#FECD08;"><b>{!v.CMNBannerTime}</b></span >
+                                                </div>
+                                                
+                                                <div style="padding-top:13.9vw;position: absolute;padding-left:59px;">
+                                                    <span id="EventB" style="font-family: AGBookTTBol;font-size:2vw;color:#57585A;"><b>{!v.CMNBannerEventDetails}</b></span >                  
+                                                </div>
+                                            </div>  
+                                        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                
+                            </lightning:layout>
+                            
+                        </lightning:accordionSection>
+                          <lightning:card>
+                          <aura:set attribute="actions">
+                        <lightning:button variant="neutral" 
+                                          label="Back"
+                                          title="Back"
+                                          onclick="{!c.BannerBackForm}" class="buttonsclass"/>
+                        <lightning:button variant="brand" 
+                                          label="Next"
+                                          title="Next"
+                                          onclick="{!c.BannerNextMethod}" class="buttonsclass"/>
+                    </aura:set>
+                        </lightning:card>
+                    </lightning:accordion> 
+                </lightning:card>
+            </ui:scrollerWrapper>
+        </div>
+    </aura:if>
+    
+    <!--*********************************************************** CMN Final Approver page *************************************************************-->
+    
+    <aura:if isTrue="{!v.CMNFinalApprove}"> 
+        <div class="showScroll">
+            <ui:scrollerWrapper class="scrollerSize">  
+                <lightning:card>
+                    <aura:set attribute="title">
+                        <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                    </aura:set>
+                    <aura:set attribute="actions">
+                        <lightning:button variant="neutral" 
+                                          label="Back"
+                                          title="Back"
+                                           disabled="{!v.isSpinner}"
+                                          onclick="{!c.FinalBackForm}" class="buttonsclass"/>
+                        <lightning:button variant="brand" 
+                                          label="Place Order"
+                                          title="Place Order"
+                                           disabled="{!v.isSpinner}"
+                                          onclick="{!c.SaveMethod}" class="buttonsclass"/>
+                    </aura:set><br/>
+                    
+                    <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="CMNCon">
+                        <lightning:accordionSection name="CMNCon" label="CMN Confirmation"  class="slds-card" >
+                            <lightning:layout multipleRows="true">  
+                                <aura:if isTrue="{!!v.isMobile}"> 
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small"> 
+                                        <b>Item Preview :</b> 
+                                        <div style="width:99%;background:white;border:3px solid black;">
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                <img src="{!$Resource.CMNForm + '/CMNFlyerHeaders.PNG'}" width='900'/>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span id="name" style="font-family: AGBookTTBol;font-size:4vw;color:#57585A;line-height:1"><b>{!v.CMNFlyerNameofEvent}</b></span>
+                                                <br/>
+                                                <span id="Date" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;line-height:2"><b>{!v.CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span id="Time" style="font-family: AGBookTTBol;font-size:2vw;color:#FECD08;"><b>{!v.CMNFlyerTime}</b></span >    
+                                                <br/>
+                                                <span id="Event" style="font-family:AGBookTTBol;font-size:2vw;color:#57585A;"><b>{!v.CMNFlyerEventDetails}</b></span >                 
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span style="font-family:AGBookTTReg;font-size:0.85vw;color:black;"> 
+                                                    Proceeds benefit Children’s Miracle Network Hospitals® 
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTReg;font-size:0.85vw;color:black;">    
+                                                    For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTIta;font-size:0.8vw;color:black;">       
+                                                    Not responsible for any accidents.
+                                                </span>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                <table  width="100%">
+                                                    <tr>
+                                                        <td style="font-family:AGBookTTBol;font-size:1vw;color:black;width:35%">
+                                                            <b>  {!v.clientCon[0].Client__r.Name}  {!v.clientCon[0].Client__r.Client_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_Street__c }<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_City__c},
+                                                                {!v.clientCon[0].Client__r.Billing_State__c}
+                                                                {!v.clientCon[0].Client__r.Billing_Postal_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Phone__c}</b>
+                                                        </td>
+                                                        <td>
+                                                            <img src="{!$Resource.CMNForm + '/CMNFlyerFooters.PNG'}" style="float:right;width:65%" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                
+                                            </div>
+                                        </div>
+                                        
+                                    </lightning:layoutItem>
+                                    
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="6" padding="around-small"> 
+                                        &nbsp;&nbsp;&nbsp; <lightning:input type="toggle" label="Approved" name="Approved" aura:id="CMNFlyApprove"/>
+                                    </lightning:layoutItem>
+                                    
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="7" padding="around-small">
+                                        <b>Item Preview :</b>   
+                                        <div class="slds-form-element__control CMNBannerCls">
+                                            
+                                            <div style="padding-left:16.55vw;padding-top:0.8vw;">
+                                                <div style="position: absolute;">
+                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:3vw;color:#57585A;line-height:2.5vw;"><b>{!v.CMNBannerNameofEvent}</b></span>
+                                                </div>
+                                                
+                                                <div style="padding-top:5.5vw;position: absolute;">
+                                                    <span id="DateB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;line-height:2vmin;"><b>{!v.CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;
+                                                    <span id="TimeB" style="font-family: AGBookTTBol;font-size:1.5vw;color:#FECD08;"><b>{!v.CMNBannerTime}</b></span >
+                                                </div>
+                                                
+                                                <div style="padding-top:7.9vw;position: absolute;">
+                                                    <span id="EventB" style="font-family: AGBookTTBol;font-size:1.1vw;color:#57585A;"><b>{!v.CMNBannerEventDetails}</b></span >                  
+                                                </div>
+                                                
+                                            </div>  
+                                        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                        
+                                    </lightning:layoutItem>  
+                                    
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="6" largeDeviceSize="5" padding="around-small"> 
+                                        &nbsp;&nbsp;&nbsp;   <lightning:input type="toggle" label="Approved" name="Approved" aura:id="CMNBanApprove"/>  
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                
+                                <!--************************************************** MOBILE LAYOUT  **************************************************-->
+                                
+                                <aura:if isTrue="{!v.isMobile}">
+                                    
+                                     <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="6" padding="around-small"> 
+                                        &nbsp;&nbsp;&nbsp; <lightning:input type="toggle" label="Approved" name="Approved" aura:id="CMNFlyApprove"/>
+                                    </lightning:layoutItem>
+                                    <b>Item Preview :</b>
+                                        <div style="width:221%;background:white;border:3px solid black;">
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;padding-right:0.5vw;">
+                                                <img src="{!$Resource.CMNForm + '/CMNFlyerHeaders.PNG'}" width='900'/>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span id="name" style="font-family: AGBookTTBol;font-size:6vw;color:#57585A;line-height:1"><b>{!v.CMNFlyerNameofEvent}</b></span>
+                                                <br/>
+                                                <span id="Date" style="font-family: AGBookTTBol;font-size:3.5vw;color:#FECD08;line-height:2"><b>{!v.CMNFlyerDate}</b></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <span id="Time" style="font-family: AGBookTTBol;font-size:3.5vw;color:#FECD08;"><b>{!v.CMNFlyerTime}</b></span >    
+                                                <br/>
+                                                <span id="Event" style="font-family:AGBookTTBol;font-size:3.5vw;color:#57585A;"><b>{!v.CMNFlyerEventDetails}</b></span >                 
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;width:100%;padding-right:0.5vw;">
+                                                <span style="font-family:AGBookTTReg;font-size:2.25vw;color:black;"> 
+                                                    Proceeds benefit Children’s Miracle Network Hospitals® 
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTReg;font-size:2.25vw;color:black;">    
+                                                    For five weeks every fall, <b>Love’s</b> organizes a fundraising campaign for <b>Children’s Miracle Network Hospitals®</b>. Last year, with generous customer support and countless employee volunteer hours, Love’s donated $2.9 million to benefit CMN Hospitals across the country.
+                                                </span>
+                                                <hr style="border:1px solid black;margin: 2px 0;height:0px;"/>
+                                                <span style="font-family:AGBookTTIta;font-size:2.25vw;color:black;">       
+                                                    Not responsible for any accidents.
+                                                </span>
+                                            </div>
+                                            
+                                            <div style="padding-left:0.5vw;padding-top:0.5vw;width:100%;">
+                                                <table  width="100%">
+                                                    <tr>
+                                                        <td style="font-family:AGBookTTBol;font-size:2.75vw;color:black;width:35%">
+                                                            <b> {!v.clientCon[0].Client__r.Name}  {!v.clientCon[0].Client__r.Client_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_Street__c }<br/>
+                                                                {!v.clientCon[0].Client__r.Billing_City__c},
+                                                                {!v.clientCon[0].Client__r.Billing_State__c}
+                                                                {!v.clientCon[0].Client__r.Billing_Postal_Code__c}<br/>
+                                                                {!v.clientCon[0].Client__r.Phone__c}</b>
+                                                        </td>
+                                                        <td>
+                                                            <img src="{!$Resource.CMNForm + '/CMNFlyerFooters.PNG'}" style="float:right;width:65%" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                
+                                            </div>
+                                        </div>
+                                    
+                                    
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="5" padding="around-small"> 
+                                        &nbsp;&nbsp;&nbsp;   <lightning:input type="toggle" label="Approved" name="Approved" aura:id="CMNBanApprove"/>  
+                                    </lightning:layoutItem>
+                                    <lightning:layoutItem size="12" smallDeviceSize="12" mediumDeviceSize="12" largeDeviceSize="5" padding="around-small"> 
+                                        <b>Item Preview :</b>
+                                        <div class="slds-form-element__control CMNBannerCls"  style="height:400vw;width:93vw;">
+                                            <div style="padding-left:16.55vw;padding-top:0.8vw;">
+                                                <div style="position: absolute;padding-left:59px;">
+                                                    <span id="NameB" style="font-family: AGBookTTBol;font-size:4.5vw;color:#57585A;"><b>{!v.CMNBannerNameofEvent}</b></span>
+                                                </div>
+                                                
+                                                <div style="padding-top:10vw;position: absolute;">
+                                                    <span id="DateB" style="font-family: AGBookTTBol;font-size:2.25vw;color:#FECD08;padding-left:59px;"><b>{!v.CMNBannerDate}</b></span>&nbsp;&nbsp;&nbsp;
+                                                    <span id="TimeB" style="font-family: AGBookTTBol;font-size:2.25vw;color:#FECD08;"><b>{!v.CMNBannerTime}</b></span >
+                                                </div>
+                                                
+                                                <div style="padding-top:13.9vw;position: absolute;padding-left:59px;">
+                                                    <span id="EventB" style="font-family: AGBookTTBol;font-size:2vw;color:#57585A;"><b>{!v.CMNBannerEventDetails}</b></span >                  
+                                                </div>
+                                            </div>  
+                                        </div><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                    </lightning:layoutItem>
+                                </aura:if>
+                                
+                            </lightning:layout>
+                        </lightning:accordionSection> 
+                    </lightning:accordion> 
+                </lightning:card>
+            </ui:scrollerWrapper>
+        </div>
+    </aura:if>
+    
+</aura:component>

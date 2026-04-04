@@ -1,0 +1,1709 @@
+<apex:page controller="StorefrontJobRequestFormController" sidebar="true" docType="html-5.0" applyBodyTag="False" standardStylesheets="false" applyHtmlTag="False" showHeader="False">
+    <!-- <apex:image value="{!$Resource.LovesHeaderLogo}" width="1350px"/><apex:page controller="StorefrontJobRequestFormController" sidebar="true" docType="html-5.0" applyBodyTag="False" standardStylesheets="false" applyHtmlTag="False" showHeader="False">
+<!-- <apex:image value="{!$Resource.LovesHeaderLogo}" width="1350px"/>
+<apex:sectionHeader title="Store Request Type Form " subtitle="Select Store Request Types" />  -->
+    <style>
+        .sfdc_richtext img {
+        border: 0;
+        height: 30%;
+        width: 30%;
+        }
+        
+        .button2 {
+        background-color: #FFD700;
+        font-weight: bold;
+        color: Black;
+        }
+        
+        #ProductsTable img {
+        opacity: 50%;
+        width: 20% !Important;
+        }
+        
+        .customImage{ height: 10px; width: 10px; }
+        #rcorners1 {
+        border-radius:0%;
+        border: 1px solid #cccccc;
+        padding: 0px; 
+        width: 100%;
+        height: 0%;
+        }
+        #pagemessage
+        {
+        color:blue;
+        }
+        .required:after { content:" *";  color: Red;font:bold;}
+        
+        html,html body
+        {
+        overflow: auto;
+        -webkit-overflow-scrolling:auto;
+        }
+        body
+        {
+        position:absolute;left:0;right:0;top:0;bottom:0;
+        margin:0;
+        }
+        
+        .slds .slds-table .slds-truncate 
+        {
+        min-width: 52px !important;
+        max-width: 125px !important;
+        }
+        
+        .slds-checkbox .slds-checkbox--faux
+        {
+        border: 2px solid lightslategrey !important;
+        }    
+        
+    </style>
+    
+    
+    <!--   <style type="text/css">
+
+@font-face {
+font-family: Neutraface2Text-Bold;
+src: url({!URLFOR($Resource.LovesBusinessCardFonts, '/Neutraface2Text-Bold.otf')});
+}
+@font-face {
+font-family: MyriadPro-LightIt;
+src: url({!URLFOR($Resource.LovesBusinessCardFonts, '/MyriadPro-LightIt.otf')});
+}
+@font-face {
+font-family: MyriadPro-Bold;
+src: url({!URLFOR($Resource.LovesBusinessCardFonts, '/MyriadPro-Bold.otf')});
+}
+@font-face {
+font-family: MyriadPro-Light;
+src: url({!URLFOR($Resource.LovesBusinessCardFonts, '/MyriadPro-Light.otf')});
+}
+@font-face {
+font-family: MyriadPro-Regular;
+src: url({!URLFOR($Resource.LovesBusinessCardFonts, '/MyriadPro-Regular.otf')});
+}
+</style>-->
+    
+    
+    
+    
+    
+    <script>
+    function Hidetext(ele) {
+        ele.value = '(xxx)xxx-xxxx';
+    }
+    
+    function validatePhone(CorporatePhone) {
+        var num = CorporatePhone;
+        if (num.length > 10) {
+            //Alert the user that the phone number entered was invalid.
+            alert('Please enter a valid phone number');
+        } else {
+            //Format (xxx)-xxx-xxxx
+            CorporatePhone.value = "(" + num.substring(0, 3) + ") " + num.substring(3, 6) + "-" + num.substring(6);
+        }
+    }
+    </script>
+    
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <apex:stylesheet value="{!URLFOR($Resource.SLDS0122, 'assets/styles/salesforce-lightning-design-system-vf.css')}" />
+        
+        <body>
+            
+            <div class="slds">
+                <ul class="slds-list--vertical slds-has-dividers">
+                    <li class="slds-list__item slds-large-size">
+                        <div class="slds-text-heading--large">
+                            <apex:image value="{!$Resource.LovesHeaderLogo}"/>
+                        </div>
+                    </li>
+                </ul>
+                
+                
+                <apex:form enctype="multipart/form-data" html-novalidate="novalidate">
+                    
+                    
+                    
+                    <div class="slds-grid slds-wrap">
+                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                            <div style="background-color:SteelBlue;color:white;display:{!IF(OR(ShowJobRequestTypes,ShowFleetSalesOrdervalue,ShowTrilliumOrdervalue), 'block','none')};">
+                                <h3 class="slds-section-title"><b>&nbsp;Order Forms</b></h3>
+                            </div>
+                            <br/>
+                            <div style="color:black;display:{!IF(OR(ShowJobRequestTypes,ShowFleetSalesOrdervalue,ShowTrilliumOrdervalue), 'block','none')};">
+                                &nbsp;&nbsp;Please select the type of order you would like to submit.
+                            </div>
+                            <div class="slds-grid slds-wrap">
+                                
+                                
+                                
+                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--3-of-3 slds-large-size--12-of-12" style="display:{!IF(ShowJobRequestTypes, 'block','none')};">
+                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                        <label class="slds-form-element__label"><b>Store Order Type</b></label>
+                                        <div class="slds-form-element__control">
+                                            <apex:selectList value="{!JobRequestTypes}" size="1" id="JobRequest_Types" style="width:50%" styleClass="slds-select slds-m-right--medium" onchange="StoreOrderTypes()">
+                                                <apex:selectOptions value="{!RequestTypes}" />
+                                                <apex:actionFunction name="StoreOrderTypes" action="{!methodcontinue}"/>
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+                                </aside>
+                                
+                                <!-- <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12" style="display:{!IF(ShowJobRequestTypes, 'block','none')};">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<div class="slds-form-element__control">
+<b>  <apex:commandButton value="Create"  action="{!methodcontinue}" styleClass="slds-button slds-button--neutral"/></b>
+</div>
+</div>
+</aside>-->
+                                
+                                <br/>
+                                
+                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--3-of-3 slds-large-size--12-of-12" style="display:{!IF(AND(ShowMultiStoreButton,ShowJobRequestTypes), 'block','none')};">
+                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                        <label class="slds-form-element__label"><b>District/Division Order Type</b></label>
+                                        <div class="slds-form-element__control">
+                                            <apex:selectList value="{!DistDivJobRequestTypes}" size="1" id="JobRequest_Types2" style="width:50%" styleClass="slds-select slds-m-right--medium" onchange="DistDivRequestTypes()">
+                                                <apex:selectOptions value="{!DistDivRequestTypes}" />
+                                                <apex:actionFunction name="DistDivRequestTypes" action="{!DistDivmethodcontinue}"/>
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+                                </aside>
+                                
+                                <!--  <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12" style="display:{!IF(AND(ShowMultiStoreButton,ShowJobRequestTypes), 'block','none')};">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<div class="slds-form-element__control">
+<b> <apex:commandButton value="Create"  action="{!DistDivmethodcontinue}" styleClass="slds-button slds-button--neutral"/></b>
+</div>
+</div>
+</aside>-->
+                                
+                                <br/>
+                                
+                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--3-of-3 slds-large-size--12-of-12" style="display:{!IF(AND(OR(ShowJobRequestTypes,ShowFleetSalesOrdervalue,ShowTrilliumOrdervalue),OR($UserRole.Name == 'Corporate',$UserRole.Name == 'Fleet Solutions',$UserRole.Name == 'Trillium CNG',$UserRole.Name == 'District Manager',$UserRole.Name == 'Division Director',$UserRole.Name == 'Division Merch Manager')), 'block','none')};">
+                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                        <label class="slds-form-element__label"><b>Corporate Order Type</b></label>
+                                        <div class="slds-form-element__control">
+                                            <apex:selectList value="{!CorpJobRequestTypes}" size="1" style="width:50%" id="JobRequest_Types3" styleClass="slds-select slds-m-right--medium" onchange="CorpRequestTypes()">
+                                                <apex:selectOptions value="{!CorpRequestTypes}" />
+                                                <apex:actionFunction name="CorpRequestTypes" action="{!Corpmethodcontinue}"/>
+                                            </apex:selectList>
+                                        </div>
+                                    </div>
+                                </aside>
+                                
+                                <!--     <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12" style="display:{!IF(OR(ShowJobRequestTypes,ShowFleetSalesOrdervalue,ShowTrilliumOrdervalue), 'block','none')};">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<br/>
+<div class="slds-form-element__control">
+<b> <apex:commandButton value="Create"  action="{!Corpmethodcontinue}" styleClass="slds-button slds-button--neutral"/></b>
+</div>
+</div>
+</aside>-->
+                                
+                            </div>
+                        </main>
+                    </div>
+                    
+                    <apex:outputPanel >
+                        
+                        <body>
+                            
+                            <apex:pageBlock id="block">
+                                <br/>
+                                <span style="color:red;">
+                                    <apex:pagemessages />
+                                </span>
+                                <!-- ********************************************************* STORE BUSINESS CARD ************************************************************ -->
+                                
+                                <apex:outputPanel rendered="{!ShowStoreBusiness}">
+                                    
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Store Business Card Request Form</b></h3>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                <!--   <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Media Type :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Job Type :</b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameBusinessCardScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label required"><b>Name</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!BusinessName}"  styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Title</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!BusinessTitleString}" id="selectTitleList" multiselect="false" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!BusinessTitle}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <!--  <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Address :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Billing_Street__c }"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>City :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Billing_City__c}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>State :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Billing_State__c}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Zip :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Billing_Postal_Code__c}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Phone :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Business_Phone__c}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Fax :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Fax__c}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Email :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Email__c }"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Logo</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!BusinessLogoString}" id="selectLogobList" multiselect="false" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!BusinessLogo}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <!--    <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Website :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!BusinesskWebsite}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                <!-- ********************************************************* End STORE BUSINESS CARD ************************************************************ -->
+                                
+                                <!-- ********************************************************* STORE NAME TAG FORM ************************************************************ -->
+                                
+                                <apex:outputPanel rendered="{!ShowStoreNameTag}">
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Store Name Tag Request Form</b></h3>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Title</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!TagTitleNewString }" id="selectTitleList1" multiselect="false" size="1" required="true" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!TagTitleNew}">
+                                                                </apex:selectoptions>
+                                                                <apex:actionSupport event="onchange" reRender="block" />
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>First Name</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                <apex:inputText value="{!TagFirstName}" styleClass="slds-input"></apex:inputText>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <apex:outputPanel rendered="{!if(TagTitleNewString == 'Team Member',false,true)}">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label required"><b>Last Name</b></label>
+                                                            <div class="slds-form-element__control">
+                                                                
+                                                                <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                    <apex:inputText value="{!TagLastName}" styleClass="slds-input"></apex:inputText>
+                                                                </apex:outputPanel>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>  
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label required"><b>Year of Hire</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                <apex:inputText value="{!TagYearsWorked}" styleClass="slds-input"></apex:inputText>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label required"><b>Logos</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                <apex:selectList value="{!TagLogoList }" id="selectLogoList" multiselect="true" size="3" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!TagLogo}"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                <!-- ********************************************************* End STORE NAME TAG FORM ************************************************************ -->
+                                
+                                <!-- ********************************************************* BILLBOARD/DOT SERVICE REQUEST ************************************************************ -->
+                                
+                                
+                                <apex:outputPanel rendered="{!ShowBillboardRepairs}" title="">
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Billboard/Dot Service Request Form</b></h3>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                
+                                                <!--   <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Media Type</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameBillboardMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Job Type</b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameBillboardScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<apex:outputPanel rendered="{!if(TagTitleNewString == 'Team Member',false,true)}">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>District</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Dummy_Picklist_1__c}"></apex:outputText>
+</div>
+</div>
+</apex:outputPanel>  
+</aside>
+
+
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Store Name</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.Client__r.Name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Requestor</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!clientcontact.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Location</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList id="BBLName" value="{!BBLName}" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectOptions value="{!BBLocation}"></apex:selectOptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Sign type</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!BillboardSigntypeList }" id="selectBSignTypeList" multiselect="true" size="2" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!BillboardSigntype}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Billboard</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList id="BBList" value="{!BBList}" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectOptions value="{!BillboardList}"></apex:selectOptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>File Storage</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputfile value="{!myfile.body}" filename="{!myfile.Name}" styleClass="slds-input"/>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Service Issues</b></label>
+                                                        <div class="slds-form-element__control">
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label">
+                                                            <b><apex:outputText value="Select the below options that apply to the signage issues you are having." style="color:red;" /></b>
+                                                        </label>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!BillboardServiceIssuesList }" id="selectBserviceList" multiselect="true" size="6" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!BillboardServiceIssues}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <!--  <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<apex:outputText value="Directional" />
+<div class="slds-form-element__control">
+</div>
+</div>
+</aside>-->
+                                                
+                                                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-6 slds-large-size--4-of-12">
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <apex:outputText value="Currently Reads" />
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!BillboardReads}" styleClass="slds-input"/>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <apex:outputText value="Should Read " />
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!Billboardshouldread}" styleClass="slds-input" />
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <apex:outputText value="Lighting" />
+                                                            <div class="slds-form-element__control">
+                                                                <apex:outputLabel value="If you are experiencing a lighting failure.select below options for each light. " />
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            
+                                                            <div class="slds-form-element__control">
+                                                                <apex:selectList value="{!BillboardLightList}" id="selectBLightList" multiselect="true" size="4" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!BillboardLight}"></apex:selectoptions>
+                                                                </apex:selectList>        
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <apex:outputLabel value="What time(s) are the lights being reported out " />
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!Billboardlightout}" styleClass="slds-input"/>
+                                                            </div>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:outputLabel value="(a.m./p.m.) " />
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <apex:outputLabel value="Notes " />
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!BillboardNotes}" styleClass="slds-input"/>
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                </div>
+                                                
+                                                
+                                                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--8-of-12">
+                                                    <br/><br/><br/>
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <div class="slds-form-element__control">
+                                                                <apex:image value="{!$Resource.LovesLogoforBillboardForm}" />
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                </div>
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                
+                                <!-- ********************************************************* End BILLBOARD/DOT SERVICE REQUEST ************************************************************ -->
+                                
+                                
+                                
+                                
+                                <!-- ********************************************************* Store Supply Order ************************************************************ -->
+                                
+                                
+                                <apex:outputpanel rendered="{!ShowStoreSupplies}" id="thestoresection">
+                                    
+                                    
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Store Supply Order Request Form</b></h3>
+                                    </div>
+                                    
+                                    
+                                    
+                                    <apex:outputPanel >
+                                        
+                                        
+                                        <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                            <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                
+                                                <div class="slds-grid slds-wrap">
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">  
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label" ><b>Select Item Category</b></label>
+                                                            <div class="slds-form-element__control" >
+                                                                <apex:selectList value="{!MaterialTypeString }" id="selectMType" size="1" multiselect="false" onchange="camname()" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!MaterialType}"></apex:selectoptions>
+                                                                    <apex:actionFunction name="camname" action="{!ShowItems}" reRender="ajaxrequest" />
+                                                                </apex:selectList>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label" ><b>Item Search</b></label>
+                                                            <div class="slds-form-element__control" >
+                                                                <apex:inputText value="{!MaterialItemNameString}" onkeyup="camname()" onkeydown="if(event.keyCode==13){this.blur();camname();}" styleClass="slds-input">
+                                                                    <apex:actionFunction name="camname" action="{!ShowItems}" reRender="ajaxrequest" />
+                                                                </apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                </div>
+                                            </main>
+                                        </div>
+                                        
+                                    </apex:outputPanel>
+                                    
+                                    <br/>
+                                    <div class="slds-notify slds-text-heading--small slds-theme--error" role="alert" style="width:92%;margin-left:4%;">
+                                        <apex:pageMessages />
+                                    </div>         
+                                    
+                                    <apex:outputPanel id="ajaxrequest">
+                                        
+                                        <!--  <apex:commandButton value="Add To Cart" action="{!AddToCart}" reRender="ajaxrequest" style="float:right;" styleClass="slds-button slds-button--neutral"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                                        
+                                        <apex:commandButton value="Add To Cart" disabled="{!Not(FirstWrapper)}" action="{!AddToCart}" reRender="ajaxrequest" style="float:right;margin-right:4%;" styleClass="slds-button slds-button--neutral"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <apex:commandButton value="View Cart" action="{!ViewToCart}" disabled="{!Not(SecondWrapper)}" style="float:right;" styleClass="slds-button slds-button--neutral"/>
+                                        <br/>
+                                        <br/>
+                                        
+                                        
+                                        
+                                        
+                                        <table style="width:92%;margin-left:4%;" class="slds-table slds-table--bordered" >
+                                            <tr class="slds-text-heading--label">
+                                                <th class="slds-truncate"><b>Photo</b></th>
+                                                <th  class="slds-truncate"><b>Item Description</b></th>
+                                                <th  class="slds-truncate"><b>Action</b></th>
+                                                
+                                            </tr>
+                                            <apex:repeat value="{!MediaIdList}" var="p" rendered="{!FirstWrapper}">
+                                                <tr>
+                                                    <td class="slds-truncate">
+                                                        
+                                                        <!--  <picture>
+<source media="(min-width: 40em)"
+srcset="big.jpg 1x, big-hd.jpg 2x">       
+<source 
+srcset="small.jpg 1x, small-hd.jpg 2x">
+<apex:outputText style="width:15px !Important;height:15px !Important;" escape="false" value="{!roleWraps[p].MI.File_Photo__c}"></apex:outputText>
+</source></source>
+</picture>-->
+                                                        <!--  <apex:outputText style="width:15px !Important;height:15px !Important;" escape="false" value="{!roleWraps[p].MI.File_Photo__c}"></apex:outputText> -->
+                                                        <apex:image id="theImage1" value="/sfc/servlet.shepherd/version/download/{!roleWraps[p].ContentVersionId}" width="200" height="30" alt="No Image"/>
+                                                        <!--       <apex:outputfield value="{!roleWraps[p].MI.File_Photo__c}" ></apex:outputfield>-->
+                                                    </td>
+                                                    <td style="word-wrap:break-word;" class="slds-truncate">
+                                                        <b>{!roleWraps[p].MI.Name}</b><br/>
+                                                        {!roleWraps[p].MI.Description__c}<br/>
+                                                        <b>Package Type:</b> {!roleWraps[p].MI.Package_Type__c}<br/>
+                                                        <apex:outputPanel rendered="{!roleWraps[p].MI.Out_of_Stock__c==True}" style="color:red;">
+                                                            <b>{!$ObjectType.Material_Item__c.Fields.Out_of_Stock__c.Label} </b>  <br/>
+                                                            <b>{!$ObjectType.Material_Item__c.Fields.Re_Stocking__c.Label} : </b> <apex:outputText value="{0,date,MM/dd/yy}"> <apex:param value="{!roleWraps[p].MI.Re_Stocking__c}" /> </apex:outputText>
+                                                        </apex:outputPanel>
+                                                    </td>
+                                                    
+                                                    <td style="padding-left:20px;">
+                                                        <label class="slds-checkbox">
+                                                            <apex:outputPanel rendered="{!roleWraps[p].MI.Out_of_Stock__c!=True}">
+                                                                <apex:inputCheckbox value="{!roleWraps[p].checked}" />
+                                                                <span class="slds-checkbox--faux"></span>
+                                                            </apex:outputPanel>
+                                                        </label>
+                                                    </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </table>
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        <!--   <apex:pageBlockTable value="{!MediaIdList}" var="p" id="ProductsTable" rendered="{!FirstWrapper}" width="600px" columnsWidth="10%"  styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+
+<apex:column value="{!roleWraps[p].MI.Name}" headerValue="{!$ObjectType.Material_Item__c.Fields.Name.Label}" style="width:150px" />
+<apex:column value="{!roleWraps[p].MI.Package_Type__c}" headerValue="{!$ObjectType.Material_Item__c.Fields.Package_Type__c.Label}" />
+
+<apex:column value="{!roleWraps[p].MI.Description__c}" style="width:150px" headerValue="{!$ObjectType.Material_Item__c.Fields.Description__c.Label}" />
+<apex:column headerValue="{!$ObjectType.Material_Item__c.Fields.File_Photo__c.Label}" style="width:10px">
+<apex:outputfield value="{!roleWraps[p].MI.File_Photo__c}"></apex:outputfield>
+</apex:column>
+<apex:column headerValue="Add to cart">
+<label class="slds-checkbox">
+<apex:inputCheckbox value="{!roleWraps[p].checked}" />
+<span class="slds-checkbox--faux"></span>
+</label>
+</apex:column>
+
+</apex:pageBlockTable>-->
+                                        
+                                    </apex:outputPanel>
+                                    
+                                    
+                                </apex:outputpanel>
+                                
+                                
+                                
+                                <apex:outputPanel rendered="{!ShowAddcartSection}"  id="ViewCartSection">
+                                    
+                                    <br/>
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Store Supply Order</b></h3>
+                                    </div>
+                                    
+                                    <br/>
+                                    
+                                    
+                                    
+                                    <table style="width:95%;margin-left:2%;" class="slds-table slds-table--bordered" >
+                                        <tr class="slds-text-heading--label">
+                                            <th class="slds-truncate"><b>Photo</b></th>
+                                            <th  class="slds-truncate"><b>Item Description</b></th>
+                                            <th  class="slds-truncate"><b>Max Qty</b></th>
+                                            <th  class="slds-truncate"><b>Qty</b></th>
+                                            <th  class="slds-truncate"><b>Action</b></th>
+                                            
+                                        </tr>
+                                        <apex:repeat value="{!roleWraps2}" var="p1" rendered="{!SecondWrapper}">
+                                            <tr>
+                                                <td>
+                                                    <!--  <apex:outputText style="width:30px !Important;height:30px !Important;" escape="false" value="{!roleWraps2[p1].MI.File_Photo__c}"></apex:outputText> -->
+                                                    <apex:image id="theImage2" value="/sfc/servlet.shepherd/version/download/{!roleWraps2[p1].ContentVersionId}" width="200" height="30" alt="No Image"/>
+                                                </td>
+                                                <td>
+                                                    <b>{!roleWraps2[p1].MI.Name}</b><br/>
+                                                    <b>Package Type:</b> {!roleWraps2[p1].MI.Package_Type__c}
+                                                </td>
+                                                
+                                                
+                                                <td>
+                                                    <apex:outputText value="{!roleWraps2[p1].MI.Max_Qty__c}"/>
+                                                </td>
+                                                
+                                                <td>
+                                                    
+                                                    <apex:inputText value="{!roleWraps2[p1].Quantity}" maxlength="2"/>
+                                                    
+                                                </td>
+                                                
+                                                <td>
+                                                    <apex:commandLink value="Remove" action="{!removeFromCart}" reRender="ViewCartSection" immediate="true">
+                                                        <apex:param value="{!roleWraps2[p1].MI.Id}" assignTo="{!toUnselect}" name="toUnselect" />
+                                                    </apex:commandLink>
+                                                </td>
+                                                
+                                            </tr>
+                                        </apex:repeat>
+                                    </table>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <!-- <apex:pageBlockTable value="{!roleWraps2}" var="p1"  rendered="{!SecondWrapper}"  styleClass="slds-table slds-table--bordered slds-m-top--medium slds-max-medium-table--stacked">
+<apex:column >
+<apex:commandLink value="Remove" action="{!removeFromCart}" reRender="ViewCartSection" immediate="true">
+<apex:param value="{!roleWraps2[p1].MI.Id}" assignTo="{!toUnselect}" name="toUnselect" />
+</apex:commandLink>
+</apex:column>
+
+<apex:column value="{!roleWraps2[p1].MI.Name}" headerValue="{!$ObjectType.Material_Item__c.Fields.Name.Label}" style="width:150px">
+
+</apex:column>
+<apex:column value="{!roleWraps2[p1].MI.Package_Type__c}" headerValue="{!$ObjectType.Material_Item__c.Fields.Package_Type__c.Label}"/>
+
+<apex:column headerValue="{!$ObjectType.Material_Item__c.Fields.File_Photo__c.Label}">
+
+<apex:outputText escape="false" value="{!roleWraps2[p1].MI.File_Photo__c}"></apex:outputText>
+
+</apex:column>
+
+<apex:column headerValue="Max Quantity">
+<apex:outputText value="{!roleWraps2[p1].MI.Max_Qty__c}"/>
+</apex:column>
+
+<apex:column headerValue="Quantity">
+<apex:inputText value="{!roleWraps2[p1].Quantity}"/>
+</apex:column>
+
+</apex:pageBlockTable>-->
+                                    
+                                </apex:outputPanel>
+                                
+                                <!-- ********************************************************* End Store Supply Order ************************************************************ -->
+                                
+                                
+                                <!-- ************************************************** added new form Custom Store Order in Store order picklist ************************************************************************ -->
+                                
+                                
+                                
+                                
+                                
+                                
+                                <apex:outputPanel rendered="{!ShowCustomStoreOrder}" id="CustomOrder">
+                                    <br/>
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Custom Order Request Form</b></h3>
+                                    </div>
+                                    
+                                    <br/>
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText Value="Notice"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control" >
+                                                            
+                                                            <div style="color:red">
+                                                                * NEW Custom Orders include a <b> $150 Custom Project Fee</b> and a turnaround time of at least 4 weeks.
+                                                            </div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </aside><br/><br/>
+                                                
+                                                
+                                                
+                                                
+                                                <!--  <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b> <apex:outputText value="Media Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b><apex:outputText Value="Job Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameCustomScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText Value="Items Needed"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel >
+                                                                <apex:selectList value="{!ItemsNeededList}" id="SelectItemsNeededList" multiselect="true" size="8" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!ItemsNeeded}"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                                
+                                                                <div style="color:black">** To Select multiple Items, press ctrl, then click the items</div>
+                                                            </apex:outputPanel>                                                                
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label required"><b> <apex:outputLabel > Upload photo of installation area</apex:outputLabel> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                                                                <div class="requiredBlock" style="height:20px;"></div>
+                                                                <apex:inputfile value="{!myfileattach.body}" filename="{!myfileattach.Name}" styleClass="slds-input"/>
+                                                                <br/>
+                                                                <div style="color:red">(Required)</div>
+                                                            </apex:outputPanel>                                                             
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b><apex:outputText Value="Turn-Time"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel >
+                                                                <apex:selectList value="{!TurnTimeString}" id="SelectTurnTimeString" multiselect="false" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!TurnTime}"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                                <font style="color:red"> * New custom orders have a 4 week minimum turn-around</font>
+                                                            </apex:outputPanel>                                                              
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText value="Quantity Needed"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!CustomQuantityNeeded}"  styleClass="slds-input"></apex:inputTextarea>                                                               
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b><apex:outputText value="Provide Height and Width Measurements in Inches "></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!CustomMeasurements}" styleClass="slds-input"></apex:inputTextarea>                                                               
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b><apex:outputText value="Explain request in detail"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!Customrequest}"  styleClass="slds-input"></apex:inputTextarea>                                                       
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>  <apex:outputText value="Explain, in detail, what signs/banners/etc. need to say"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!Customneedtosay}" styleClass="slds-input"></apex:inputTextarea>                                                           
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText value="Explain, in detail, where items will be installed"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!Customneedtogo}" styleClass="slds-input"></apex:inputTextarea>                                                    
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                
+                                
+                                
+                                <!-- ************************************************** added new form MadeToOrder in Store Order type ************************************************************************ -->
+                                
+                                <apex:outputPanel rendered="{!ShowMadeToOrder}" id="MadetoOrder">
+                                    
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Made To Order Request Form</b></h3>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText Value="Notice"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control" style="color:red">
+                                                            <div style="color:red">
+                                                                * Made To Order items are not kept in stock, but are made upon request with a turnaround time of at least 2 weeks. Made To Order items can be previewed in the Made To Order tab and come as displayed.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <br/><br/>
+                                                
+                                                <!--  <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b> <apex:outputText value="Media Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b><apex:outputText Value="Job Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameMadeToOrderScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--4-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText Value="Items Needed"></apex:outputText></b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel id="Items">
+                                                                <apex:selectList value="{!MadeItemsCategory}" id="SelectMadeItemsCategoryList" size="8" >
+                                                                    <apex:selectoptions value="{!MadeItemsCategoryList}"></apex:selectoptions>
+                                                                    <apex:actionSupport event="onchange" action="{!ItemsInd}" reRender="SelectMadeItemsIndividualList,SelectMadeItemsIndividualList1" />
+                                                                </apex:selectList> &nbsp;&nbsp;
+                                                                <apex:selectList value="{!MadeIndividualItemsNeeded}" id="SelectMadeItemsIndividualList" size="8" onchange="alter();" rendered="{!$User.UITheme == 'Theme3'}">
+                                                                    <apex:selectoptions value="{!MadeIndividualItemsNeededList}"></apex:selectoptions>
+                                                                    <apex:actionSupport event="onclick" action="{!ItemsPic}" reRender="SCD,SCD1" status="sts" oncomplete="alter1();" />
+                                                                </apex:selectList>
+                                                                <apex:selectList value="{!MadeIndividualItemsNeeded}" id="SelectMadeItemsIndividualList1" size="8" onchange="alter();" rendered="{!$User.UITheme == 'Theme4t'}">
+                                                                    <apex:selectoptions value="{!MadeIndividualItemsNeededList}"></apex:selectoptions>
+                                                                    <apex:actionSupport event="onblur" action="{!ItemsPic}" reRender="SCD,SCD1" status="sts" oncomplete="alter1();" />
+                                                                </apex:selectList>
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--4-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel id="SCD">
+                                                                <table>
+                                                                    <tr>
+                                                                        <td valign="top">
+                                                                            <apex:outputText Value="Item Preview"></apex:outputText>
+                                                                        </td>&nbsp;
+                                                                        <td>
+                                                                            
+                                                                            <apex:image id="Imgs" value="/sfc/servlet.shepherd/version/download/{!MadeToOrderpicId}" width="200" height="30" alt="No Image"/>
+                                                                            <!--  <apex:outputField value="{!pic.File_Photo__c}" id="Imgs" />-->
+                                                                            
+                                                                            <apex:actionStatus id="sts">
+                                                                                <apex:facet name="start">
+                                                                                    <img src="/img/loading.gif" />&nbsp;&nbsp; <b> Please Wait....... </b>
+                                                                                </apex:facet>
+                                                                            </apex:actionStatus>
+                                                                        </td>
+                                                                        
+                                                                        
+                                                                    </tr>
+                                                                </table>
+                                                            </apex:outputPanel>                                                           
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <font style="color:red;"> * 2 weeks minimum turn-around</font>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText value="Max Qty"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:outputPanel id="SCD1">
+                                                                <apex:outputField value="{!pic.Max_Qty__c}"/>  
+                                                            </apex:outputPanel>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText value="Qty"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!Mqty}"  styleClass="slds-input" maxlength="2"></apex:inputText>  
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b> <apex:outputText value="Special Details"></apex:outputText> </b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputTextarea value="{!SpecialDetails}"  styleClass="slds-input"></apex:inputTextarea>                                                  
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                <!-- ********************************************************* CORPORATE NAME TAG FORM ************************************************************ -->
+                                
+                                <apex:outputPanel rendered="{!ShowNameTag}">
+                                    <br/>
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Corporate Name Tag Request Form</b></h3>
+                                    </div>
+                                    
+                                    <br/>
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                <!--     <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Media Type :</b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>Job Type :</b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameTagScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Title</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!Tagtitlecorp}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>First Name</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!TagFirstName}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Last Name</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!TagLastName}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--6-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Year of Hire</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!TagYearsWorked}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Logos</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!TagLogoList }" id="selectLogoList1" multiselect="true" size="3" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!TagLogo}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                <!-- ********************************************************* End CORPORATE NAME TAG FORM ************************************************************ -->
+                                
+                                <!-- ********************************************************* CORPORATE OFFICE NAMEPLATE ************************************************************ -->
+                                
+                                <apex:outputPanel rendered="{!ShowNamePlate}">
+                                    <br/>
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Corporate Office Nameplate Request Form</b></h3>
+                                    </div>
+                                    
+                                    <br/>
+                                    
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Name Plate Type</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!PlateTypeList}" id="selecteList" multiselect="true" size="2" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!PlateType}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Name</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!PlateName}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Title</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!PlateTitle}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Year Of Hire</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:inputText value="{!PlateDate}" styleClass="slds-input"></apex:inputText>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                        <label class="slds-form-element__label"><b>Building</b></label>
+                                                        <div class="slds-form-element__control">
+                                                            <apex:selectList value="{!PlateBuildingString}" id="selectPlateList" multiselect="false" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                <apex:selectoptions value="{!PlateBuilding}"></apex:selectoptions>
+                                                            </apex:selectList>
+                                                        </div>
+                                                    </div>
+                                                </aside>
+                                                
+                                                
+                                                
+                                                
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                <!-- ********************************************************* End CORPORATE OFFICE NAMEPLATE ************************************************************ -->
+                                
+                                <!-- ********************************************************* CORPORATE BUSINESS CARD ************************************************************ -->
+                                
+                                
+                                
+                                
+                                
+                                <apex:outputPanel rendered="{!ShowCorporateBusiness}">
+                                    <br/>
+                                    <div style="background-color:SteelBlue;color:white;width:95%;margin-left:2%;">
+                                        <h3 class="slds-section-title"><b>&nbsp;Corporate Business Card Request Form</b></h3>
+                                    </div>
+                                    
+                                    <br/>
+                                    
+                                    <div class="slds-grid slds-wrap" style="width:95%;margin-left:2%;">
+                                        <main class="slds-col slds-col--padded slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                            
+                                            <div class="slds-grid slds-wrap">
+                                                
+                                                <!--           <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--5-of-6 slds-large-size--8-of-12">-->
+                                                
+                                                
+                                                <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--6-of-6 slds-large-size--12-of-12">
+                                                    
+                                                    <!--<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b> <apex:outputText value="Media Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:outputText value="{!NameMediatype.name}"></apex:outputText>
+</div>
+</div>
+</aside>
+
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b><apex:outputText value="Job Type"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:OutputText value="{!NameCorporateCardScheduletype.name}"></apex:outputText>
+</div>
+</div>
+</aside>-->
+                                                    
+                                                    
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText Value="Business Unit"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:selectList value="{!SelectCompany}" id="compList" size="1" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!CompanySelections}"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText Value="Address Selections"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:selectList value="{!SelectAddress}" id="selectAddressList" size="1" onchange="document.getElementById('address').innerHTML = this.value;" styleClass="slds-select slds-m-right--medium">
+                                                                    <apex:selectoptions value="{!AddressSelections }"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b> <apex:outputText value="Name"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporateName}" onkeyup="document.getElementById('name').innerHTML = this.value;" styleClass="slds-input">
+                                                                </apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Title"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporateTitle}" onkeyup="document.getElementById('title').innerHTML = this.value;" styleClass="slds-input"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    <!--    
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b><apex:outputText value="Department"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:inputText value="{!CorporateDepartment}"  styleClass="slds-input"></apex:inputText>
+</div>
+</div>
+</aside>
+--> 
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Phone"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporatePhone}" html-placeholder="Enter the 10 digits Phone" onkeyup="document.getElementById('phone').innerHTML = this.value;" styleClass="slds-input"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Fax"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporateFax}" html-placeholder="Enter the 10 digits Fax" onkeyup="document.getElementById('fax').innerHTML = this.value;" styleClass="slds-input"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Email"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporateEmail}" onkeyup="document.getElementById('mail').innerHTML = this.value;" styleClass="slds-input"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Mobile"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText html-placeholder="Enter the 10 digits Mobile" value="{!CorporateMobile}" styleClass="slds-input" onkeyup="document.getElementById('mobile').innerHTML = this.value;"  onblur="phoneFaxMobileFormat('mobile', this.value);"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="Web Site"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:selectList value="{!SelectCorporate}" id="selectCWebsiteList" size="1" styleClass="slds-select slds-m-right--medium" onchange="document.getElementById('site').innerHTML = this.value;">
+                                                                    <apex:selectoptions value="{!CorporateWebsite}"></apex:selectoptions>
+                                                                </apex:selectList>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    
+                                                    
+                                                    <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                                        <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                                            <label class="slds-form-element__label"><b><apex:outputText value="ICE Chat"></apex:outputText></b></label>
+                                                            <div class="slds-form-element__control">
+                                                                <apex:inputText value="{!CorporateYahooIM}" styleClass="slds-input" maxlength="20"></apex:inputText>
+                                                            </div>
+                                                        </div>
+                                                    </aside>
+                                                    <!--   
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b><apex:outputText value="Logo"></apex:outputText></b></label>
+<div class="slds-form-element__control">
+<apex:selectList value="{!SelectCorporateLogo}" id="selectCLogoList" size="1" styleClass="slds-select slds-m-right--medium">
+<apex:selectoptions value="{!CorporateLogo}"></apex:selectoptions>
+</apex:selectList>
+</div>
+</div>
+</aside>
+
+-->
+                                                </div>            
+                                                
+                                                
+                                                
+                                                <!--     <div class="slds-p-horizontal--small slds-size--1-of-2 slds-medium-size--1-of-6 slds-large-size--4-of-12">
+
+<br/><br/>
+
+
+<div style="width:252pt;height:153pt;border:1px solid black;display:{!if(BusinessCardCompany == 'Loves','block', 'none')}" id="LovesBusinessCard">
+
+<div style="width:100%;height:89.6pt;background:white;">
+<div style="padding-left:30px;padding-top:15px;">
+<p id="name" style="font-family: Neutraface2Text-Bold;font-size:20pt;">Name</p>
+<span id="title" style="font-family: MyriadPro-LightIt;font-size:9pt;">Title</span><br/><br/>
+<table >
+<tr style="line-height:100%;">
+<td>
+<span style="font-family:MyriadPro-Bold;font-size:10pt;"> P: </span>
+<span id="phone" style="font-size:10pt;font-family:MyriadPro-Light;">Phone</span>
+</td>
+<td>&nbsp;&nbsp;
+<span id="mail" style="font-size:10pt;font-family:MyriadPro-Light;">Email</span>
+</td>
+</tr>
+<tr style="line-height:100%;">
+<td>
+<span id="site" style="font-size:10pt;font-family:MyriadPro-Light;">www.loves.com</span>
+</td>
+<td>&nbsp;&nbsp;
+<span style="font-family:MyriadPro-Bold;font-size:10pt;">HR Hotline: </span>
+<span id="mobile" style="font-size:10pt;font-family:MyriadPro-Light;">Mobile</span>
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div style="width:100%;height:63.4pt;background-image : url({!URLFOR($Resource.LovesBusinessCardFooter, 'LovesBusinessCardFooter.PNG')});background-repeat: round;">
+<div style="padding-left:30px;padding-top:48px;width:200px;font-size:7pt;;font-family:MyriadPro-Regular;" id="address">
+10601 North Pennsylvania Ave.Oklahoma City,OK 73120
+</div>
+</div>
+
+</div>
+
+<br/><br/><br/>
+
+<aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+<div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+<label class="slds-form-element__label"><b>  <apex:outputLabel value="Back Option Image(PNG Formate)" for="file"/></b></label>
+<div class="slds-form-element__control">
+<apex:inputFile value="{!attachment.body}" filename="{!attachment.name}" id="file"/>
+</div>
+</div>
+</aside>
+
+
+</div>-->
+                                            </div>
+                                        </main>
+                                    </div>
+                                    
+                                </apex:outputPanel>
+                                
+                                
+                                
+                                
+                                <!-- ********************************************************* End CORPORATE BUSINESS CARD ************************************************************ -->
+                                
+                                <apex:pageBlockButtons location="top" style="position:absolute;left:43%">
+                                    <center>
+                                        <b>
+                                            
+                                            <apex:commandButton value="Back" action="{!Cancel}" rendered="{!ShowCancelbutton}" styleClass="slds-button slds-button--neutral" />
+                                            <apex:commandButton value="Place Order" action="{!Save}" rendered="{!ShowSavebutton}" styleClass="slds-button slds-button--neutral"/>
+                                            <apex:commandButton value="Continue Shopping" action="{!CancelfromCart}" rendered="{!ShowCartBackbutton}" styleClass="slds-button slds-button--neutral"/>
+                                            <!-- <apex:commandButton value="Next" action="{!nextmethod}" rendered="{!ShowNextbutton}" styleClass="slds-button slds-button--neutral"/>-->
+                                            <br/><br/>
+                                            <apex:commandButton value="Cancel" action="{!Back}" rendered="{!ShowBackbutton}"  styleClass="slds-button slds-button--neutral"/>
+                                            
+                                        </b>
+                                    </center>
+                                </apex:pageBlockButtons>
+                                
+                            </apex:pageBlock>
+                            
+                            
+                        </body>
+                        
+                    </apex:outputPanel>
+                </apex:form>
+            </div>
+        </body>
+        
+    </html>
+    
+    <script>
+    function alter() {
+        var el = document.getElementById('j_id0:j_id2:block:MadetoOrder:ItemPreview:Imgs');
+        el.style.display = "none";
+    }
+    
+    function alter1() {
+        var el = document.getElementById('j_id0:j_id2:block:MadetoOrder:ItemPreview:Imgs');
+        el.style.display = "block";
+    }
+    </script>
+    
+</apex:page>

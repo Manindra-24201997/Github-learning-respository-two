@@ -1,0 +1,335 @@
+<apex:page showHeader="false"  sidebar="false" standardStylesheets="true"   docType="html-5.0" applyBodyTag="false" applyHtmlTag="false" >
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+     <style>
+            /* The Modal (background) */
+            .modal {
+                display:block; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 60px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+            }
+            
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 90%;
+                //height:100%;
+            }
+            
+          
+            .slds .slds-icon-standard-user {
+                 background-color:inherit;
+            }
+            .slds .slds-text-link {
+                color: #0070d2;
+                text-decoration: none;
+                transition: color .2s linear;
+                font-size: larger;
+            }
+            p{
+             color:black !important;
+            }
+  
+        
+        body
+            {
+                background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+                // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+                //background-image:none !important;
+                //background-color:#D7D7D7 !important;
+                background-repeat: repeat-x;
+                background-position: left top;
+                background-attachment: fixed; 
+                margin:0px !important;
+            }
+       body11 
+       {
+            background-repeat: repeat-x;
+            background-position: left top;
+            font-size: 75%;
+            font-family: 'Arial','Helvetica',sans-serif;
+            background-color: rgba(175, 197, 222, 1);
+       }
+    
+  
+        
+        .slds .slds-tabs--scoped {
+            display: block;
+            width: 100%;
+            background-color: white;
+           margin-top: 2px;
+            border-radius: 10px;
+        }    
+                
+         
+        .slds .slds-p-vertical--medium {
+            padding-top: 25px;
+            padding-bottom: 0px;
+        }
+        
+        .slds .slds-page-header{
+             border-radius:5px;
+         }
+         .slds .slds-text-heading--medium {
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 1;
+         }
+         .slds-col desktop
+         {
+            border-radius:5px !important;
+         }
+        
+    </style>
+
+
+     <script>
+     
+       function TabSelect(prefix)
+       {
+            //alert(prefix)
+            TabMethod(prefix);
+       }
+   
+     </script>
+          
+           
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+         <script>
+    
+                $(document).ready(function(){
+                    $("li").mouseover(function(){
+                        $(this).addClass("blue");
+                    });
+                    $("li").mouseout(function(){
+                        $(this).removeClass("blue");
+                       });
+                    
+                    });
+         </script>
+                
+                
+      <style>
+     
+             /*   .blue{
+                    background-color:#E8CCD4 !important;
+                     box-shadow: 5px 5px 5px  grey;
+                    border: 2px solid blue; 
+                  }
+               
+               */   
+               
+             .slds .slds-app-launcher__tile:hover{
+                border:2px solid #851225;
+             }
+                
+      </style>
+        
+  
+
+            <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  
+                <apex:form id="c">  
+                  
+                    <apex:stylesheet value="{!URLFOR($Resource.SLDS, 'assets/styles/salesforce-lightning-design-system-vf.min.css')}" />
+                   
+                     <head>
+                        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+                     </head>
+            
+               
+             <!------   <apex:commandButton value="ssss" action="{!redirecet}"/>---->
+                
+                
+            <div class="slds" >
+            
+              <div id="myModal" class="modal">
+                 <div class="modal-content">
+                       
+                     <br/><br/> <br/><br/>
+                    
+                       <ul class="slds-grid slds-grid--pull-padded slds-wrap" style="margin-left:25px;margin-right:25px;">
+                       
+                         <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3" style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                            <a onclick="window.open('/one/one.app#/alohaRedirect/apex/BBMaintReport');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center   slds-icon-custom-72">
+                                
+                                    <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                                        <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/table.jpg')}" width="25" style="margin-right:11px;"/>
+                                    </svg>
+                                
+                                </span>
+                               
+                              </div> 
+                              <div class="slds-app-launcher__tile-body" title="BB Maintenance Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                     <b>BB Maintenance Report</b>
+                                 </span>
+                                
+                              </div>
+                            </a>
+                         </li>
+                     
+                  
+                          
+                        <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                             <a onclick="window.open('/one/one.app#/alohaRedirect/apex/BBBinderReportLightning');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-97">
+                                
+                                    <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                                        <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/Summary.jpg')}" width="30" style="margin-right:9px;"/>
+                                    </svg>
+                                
+                                </span>
+                                
+                              </div>
+                              <div class="slds-app-launcher__tile-body"  title="BB Binder Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                 <b> BB Binder Report </b></span>
+                                
+                              </div>
+                            </a>
+                          </li>
+                          
+                          
+                          <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                             <a onclick="window.open('/one/one.app#/alohaRedirect/apex/LovesCampaignStatusReport');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-99">
+                                
+                                <svg aria-hidden="true" class="slds-icon slds-icon-standard-user">
+                                    <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/metric.JPG')}" width="30" style="margin-right:9px;"/>
+                                </svg>
+                                
+                                </span>
+                                 
+                              </div>
+                              <div class="slds-app-launcher__tile-body"  title="Loves Campaign Status Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                 <b>Loves Campaign Status Report</b></span>
+                               
+                              </div>
+                            </a>
+                          </li>
+                         
+                         
+                           <br/> <br/> <br/> <br/> <br/> <br/> 
+                           
+                            <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name =='Training Department',"block","none")};">
+                            <a onclick="window.open('/one/one.app#/alohaRedirect/apex/TrainingCampaignStatusReport');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-79">
+                                
+                                    <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                        <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/news.JPG')}" width="30" style="margin-right:9px;"/>
+                                    </svg>
+                                
+                                </span>
+                               
+                              </div> 
+                              <div class="slds-app-launcher__tile-body" title="Training Campaign Status Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                     <b>Training Campaign Status Report</b>
+                                 </span>
+                                
+                              </div>
+                            </a>
+                         </li>
+                     
+                  
+                          
+                        <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                             <a onclick="window.open('/one/one.app#/alohaRedirect/apex/BusinessCardOrderReportLightning');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-98">
+                                
+                                <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                    <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/snip.JPG')}" width="30" style="margin-right:9px;"/>
+                                </svg>
+                                
+                                </span>
+                                
+                              </div>
+                              <div class="slds-app-launcher__tile-body"  title="Name Tag/Business Card Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                 <b> Name Tag/Business Card Report </b></span>
+                               
+                              </div>
+                            </a>
+                          </li>
+                          
+                           
+                            <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                            <a onclick="window.open('/one/one.app#/alohaRedirect/apex/MaterialInventoryItemImportLightning');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-87">
+                                
+                                    <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                        <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/graph.JPG')}" width="30" style="margin-right:9px;"/>
+                                    </svg>
+                                
+                                </span>
+                               
+                              </div> 
+                              <div class="slds-app-launcher__tile-body" title="MI Import" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                     <b>MI Import</b>
+                                 </span>
+                               
+                              </div>
+                            </a>
+                         </li>
+                         
+                         <br/> <br/> <br/> <br/> <br/> <br/> 
+                     
+                 
+                          <li class="slds-p-horizontal--small slds-size--1-of-1 slds-medium-size--2-of-4 slds-large-size--1-of-3"  style="display:{!if($Profile.Name !='Training Department',"block","none")};">
+                             <a onclick="window.open('/one/one.app#/alohaRedirect/apex/NewStoreOutdoorReport');" class="slds-app-launcher__tile slds-text-link--reset ">
+                              <div class="slds-app-launcher__tile-figure">
+                                <span class="slds-avatar slds-avatar--large slds-align--absolute-center slds-icon-custom-10">
+                                
+                              
+                                 <svg class="slds-icon slds-icon-standard-user" aria-hidden="true">
+                                    <apex:image url="{!URLFOR($Resource.CustomReport,'CustomReports/matrix.JPG')}" width="30" style="margin-right:9px;"/>
+                                </svg>
+                                
+                                </span>
+                                 
+                              </div>
+                              <div class="slds-app-launcher__tile-body"  title="New Store Outdoor Report" style="padding: 1.5rem .75rem;">
+                                <span class="slds-text-link">
+                                 <b>New Store Outdoor Report</b></span>
+                              </div>
+                            </a>
+                          </li>
+                         
+                        </ul>
+                      
+                        <br/> <br/>
+                    
+                    </div>
+                    </div>
+             </div>
+             
+        </apex:form>
+ 
+     </html>
+ 
+ </apex:page>

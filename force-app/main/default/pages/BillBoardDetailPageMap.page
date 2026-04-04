@@ -1,0 +1,212 @@
+<apex:page controller="BillBoardClassforDetailPage" sidebar="false" standardStylesheets="true"  showHeader="false" applyHtmlTag="false" applyBodyTag="false"  docType="html-5.0" >
+    <head>
+        <style type="text/css">
+            html { height: 100% }
+            body { height: 100%; margin: 0; padding: 0 }
+            #map-canvas { height: 100% }
+        </style>
+        
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCS-fvj21wJ1eUBww8t1e7sbTIMeNV_qQY&sensor=false"></script>
+        <script>
+            var map;
+        function initialize() {
+            
+            var myLatlng = new google.maps.LatLng({!centerLat},{!centerLang});
+            var mapOptions = {
+                zoom: 5,
+                center: myLatlng
+            }
+            
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            /* var boolval = {!val};
+            if(boolval){
+                loadClient();
+                loadBillboards();
+            }
+            else{
+                loadBillboards();
+            }*/
+            var ltloval = '{!ltlo}';
+            if(ltloval == 'clientnull'){
+                loadBillboards();
+            }
+            else if(ltloval == 'clientandbillboardnull'){
+                loadNAmap();
+            }
+                else{
+                    loadClient();
+                    loadBillboards();
+                }
+            /*loadClient();
+             loadBillboards();*/
+        }
+        
+        function loadClient() {
+            var id = '{!cc.id}';
+            var name='{!cc.name}';
+            addMarker(id,name,{!centerLat},{!centerLang});            
+        }
+        
+        function loadNAmap() {
+            var id = '{!cc.id}';
+            var name='{!cc.name}';
+            addMarkerNA(id,name,{!centerLat},{!centerLang});            
+        }
+        
+        function loadBillboards() {
+            
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.BillBoardClassforDetailPage.findAll}','{!$CurrentPage.parameters.id}',
+                                                      function(result, event){
+                                                          if (event.status) {
+                                                              // alert(result);
+                                                              for (var i=0; i<result.length; i++) {
+                                                                  var obj =result[i];
+                                                                  var id = obj.billboard.Id;
+                                                                  //alert('---id----'+id); 
+                                                                  console.log('----imageId---'+obj.contentversionId);
+                                                                  
+                                                                  console.log('/servlet/servlet.FileDownload?file=obj.Attachment_ID__c');
+                                                                  
+                                                                  // alert(result[i].billboard.Billboard_Status__c);
+                                                                  
+                                                                  if(obj.billboard.Billboard_Status__c == 'Active-Batch' || obj.billboard.Billboard_Status__c == 'Active'){
+                                                                      //alert('active');
+                                                                      var marker = new google.maps.Marker({
+                                                                          position: new google.maps.LatLng(obj.billboard.Latitude__c,obj.billboard.Longitude__c),
+                                                                          map: map,
+                                                                          title: obj.billboard.Name,
+                                                                          //labelContent:'/servlet/servlet.FileDownload?file=obj.Attachment_ID__c',
+                                                                          // Icon :obj.photo1_new__C
+                                                                          Icon : 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+                                                                          
+                                                                      });
+                                                                  }
+                                                                  if(obj.billboard.Billboard_Status__c == 'Pending'){
+                                                                      //  alert('pending');
+                                                                      var marker = new google.maps.Marker({
+                                                                          position: new google.maps.LatLng(obj.billboard.Latitude__c,obj.billboard.Longitude__c),
+                                                                          map: map,
+                                                                          title: obj.billboard.Name,
+                                                                          //labelContent:'/servlet/servlet.FileDownload?file=obj.Attachment_ID__c',
+                                                                          // Icon :obj.photo1_new__C
+                                                                          Icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+                                                                          
+                                                                      });
+                                                                  }
+                                                                  
+                                                                  if(obj.billboard.Billboard_Status__c == 'Cancelled'){
+                                                                      //  alert('Cancelled');
+                                                                      var marker = new google.maps.Marker({
+                                                                          position: new google.maps.LatLng(obj.billboard.Latitude__c,obj.billboard.Longitude__c),
+                                                                          map: map,
+                                                                          title: obj.billboard.Name,
+                                                                          //labelContent:'/servlet/servlet.FileDownload?file=obj.Attachment_ID__c',
+                                                                          // Icon :obj.photo1_new__C
+                                                                          Icon : 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png'
+                                                                          
+                                                                      });
+                                                                  }
+                                                                  
+                                                                  if(obj.contentversionId!=undefined){
+                                                                      var url='/sfc/servlet.shepherd/version/download/'+obj.contentversionId;
+                                                                      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                                                                      // if(isMobile){ 
+                                                                      //one/one.app#/alohaRedirect/apex/WorkOrder
+                                                                      
+                                                                      var redi='/one/one.app#/sObject/'+id+'/view';
+                                                                      //var redi='salesforce1://Billboard__c/'+id+'/view';
+                                                                      // }else{
+                                                                      //   var redi='/'+id;
+                                                                      // }
+                                                                      
+                                                                      console.log('====redi==='+redi);
+                                                                      var contentString = '<div id="content">'+'<a href="'+redi+'">'+
+                                                                          '<div class="propInfoImageContainer" style="background: url('+ url +') no-repeat;background-size: cover; width: 160px; height: 150px;">'
+                                                                      '</a>'+'</div>';
+                                                                      addListener(id, marker,id,contentString);    
+                                                                  }
+                                                                  
+                                                              }
+                                                          } else {
+                                                              alert(event.message);
+                                                          }
+                                                      },
+                                                      {escape: true}
+                                                     ); 
+        }
+        
+        function addMarker(id ,name,lat ,lng) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat,lng),
+                map: map,
+                title: name,
+                Icon : 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                //zIndex:100
+            });
+            
+            //addListener(id, marker);
+        }
+        
+        function addMarkerNA(id ,name,lat ,lng) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat,lng),
+                map: map,
+                title: name,
+                Icon : 'http://maps.google.com/mapfiles/ms/icons',
+                //zIndex:100
+            });
+            
+            //addListener(id, marker);
+        }
+        
+        
+        function addListener(vid, marker,VName,content)
+        {
+            var infowindow = new google.maps.InfoWindow();
+            google.maps.event.addListener(marker, 'click', function() {
+                console.log(vid);
+                // window.top.location = '/one/one.app#/sObject/'+vid+'/view';
+                infowindow.setContent(content); 
+                infowindow.open(map, marker);
+            });
+            
+            
+            google.maps.event.addListener(marker, 'mouseover', function() {
+                
+                /*var icon = {
+                    url: '/servlet/servlet.FileDownload?file='+VName, // url
+                    scaledSize: new google.maps.Size(150, 150), // scaled size
+                    origin: new google.maps.Point(0,0), // origin
+                    anchor: new google.maps.Point(50,180), // anchor
+                    zIndex:1000
+                };
+                this.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+                this.setIcon(icon );*/
+                
+                infowindow.setContent(content); 
+                infowindow.open(map, marker);
+                
+            });
+            google.maps.event.addListener(marker, 'onmouseout', function() {
+                infowindow.close();
+            });
+            google.maps.event.addListener(map, 'click', function() {
+                // infowindow.close(map,marker);
+                infowindow.close();
+                //this.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+            });
+            
+            
+        }   
+        
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+        </script>
+    </head>
+    
+    <body>
+        <div id="map-canvas"/>
+    </body>  
+    
+    
+</apex:page>

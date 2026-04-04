@@ -1,0 +1,180 @@
+<apex:page controller="NewStoreOutdoorReportController"  renderAs="pdf"   standardStylesheets="false" showHeader="false" applyHtmlTag="false"    >
+<html>
+        <head>
+          <style type="text/css">
+            @page{
+                size:landscape;
+                margin : .7in .3in 1.5in .5in;
+                counter-increment: pages;
+                
+                @top-Left{
+                content:element(header) ;
+                Background-repeat:no-repeat;
+                font-size:20px;
+                font-Weight:bold;
+                  font-family: sans-serif !important;
+                
+                   }   
+                
+                @bottom-center{
+                   content : element(footer); 
+                    height:50px;         
+                    }
+                    
+                @bottom-right 
+               {
+                  content: "Page " counter(page);
+                    font-family: sans-serif !important;
+                  
+                  font-size:8pt;
+                } 
+                
+                
+                
+                    
+               
+                    
+                 @bottom-left-corner
+                   {
+                       content: "<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!NOW()}" /></apex:outputText>";
+                        background-repeat: no-repeat;
+                       font-size:10pt;
+                        font-family: sans-serif !important;
+                       padding-left: 20px;
+                       padding-top:20px;
+                  }   
+            
+                }
+                
+                
+                div.header{
+                    position : running(header);
+                    line-height:10px;
+                }
+               
+               
+               @page { 
+                    margin-left: 5mm;
+                    margin-right: 4mm;
+                    margin-top:5cm;
+                    margin-bottom:20mm;
+                    page-break-inside: avoid;
+                    
+                } 
+                body { line-height:90% !important; } 
+
+
+               
+            </style> 
+            
+            </head>
+            
+            
+     
+            
+
+ 
+<apex:repeat value="{!mapJClientName}" var="client"> 
+ 
+ 
+
+   <div class="header">  
+           
+     <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table1">
+                  <tr>
+                    <td rowspan="5" width="60"><Br/>
+                       <apex:image id="JS_logo" value="{!$Resource.JS_Logo}" rendered="{!imageNotFound == True}" />
+                       <apex:image url="{!imageBody}" rendered="{!imageNotFound == False}" />
+                       
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td align= "right" style="  font-family: sans-serif !important;font-weight:bold;font-size:18px">
+                     &nbsp;<b>New Store Outdoor Report</b>
+                   </td>
+                 </tr>
+              </table> <br/>
+
+
+          <table width = "100%" style="page-break-inside: avoid;line-height:14px;font-weight:bold;font-family: sans-serif !important;">
+               
+                <tr>
+                      <th width="50%" style="text-align:justify;"><b>Spec Name</b></th>
+                      <th width="50%" style="text-align:left;"><b>Spec Description</b></th>
+                      
+                  <!---    <th width="25%" style="text-align:left;"><b>Notes</b></th>
+                      <th width="10%" style="text-align:left;"><b>Req. Due Date</b></th>
+                      <th width="15%" style="text-align:left;"><b>Job Name</b></th> ------>
+                      
+               </tr>
+                <tr>
+                     <td colspan="7">
+                     <hr color="black"/>
+                     </td>
+               </tr>
+               
+             
+               </table>
+               
+             <br/>    
+                
+              <div style="width:100%;font-weight: bolder;width:100%; font-family: sans-serif !important;">
+                 <b> <apex:outputText value="{!mapJClientName[client]}"   style="font-size:14.5px;font-weight:bold;"/> </b>
+               </div> <br/>  
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/> 
+               
+              </div>
+               
+            
+              
+         
+           
+ 
+          <apex:repeat value="{!mapJClient[client]}"  var="job">
+            <div style="page-break-inside: avoid;">  
+             <table width="100%" style="font-family: sans-serif !important;" >
+                <tr>
+                 <td width = "30%" valign="top"> 
+                   <div style="width:100%;font-weight: bolder;width:100%; font-family: sans-serif !important;">
+                 <b> <apex:outputText value="{!job.name}"   style="font-size:14.5px;font-weight:bold;"/> </b> &nbsp;&nbsp;  <b> <apex:outputText value="(# {!job.Job_Auto_Number__c})"   style="font-size:14.5px;font-weight:bold;"/> </b>
+               </div> <br/>
+               </td>  
+              </tr>  
+               </table> 
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/> <br/>
+             
+    
+     
+      
+         <apex:repeat value="{!mapJSpec[job.id]}" var="spec">
+       <table width="100%" style="font-family: sans-serif !important;" >   
+         <tr>
+            <td width = "50%" valign="top">
+             <apex:outputtext value="{!spec.name}"    style="font-size:14px;height:22px;width:225px"/><br/>
+             </td>
+             
+              <td width = "50%" valign="top">
+             <apex:outputtext value="{!spec.Description__c}"    style="font-size:14px;height:22px;width:225px"/><br/>
+             </td>
+             
+            </tr>
+              </table>
+         </apex:repeat>
+        
+         
+         
+          </div>
+             <hr/>
+              
+              
+        </apex:repeat>
+    
+             <hr/>
+              <div style="page-break-after: always;">
+             </div>
+       
+</apex:repeat>
+
+ </html>
+</apex:page>

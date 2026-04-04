@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Component Type --></label>
+    <name>Component_Type__c</name>
+    <picklistValues>
+        <masterLabel>Apex Classes</masterLabel>
+        <translation><!-- Apex Classes --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Communities</masterLabel>
+        <translation><!-- Communities --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Creating Sites</masterLabel>
+        <translation><!-- Creating Sites --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Creating domains</masterLabel>
+        <translation><!-- Creating domains --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Creating new buttons</masterLabel>
+        <translation><!-- Creating new buttons --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Creating new objects</masterLabel>
+        <translation><!-- Creating new objects --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Custom report types</masterLabel>
+        <translation><!-- Custom report types --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Data Loader</masterLabel>
+        <translation><!-- Data Loader --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Duplicate rule</masterLabel>
+        <translation><!-- Duplicate rule --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Email Templates</masterLabel>
+        <translation><!-- Email Templates --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Fields</masterLabel>
+        <translation><!-- Fields --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Page Layout</masterLabel>
+        <translation><!-- Page Layout --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Process Builder</masterLabel>
+        <translation><!-- Process Builder --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Record types</masterLabel>
+        <translation><!-- Record types --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Reports</masterLabel>
+        <translation><!-- Reports --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sharing and OWD settings</masterLabel>
+        <translation><!-- Sharing and OWD settings --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Trigger</masterLabel>
+        <translation><!-- Trigger --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Users and Profiles</masterLabel>
+        <translation><!-- Users and Profiles --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>VF Component</masterLabel>
+        <translation><!-- VF Component --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>VF Page</masterLabel>
+        <translation><!-- VF Page --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Validation</masterLabel>
+        <translation><!-- Validation --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>WorkFlow</masterLabel>
+        <translation><!-- WorkFlow --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

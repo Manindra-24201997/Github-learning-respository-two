@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Sample Object 3 --></label>
+    <name>Sample_Object_3__c</name>
+    <relationshipLabel><!-- Sample Junction Object --></relationshipLabel>
+</CustomFieldTranslation>

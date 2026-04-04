@@ -1,0 +1,139 @@
+<aura:component controller="CreateClientInvoiceExt" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    
+    <aura:attribute name="JobList" type="Job__c[]"/>
+    <aura:attribute name="AccColumn" type="List"/>
+    <aura:attribute name="selectedJobs" type="List"/>
+    <aura:attribute name="selectedRowsCount" type="Integer" default="0"/>
+    
+    <aura:attribute name="selectedRowsDetails" type="Object" />
+    <aura:attribute name="selectedRowsList" type="List" />
+    <aura:attribute name="maxRowSelection" type="Integer" default="10"/>
+    <aura:attribute name="selectedRows" type="List" />
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="initialRows" type="Integer" default="10"/>
+    <aura:attribute name="rowsToLoad" type="Integer" default="10"/>
+    <aura:attribute name="totalNumberOfRows" type="Integer" default="10"/>
+    <aura:attribute name="loadMoreStatus" type="String" default="Please scroll down to load more data"/>
+    <aura:attribute name="showRowNumberColumn" type="Boolean" default="false"/>
+    <aura:attribute name="rowNumberOffset" type="Integer" default="0"/>
+    <aura:attribute name="rowsToAdd" type="Integer" default="10"/>
+    <aura:attribute name="currentCount" type="Integer" default="10"/>
+    
+    <aura:attribute name="CampaignList" type="Object"/>
+    <aura:attribute name="MediaTypeList" type="Object"/>
+    <aura:attribute name="ScheduleTempList" type="Object"/>
+    <aura:attribute name="ClientList" type="Object"/>
+     <aura:attribute name="UserList" type="Object"/>
+    <lightning:navigation aura:id="navService"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.fetchCompletedJobs}"/>
+    
+    <aura:attribute name="showSpinner" type="boolean" default="false"/>
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading, Please Wait..." title="Loading, Please Wait..." variant="brand" size="large"/>
+    </aura:if>
+    
+    <lightning:card>
+        <center>
+            <lightning:button variant="neutral" label="Create Batch Client Invoice" onclick="{!c.createClientInvoice}"/>
+            <lightning:button label="Cancel"   title="Cancel" onclick="{! c.cancelnaviagtion}"/> 
+        </center>
+        <br/><br/>
+        <lightning:layout multipleRows="true">
+            <lightning:layoutItem size="4" padding="around-small"> 
+                
+                <div class="slds-form-element slds-size--1-of-1 slds-p-horizontal_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1"> Campaign</label>
+                    <div class="slds-form-element__control">
+                        <select name="CampList" size="3" class="slds-select" id="CampAuraId" multiple="true" onchange="{!c.doFilter}" >
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.CampaignList}" var="item">
+                                <option value="{!item.Name}">{!item.Name}</option>
+                            </aura:iteration>
+                        </select> 
+                    </div>
+                </div>
+                
+                <div class="slds-form-element slds-size--1-of-1 slds-p-horizontal_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1"> MediaType</label>
+                    <div class="slds-form-element__control">
+                        <select name="MTList" size="3" class="slds-select" id="MTAuraId" multiple="true" onchange="{!c.doFilter}">
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.MediaTypeList}" var="item">
+                                <option value="{!item.Name}">{!item.Name}</option>
+                            </aura:iteration>
+                        </select> 
+                    </div>
+                </div>
+                
+                <div class="slds-form-element slds-size--1-of-1 slds-p-horizontal_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1"> Schedule Template</label>
+                    <div class="slds-form-element__control">
+                        <select name="STList" size="3" class="slds-select" id="STAuraId" multiple="true" onchange="{!c.doFilter}">
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.ScheduleTempList}" var="item">
+                                <option value="{!item.Name}">{!item.Name}</option>
+                            </aura:iteration>
+                        </select> 
+                    </div>
+                </div>
+                
+                <div class="slds-form-element slds-size--1-of-1 slds-p-horizontal_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1"> Client</label>
+                    <div class="slds-form-element__control">
+                        <select name="ClientList" size="3" class="slds-select" id="ClientAuraId" multiple="true" onchange="{!c.doFilter}">
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.ClientList}" var="item">
+                                <option value="{!item.Name}">{!item.Name}</option>
+                            </aura:iteration>
+                        </select> 
+                    </div>
+                </div>
+                
+               <div class="slds-form-element slds-size--1-of-1 slds-p-horizontal_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Owner</label>
+                    <div class="slds-form-element__control">
+                        <select name="OwnerList" size="3" class="slds-select" id="OwnerAuraId" multiple="true" onchange="{!c.doFilter}">
+                            <option value="">--None--</option>
+                            <aura:iteration items="{!v.UserList}" var="item">
+                                <option value="{!item}">{!item}</option>
+                            </aura:iteration>
+                        </select> 
+                    </div>
+                </div>   
+                
+                <br/>
+                <center> 
+                    <lightning:button label="Reset" title="Reset" onclick="{! c.resetFilters}"/>
+                </center>
+                
+            </lightning:layoutItem> 
+            <aura:if isTrue="{!!empty(v.JobList)}">
+                
+                <lightning:layoutItem size="8" padding="around-small">
+                    
+                    <div class="slds-float_left">
+                        <strong>Selected Rows: {! v.selectedRowsCount }</strong>
+                    </div>
+                    <div class="slds-float_right">
+                        <strong>Total Rows : {!v.totalNumberOfRows}</strong>
+                    </div>
+                    <br/><br/>
+                    <lightning:datatable data="{!v.JobList}"
+                                         columns="{!v.AccColumn}"
+                                         keyField="id"
+                                         onrowselection="{!c.handleSelect}"
+                                         showRowNumberColumn="true"
+                                         selectedRows="{!v.selectedRows}"
+                                         />
+                </lightning:layoutItem>
+                
+                <aura:set attribute="else">                      
+                    No records to display.
+                </aura:set>
+            </aura:if>
+            
+        </lightning:layout>
+    </lightning:card>
+</aura:component>

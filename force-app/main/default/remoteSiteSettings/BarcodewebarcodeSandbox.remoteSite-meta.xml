@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>https://www.webarcode.com - website Url which used in formula field .
+And this remote site is used for work order detailed page button in job level for loves.</description>
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://www.webarcode.com</url>
+</RemoteSiteSetting>

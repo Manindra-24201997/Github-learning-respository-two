@@ -1,0 +1,167 @@
+<aura:component controller="Custom_Reports_LC_Class" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="ProfileInfo" type="string" default="" />
+    <lightning:card title="">
+        <ul class="slds-has-dividers_bottom-space">
+            <div class="c-container">
+                
+                <lightning:layout multipleRows="true">
+                    
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.BBMaintenanceReport}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="BB Binder Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:contact_list"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">BB Maintenance Report</li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.BBBinderReport}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="BB Binder Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:lead_list"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">BB Binder Report</li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.LovesCampaignStatus}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="Loves Campaign Status Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:product_item"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">Loves Campaign Status Report</li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    <aura:if isTrue="{!v.ProfileInfo=='Training Department'}">
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.TrainingDept}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="Training Campaign Status Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:bot_training"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">Training Campaign Status Report</li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    </aura:if>
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.NameTagReport}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="Name Tag/Business Card Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:product"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">Name Tag/Business Card Report</li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.MIImport}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="MI Import" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:template"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">MI Import </li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    <lightning:layoutItem size="4" flexibility="auto" padding="around-small">
+                        <div class="custom-box">
+                            <li class="slds-item">
+                                <a onclick="{!c.NewStoreOutdoorReport}" class="slds-app-launcher__tile slds-text-link--reset ">
+                                    <div class="slds-app-launcher__tile-body"  title="New Store Outdoor Report" style="padding: 1.5rem .75rem;">
+                                        
+                                        <lightning:tile label="">
+                                            <aura:set attribute="media">
+                                                <lightning:avatar src="{!$Resource.CustomReport + 'CustomReports/table.jpg'}" fallbackIconName="standard:work_step"/>
+                                            </aura:set>
+                                            <ul class="slds-list_horizontal slds-has-dividers_right">
+                                                <li class="slds-item titlecls">New Store Outdoor Report </li>
+                                            </ul>
+                                        </lightning:tile>
+                                        
+                                    </div>
+                                </a>
+                            </li>
+                        </div>
+                    </lightning:layoutItem>
+                    
+                    
+                </lightning:layout>
+            </div>
+        </ul>
+        
+        
+        
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,70 @@
+.THIS .frequired label:before { 
+    content:" *";
+    color: #e32;
+}
+.THIS.c-container {
+    border: 10px solid #d8dde6;
+    margin: 10px 0 20px 0;
+}
+.THIS .scrollerSize{
+    height: 100rem; 
+}
+.THIS .slds-radio{
+        padding: 5px;
+}
+
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}
+ 
+
+.THIS .slds-accordion__summary-action {
+    display: inline-flex;
+    flex-grow: 1;
+    align-items: center;
+    min-width: 0;
+    background: #e2e4e6  !important;
+    line-height: 1.675rem  !important;
+    padding: 5px  !important;
+    font-size: 1.1em !important;
+    color: darkslategrey !important;
+}
+.THIS .buttonsclass
+{
+    margin-top: 26px !important;
+}
+
+.THIS .slds-card__body
+{
+    margin-top: -1.25rem !important;
+    height: 700px;
+}
+
+
+.THIS .slds-accordion__section {
+    padding: 0.65rem !important;
+}
+
+.THIS .slds-table td {
+    padding: .5rem .5rem !important;
+}
+
+.THIS slds-card cStoreFront
+{
+    padding: .5rem .5rem .5rem .5rem !important;
+    
+    background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgba(32, 92, 159, 0), rgb(32, 92, 159));
+}
+
+.THIS .loading {
+    background: transparent url('http://loading.gif') center no-repeat;
+}
+
+.THIS .slds-accordion__summary
+{
+    margin-top: 5px;
+    margin-bottom: 18px;
+    margin-left: 3px;
+    margin-right: 3px;
+}

@@ -1,0 +1,146 @@
+<apex:page controller="MaterialInventoryItemImportController" sidebar="true" docType="html-5.0" standardStylesheets="true" showHeader="false" applyBodyTag="false" applyHtmlTag="false">
+ 
+    <apex:slds />
+   <apex:form html-novalidate="novalidate">
+   
+        <style>
+             .rotate {
+                  float:left;
+                  width: 50px;
+                  height: 95px
+                  top: 300px;
+                  border-style: none;
+                  valign : bottom;
+    
+                /* Safari */
+                -webkit-transform: rotate(-90deg);
+                
+                /* Firefox */
+                -moz-transform: rotate(-90deg);
+                
+                /* IE */
+                -ms-transform: rotate(-90deg);
+                
+                /* Opera */
+                -o-transform: rotate(-90deg);
+                
+                /* Internet Explorer */
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+            
+            }
+            
+            .bPageBlock 
+            {
+                 margin: 20px 20px 20px 20px !important;
+            }
+            
+            
+          body
+            {
+                background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, rgb(212, 228, 247), rgb(32, 92, 159));
+                // background-image: url(/_slds/images/themes/oneSalesforce/banner-brand-default.png?cache=210.2), linear-gradient(to top, #d4d7da, #333) !important;
+                //background-image:none !important;
+                //background-color:#D7D7D7 !important;
+                background-repeat: repeat-x;
+                background-position: left top;
+                background-attachment: fixed; 
+                margin:0px !important;
+            }
+          .customImage{ height: 10px; width: 10px; }
+          
+        
+           .pbHeader
+           {
+               background: white !important;
+           }
+           
+           body .bPageBlock, body .bPageBlock .pbBody, body .bPageBlock .pbBottomButtons 
+           {
+               background: white;
+           }
+         
+        
+         
+        .bPageBlock 
+        {
+            border-top: 0px;
+        }
+    
+        </style>
+        
+        <meta charset="utf-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <title>jQuery UI Datepicker - Default functionality</title>
+          <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+          <link rel="stylesheet" href="/resources/demos/style.css"/>
+          <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        
+        
+        <div class="slds"> 
+      
+        <div style="background-color:#F3F2F2;height:40px; padding-top:14px; color:#333;font-size:18px;font-weight:bold;padding-left:10px;">
+            <h3 class="slds-section-title"><b>&nbsp;Import Material Inventory Items</b></h3>
+        </div>
+      
+       <apex:pagemessages />
+         <apex:pageBlock id="kk" title="File Upload">
+        
+            <apex:pageBlockButtons location="bottom">
+                  <apex:commandButton value="Insert" action="{!saveme}"/>
+                  <apex:commandButton value="Cancel" action="{!cancelme}"/>
+                  <apex:commandButton value="Refresh" action="{!Refresh}"/>                 
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection columns="1" > 
+         
+              <apex:pageBlockSectionItem >
+                  <apex:outputText > Select a File <br/> (Please Upload .CSV format only)</apex:outputText>
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString1}"/>
+              </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                 <apex:outputText > Click to Upload </apex:outputText>           
+                 <apex:commandButton value="Upload" action="{!importCSVFile}" status="csvstatus"> &nbsp;&nbsp;&nbsp; <b> {!csvAsString1}</b>
+                  <apex:actionStatus id="csvstatus">
+                            <apex:facet name="start">
+                              <img src="/img/loading.gif" />
+                            </apex:facet>
+                  </apex:actionStatus>
+             </apex:commandbutton> 
+             </apex:pageBlockSectionItem>
+                 
+            </apex:pageBlockSection>
+           
+                
+        </apex:pageBlock>
+
+     <apex:pageBlock title="Records" rendered="{!recordsdisplay}">
+           <apex:pageblocktable value="{!miiList}" var="acc">
+             
+              <apex:column headerValue="Item Name">
+                 <apex:outputField value="{!acc.name}"/>
+              </apex:column>
+              
+              <apex:column headerValue="Mfg Item Number">
+                 <apex:outputField value="{!acc.Mfg_Item_Number__c }"/>
+              </apex:column>
+              
+              <apex:column headerValue="Qty On Shelf">
+                 <apex:outputField value="{!acc.Qty_On_Shelf__c}"/>
+              </apex:column>
+              
+              <apex:column headerValue="InventoryDate">
+                <apex:outputText value="{0,date, MM/dd/yyyy}">
+                    <apex:param value="{!acc.Inventory_Date__c}"/>
+                </apex:outputText>
+              </apex:column>  
+              
+        </apex:pageblocktable>
+     </apex:pageBlock>
+     
+     <apex:pageBlock rendered="{!recordinsert}">
+        <b>  {!Miilist.size} was successfully inserted </b>
+     </apex:pageBlock> 
+     
+     </div>
+  </apex:form>
+</apex:page>

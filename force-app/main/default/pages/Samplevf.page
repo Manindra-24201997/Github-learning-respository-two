@@ -1,0 +1,24 @@
+<apex:page controller="samplevfcontroller" sidebar="false" showHeader="false">
+    
+     <apex:sectionHeader title="Manindra Form" />
+      <apex:form >
+          <apex:pageBlock >
+              <apex:pageBlockSection columns="1" showHeader="true" title="Personal Details">
+                  <apex:inputField value="{!jtk.Name}"/>
+                  <apex:inputField value="{!jtk.Days__c}"/>
+                  <aside class="slds-col slds-size--1-of-1 slds-medium-size--2-of-2 slds-large-size--12-of-12">
+                                    <div class="slds-form-element slds-p-top--medium slds-p-left--medium">
+                                        <label class="slds-form-element__label"><b>File Storage</b></label>
+                                        <div class="slds-form-element__control">
+                                            <apex:inputfile value="{!myfile.body}" filename="{!myfile.Name}" styleClass="slds-input"/>
+                                        </div>
+                                    </div>
+                                </aside>
+
+              </apex:pageBlockSection>
+              <apex:pageblockButtons >
+                  <apex:commandButton value="Submit" action="{!saveDetails}"/>
+              </apex:pageblockButtons>
+          </apex:pageBlock>
+      </apex:form>
+</apex:page>

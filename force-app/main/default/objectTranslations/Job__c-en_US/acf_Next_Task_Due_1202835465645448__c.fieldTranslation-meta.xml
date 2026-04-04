@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- acf_Next_Task_Due_1202835465645448 --></label>
+    <name>acf_Next_Task_Due_1202835465645448__c</name>
+</CustomFieldTranslation>

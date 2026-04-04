@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Estimate Line Item</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Estimate Line Items</value>
+    </caseValues>
+    <fieldSets>
+        <label><!-- JobEstimate --></label>
+        <name>JobEstimate</name>
+    </fieldSets>
+    <layouts>
+        <layout>Estimate Copied From Quote</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Estimate Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Layout when Approved</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <nameFieldLabel>Name</nameFieldLabel>
+    <quickActions>
+        <label><!-- Delete --></label>
+        <name>Delete</name>
+    </quickActions>
+    <recordTypes>
+        <label><!-- Estimate Copied from Quote --></label>
+        <name>Estimate_Copied_from_Quote</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- When Approved --></label>
+        <name>When_Approved</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- When any ELI Unapproved its Page layout will be changed --></description>
+        <label><!-- When UnApproved --></label>
+        <name>When_UnApproved</name>
+    </recordTypes>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

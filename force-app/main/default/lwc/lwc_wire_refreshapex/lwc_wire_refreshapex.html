@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Showing Refresh Apex">
+        <lightning-input label="Enter serach" onchange={handlesearch}></lightning-input>
+        <lightning-button label="Refresh" onclick={refreshbutton}></lightning-button>
+        / ***    for loop  in refresh apex *** /
+<template for:each={opportunities} for:item="rcd">
+    <p key = {rcd.id}>{rcd.Name}</p>
+    </template> 
+    </lightning-card>
+</template>

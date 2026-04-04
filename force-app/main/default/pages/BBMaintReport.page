@@ -1,0 +1,258 @@
+<apex:page controller="BBMaintReportController" renderAs="pdf" standardStylesheets="false" showHeader="false" applyHtmlTag="false" >
+<html>
+        <head>
+          <style type="text/css">
+            @page{
+                size:landscape;
+                margin : .7in .3in 1.5in .5in;
+                counter-increment: pages;
+                
+                @top-Left{
+                content:element(header) ;
+                Background-repeat:no-repeat;
+                font-size:20px;
+                font-Weight:bold;
+                  font-family: sans-serif !important;
+                
+                   }   
+                
+                @bottom-center{
+                   content : element(footer); 
+                    height:50px;         
+                    }
+                    
+                @bottom-right 
+               {
+                  content: "Page " counter(page);
+                    font-family: sans-serif !important;
+                  
+                  font-size:8pt;
+                } 
+                
+                
+                
+                    
+               
+                    
+                 @bottom-left-corner
+                   {
+                       content: "<apex:outputText value="{0,date,MM'/'dd'/'yyyy}"><apex:param value="{!NOW()}" /></apex:outputText>";
+                        background-repeat: no-repeat;
+                       font-size:10pt;
+                        font-family: sans-serif !important;
+                       padding-left: 20px;
+                       padding-top:20px;
+                  }   
+            
+                }
+                
+                
+                div.header{
+                    position : running(header);
+                    line-height:10px;
+                }
+               
+               
+               @page { 
+                    margin-left: 5mm;
+                    margin-right: 4mm;
+                    margin-top:5cm;
+                    margin-bottom:20mm;
+                    page-break-inside: avoid;
+                    
+                } 
+                body { line-height:90% !important; } 
+
+
+               
+            </style> 
+        
+        
+        
+         <!--  <style type="text/css">
+             @page{
+                size:landscape;
+                
+             @top{
+                content:element(header) ;
+                Background-repeat:no-repeat;
+                font-size:17px;
+                font-Weight:bold;
+                
+                
+     
+                   }   
+                
+            @bottom-right
+            {
+            content: "Page " counter(page);
+            font-family:Arial;
+            font-size:8pt;
+            }
+   
+            @bottom-left 
+            {
+            content: "<apex:outputText value="{0,date,MMMM dd,yyyy}"><apex:param value="{!NOW()}" /></apex:outputText>"; 
+            background-repeat: no-repeat;
+            font-size:8pt;
+            font-family:Arial;
+            } 
+                
+                
+              }  
+            div.header{
+                    position : running(header);
+                    line-height:18px;
+                }
+               
+            </style>  -->
+        
+        </head>
+        
+         <body> 
+     
+        
+         <apex:repeat value="{!CDWrapper}" var="cdw">
+         
+          <div style="page-break-after: always;">
+       
+         <apex:Repeat value="{!cdw.CNWrapper}" var="cnw" >
+         
+          <div class="header"  >  
+           
+               <table border="0" cellspacing="0" cellpadding="0" width="100%" id="table1">
+                  <tr>
+                    <td rowspan="5" width="60"><Br/>
+                       <apex:image id="JS_logo" value="{!$Resource.JS_Logo}" rendered="{!imageNotFound == True}" />
+                       <apex:image url="{!imageBody}" rendered="{!imageNotFound == False}" />
+                       
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td>&nbsp;&nbsp;</td>
+                    <td align= "right" style="  font-family: sans-serif !important;font-weight:bold;font-size:18px">
+                     &nbsp;<b>Billboard Maintenance Report</b>
+                   </td>
+                 </tr>
+              </table> <br/>
+              
+          <!-- <div style="page-break-after: always;"> -->
+          
+               <table width = "100%" style="page-break-inside: avoid;line-height:14px;font-weight:bold;font-family: sans-serif !important;">
+               
+                <tr>
+                      <th width="15%" style="text-align:justify;"><b>Spec Name</b></th>
+                      <th width="31%" style="text-align:left;"><b>Spec Description</b></th>
+                      
+                      <th width="28%" style="text-align:left;"><b>Notes</b></th>
+                      <th width="14%" style="text-align:left;"><b>Req. Due Date</b></th>
+                      <th width="10%" style="text-align:left;"><b>Job Name</b></th> 
+               </tr>
+                <tr>
+                     <td colspan="7">
+                     <hr color="black"/>
+                     </td>
+               </tr>
+               
+               
+               
+           
+                
+               </table>
+               
+                  
+            <br/>      
+                 
+              <div style="width:100%;font-weight: bolder;width:100%;  font-family: sans-serif !important;">
+              
+                <b> <apex:outputText value="{!cdw.strClientDist}"   style="font-size:18px;font-weight:bold;"/> </b> 
+           
+              </div> <br/>
+              
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/><br/> 
+              
+              <div style="width:100%;font-weight: bolder;width:100%; font-family: sans-serif !important;">
+                 <b> <apex:outputText value="{!cnw.strClientName}"   style="font-size:14.5px;font-weight:bold;"/> </b> , <b> <apex:outputText value="{!cnw.strClientcode}"   style="font-size:14.5px;font-weight:bold;"/> </b>
+               </div> <br/> <br/>       
+              <hr style="margin-bottom:-5px;margin-top:-4px;noshade;"/> 
+               
+             
+             </div> 
+           
+             <apex:repeat value="{!cnw.jWrapper}"  var="jw"  >    
+              
+                                   
+               <div style="page-break-inside: avoid;"> 
+               
+               <table width="100%" style="font-family: sans-serif !important;" >
+                <tr>
+                 <td width = "15%" valign="top">
+                 <apex:repeat value="{!jw.jobSpecs}" var="jobSpecs">
+                  <apex:outputtext value="{!jobSpecs.name}"    style="font-size:14px;height:22px;width:225px"/> <br/>
+                 
+                  
+                 </apex:repeat>
+                 
+                
+                <!--   <apex:datatable value="{!jw.jobSpecs}" var="jobSpecs" style="width:450px">
+             
+                   <apex:column value="{!jobSpecs.name} :"    style="font-size:14px;height:22px;width:225px"/> 
+                  
+                   <apex:column value="{!jobSpecs.Description__c}"  style="font-size:14px;height:22px;width:225px"/> <br/>
+                   
+                  </apex:datatable>-->
+                 </td>
+                 
+                 <td width = "30%" valign="top">
+                   <apex:repeat value="{!jw.jobSpecs}" var="jobSpecs">
+                 
+                  <apex:outputtext value="{!jobSpecs.Description__c}"    style="font-size:14px;height:22px;width:225px"/> <br/>
+                  
+                 </apex:repeat>
+                 
+                 </td>
+                 
+                 <td width="32%" align = "left" style="vertical-align:top;page-break-inside: avoid;">
+                   <div style="width:100%;float:left;" align = "left">
+                    <apex:outputField value="{!jw.job.Creative_Overview__c}" style="font-size:14px;"/>
+                   </div>
+                 </td>
+                
+               
+               <td width="12%" align = "left" style="vertical-align:top;page-break-inside: avoid;">
+                   <div style="width:100%;float:left;" align = "left">
+                    <apex:outputText style="width:100%;float:left;font-size:14px;" value="{0,date,MM'/'dd'/'yy}"  rendered="{!if(jw.job.Due_Date__c !=null,true,false)}">
+                    <apex:param value="{!if(jw.job.Due_Date__c !=null,jw.job.Due_Date__c,'-')}"/> </apex:outputText>
+                    <apex:outputText style="width:100%;float:right; align:center;" value=" " rendered="{!if(jw.job.Due_Date__c == null,true,false)}" ></apex:outputText> 
+                   </div>
+                 </td>
+               
+               <td width="18%" align = "left" style="vertical-align:top;page-break-inside: avoid;">
+                   <div style="width:100%;float:left;" align = "left">
+                    <apex:outputText value="{!left(jw.job.Name,200)}" style="width:100%;float:left;font-size:14px;"/>
+                   </div>
+                 </td>
+                </tr>    
+             <tr>
+                     <td colspan="7">
+                     <hr color="black"/>
+                     </td>
+               </tr>
+             </table>
+             
+             </div>  
+                    
+            </apex:repeat>   
+           
+          
+           
+          </apex:repeat>
+        </div>     
+      </apex:repeat>
+       
+    </body>
+        
+        
+</html>
+  
+</apex:page>

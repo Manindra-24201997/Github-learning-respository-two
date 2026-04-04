@@ -1,0 +1,4 @@
+<!--SampleEvent.evt-->
+<aura:event type="APPLICATION" description="Sample Event">
+    <aura:attribute type="string" name="msg" />
+</aura:event>

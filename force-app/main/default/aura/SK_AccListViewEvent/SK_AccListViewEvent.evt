@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION"  >
+    <aura:attribute name="accountIdPassedFromEvent" type="string"/>
+</aura:event>

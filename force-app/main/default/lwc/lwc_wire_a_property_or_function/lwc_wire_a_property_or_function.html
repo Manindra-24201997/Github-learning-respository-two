@@ -1,0 +1,56 @@
+<template>
+<lightning-card title="lwc_wire_a_property_or_function basic example with for loop models">
+
+/*** wire a property  ***/
+<br/>
+<lightning-input label="Enter Name" onchange={handletextforeach}></lightning-input><br/>
+<!--  Note : For wire a property when declaring as a {variable} it is not working already tested -->
+ /***  for loop  for:each without .data component error coming  ***/
+<!--<template for:each={returnrcd} for:item="rcd">
+<p key = {rcd.id}>{rcd.Name}</p>
+</template>-->
+<br/>
+/***  for loop  for:each with .data extension.If without .data extension component error coming 1 ***/
+<template for:each={returnrcd.data} for:item="rcd">
+<p key = {rcd.id}>{rcd.Name}</p>
+</template> 
+<br/>
+/***  for loop  iterator:item without .data component error coming 2 ***/
+<!--<template iterator:item={returnrcd.data}> 
+<p key = {item.value.id}>{item.value.Name}</p>
+</template> -->
+<br/>
+/***  for loop  iterator:item with .data extension.If without .data extension component error coming 3 ***/
+<template iterator:item={returnrcd.data}> 
+<p key = {item.value.id}>{item.value.Name}</p>
+</template> 
+<br/>
+/***  Wire a function 4 ***/
+<br/>
+<lightning-input label="Enter Name" onchange={handletextiteratoritem}></lightning-input>
+
+<!-- Note :For wire a function when declaring as a {returnrcddata.data} it is not working already tested -->
+/***  for loop  for:each 5 ***/
+<template for:each={returnrcddata} for:item="rcd">
+<p key = {rcd.id}>{rcd.Name}</p>
+</template>
+<br/>
+-/***  for loop  for:each with .data 6 ***/
+<template for:each={returnrcddata.data} for:item="rcd">
+<p key = {rcd.id}>{rcd.Name}</p>
+</template>
+<br/>
+/***  for loop  iterator:item 7 ***/
+<template iterator:item={returnrcddata}> 
+<p key = {item.value.id}>{item.value.Name}</p>
+</template> 
+<br/>
+/***  for loop  iterator:item with .data 8 ***/
+<template iterator:item={returnrcddata.data}> 
+<p key = {item.value.id}>{item.value.Name}</p>
+</template>  
+
+
+
+</lightning-card>
+</template>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Payment Term --></label>
+    <name>Payment_Term__c</name>
+    <picklistValues>
+        <masterLabel>Due upon reciept</masterLabel>
+        <translation><!-- Due upon reciept --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Net 15</masterLabel>
+        <translation><!-- Net 15 --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Net 30</masterLabel>
+        <translation><!-- Net 30 --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

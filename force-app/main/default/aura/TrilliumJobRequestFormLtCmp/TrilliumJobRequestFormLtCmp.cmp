@@ -1,0 +1,434 @@
+<aura:component controller="TrilliumJobRequestLtCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <!-- create 2 aura handler with waiting and donewaiting events--> 
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <!--create a component attributs -->
+    <aura:attribute name="Loading" type="boolean" default="false"/>
+    
+    <aura:attribute name="isSpinner" type="boolean" default="false"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="clientContacts" type="List" />
+    <aura:attribute name="clientContactSelected" type="list"/>
+    <aura:attribute name="MaterialItemsList" type="list"/>
+    <aura:attribute name="combineStoreWrapper" type="list"/>
+    <aura:attribute name="prefixURL" type="String" default="/sfc/servlet.shepherd/version/download/"/>
+    <aura:attribute name="ShowClientList" type="boolean" default="true" />
+    <aura:attribute name="ShowMaterialItemList" type="boolean" default="false" />
+    <aura:attribute name="ShowCombineList" type="boolean" default="false" />
+    <aura:attribute name="isMobile" type="boolean" />
+    
+    <aura:attribute name="enteredInputSearch" type="string"/>
+    
+    
+    <aura:if isTrue="{!v.Loading}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    
+    <!--===========================================* Client Contact List Layout*======================================-->
+    
+    <lightning:card  title="" >       
+        <aura:if isTrue="{!v.ShowClientList}"> 
+            
+            <lightning:card>
+                <aura:set attribute="title">
+                    <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                </aura:set>  
+                <aura:set attribute="actions">
+                    <lightning:button class="buttonClass"
+                                      variant="neutral" 
+                                      label="Back"
+                                      title="Back"
+                                      onclick="{!c.backToStoreFront}"/>
+                    <lightning:button class="buttonClass"
+                                      variant="brand" 
+                                      label="Next"
+                                      title="Next"
+                                      onclick="{!c.ShowMaterialItemList}" />
+                </aura:set>
+            </lightning:card>
+            <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName=" Client Contact List" >
+                <lightning:accordionSection name=" Client Contact List" label=" Client Contact List">
+                    
+                    
+                    <!--lightning:datatable aura:id="storetable"
+                                 keyField="Id" 
+                                 columns="{!v.storeColumns}"
+                                 data="{!v.storeData}"                                
+                                 onrowselection="{!c.handleRow}"
+                                 /-->
+                    <div class="showScroll">
+                        <ui:scrollerWrapper class="scrollerSize">    
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="margin-top:15px;">
+                                <thead >
+                                    <tr>
+                                        <th class="slds-cell-shrink" scope="col"><b>Action</b></th>
+                                        <th  class="slds-cell-shrink" scope="col"><b>Name</b></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.clientContacts}" var="item">
+                                        <tr>
+                                            <td class="slds-cell-shrink"  >
+                                                <div class="slds-checkbox">
+                                                    <label class="slds-checkbox">
+                                                        <ui:inputCheckbox value="{!item.Contactselect}" />
+                                                        <span class="slds-checkbox--faux" />                                
+                                                    </label>
+                                                </div>
+                                            </td>
+                                            <td style="word-wrap:break-word;" class="slds-truncate">
+                                                {!item.ClientConWrap.Name}
+                                            </td>                                   
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table> 
+                        </ui:scrollerWrapper>
+                    </div>
+                </lightning:accordionSection>
+            </lightning:accordion> 
+            
+        </aura:if>
+        
+        <!--===========================================* Client Contact List Layout*======================================-->
+        <!--===========================================* Material Item List Layout*=====================================-->
+        <aura:if isTrue="{!v.ShowMaterialItemList}">
+            
+            
+            <lightning:card>
+                <aura:set attribute="title">
+                    <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                </aura:set>  
+                <aura:set attribute="actions">
+                    <lightning:button variant="neutral" 
+                                      label="Back"
+                                      title="Back"
+                                      onclick="{!c.backToClient}"
+                                      class="buttonClass"/>
+                    <lightning:button class="buttonClass"
+                                      variant="brand" 
+                                      label="Next"
+                                      title="Next"
+                                      onclick="{!c.goToCobineList}" />
+                </aura:set>
+            </lightning:card>
+            <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName=" Material Item List" >
+                <lightning:accordionSection name=" Material Item List" label=" Material Item List">                    
+                    <lightning:input aura:id="MaterialNameString" name="ItemSearch" label="Item Search" class="slds-m-around--medium" onchange="{!c.onMiInput}" />
+                    <br/>
+                    <aura:if isTrue="{!!v.isMobile}">
+                        <aura:if isTrue="{!empty(v.MaterialItemsList)}">
+                            <p style="margin:2rem 4rem;"><b>No records found for the search criteria entered</b></p>
+                            <aura:set attribute="else">
+                                <div class="showScroll">
+                                    <ui:scrollerWrapper class="scrollerSize">  
+                                        <table class="slds-table slds-table_cell-buffer slds-table_fixed-layout slds-table_bordered  " >
+                                            <thead >
+                                                <tr>
+                                                    <th class="slds-cell-shrink" scope="col" style="text-align:left;"><b>Photo</b></th>
+                                                    <th  class="slds-cell-shrink" scope="col" ><b>Item Description</b></th>
+                                                    <th  class="slds-cell-shrink" scope="col" style="text-align:center;"><b>Action</b></th>  
+                                                </tr>
+                                            </thead>
+                                            
+                                            <tbody >
+                                                
+                                                <aura:iteration items="{!v.MaterialItemsList}" var="item">                
+                                                    <tr>
+                                                        <td class="slds-truncate" style="text-align:left;" ><img src="{!v.prefixURL + item.ContentVersionId}" width="200" height="30" alt="No Image"/></td>
+                                                        
+                                                        <td style="word-wrap:break-word;text-align:left;white-space:pre-wrap;"  class="slds-truncate slds-cell-shrink">
+                                                            <b>{!item.MIWrap.Name}</b><br/>
+                                                            {!item.MIWrap.Description__c}<br/>                                        
+                                                        </td>
+                                                        <td class="slds-cell-shrink" style="text-align:center;">
+                                                            <div class="slds-checkbox">
+                                                                <label class="slds-checkbox">
+                                                                    <ui:inputCheckbox value="{!item.MISelect}" />
+                                                                    <span class="slds-checkbox--faux" />                                
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </tbody>
+                                        </table>
+                                    </ui:scrollerWrapper>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isMobile}">
+                        <aura:if isTrue="{!empty(v.MaterialItemsList)}">
+                            <p style="margin:2rem 4rem;"><b>No records found for the search criteria entered</b></p>
+                            <aura:set attribute="else">
+                                <div class="showScroll">
+                                    <ui:scrollerWrapper class="scrollerSize">
+                                        <aura:iteration items="{!v.MaterialItemsList}" var="item"> 
+                                            <table>
+                                                <tr>
+                                                    <td><img src="{!v.prefixURL + item.ContentVersionId}" width="150" height="30" alt="No Image"/>
+                                                        <br/> <b>{!item.MIWrap.Name}</b><br/>
+                                                        {!item.MIWrap.Description__c}<br/>   
+                                                    </td>
+                                                    <td class="slds-cell-shrink" style="text-align:center;vertical-align:top;">
+                                                        <div class="slds-checkbox" style="padding-top:35px;">
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox value="{!item.MISelect}" />
+                                                                <span class="slds-checkbox--faux" />                                
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <hr style="display: block;margin: 1rem 0 1rem 0;border-top: 1px solid rgb(221, 219, 218);"/>
+                                        </aura:iteration>
+                                    </ui:scrollerWrapper>
+                                </div>
+                            </aura:set>
+                        </aura:if>
+                    </aura:if>
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </aura:if>
+        
+        <!--===========================================*End of Search criteria Layout*=====================================-->
+        <!--===========================================*Fleet Sales Order List Layout*=======================================-->
+        <aura:if isTrue="{!v.ShowCombineList}"> 
+            
+            <lightning:card>
+                <aura:set attribute="title">
+                    <img src="{!$Resource.LovesHeaderLogo}" width="250" height="250"/> 
+                </aura:set>  
+                <aura:set attribute="actions">
+                    <lightning:button variant="neutral" 
+                                      label="Back"
+                                      title="Back"
+                                       disabled="{!v.isSpinner}"
+                                      onclick="{!c.backToMaterial}" class="buttonClass"/>
+                    <lightning:button variant="brand" 
+                                      label="Place Order"
+                                      title="Place Order"
+                                      disabled="{!v.isSpinner}"
+                                      onclick="{!c.submitOrder}" class="buttonClass"/>                 
+                </aura:set>
+            </lightning:card>
+            <lightning:accordion  allowMultipleSectionsOpen="true"  activeSectionName="Trillium Sales Order List" >
+                <lightning:accordionSection name="Trillium Sales Order List" label=" Trillium Sales Order List">
+                    <aura:if isTrue="{!!v.isMobile}">
+                        <div class="showScroll">
+                            <ui:scrollerWrapper class="scrollerSize">  
+                                <table class="slds-table  slds-no-row-hover slds-table--bordered" style="margin-top:15px;">
+                                    <thead >                 
+                                        <tr class="slds-text-heading--label slds-grid">
+                                            <th class="slds-truncate slds-size_2-of-12" style="white-space:pre-wrap;"><b>Client Contact</b></th>
+                                            <th class="slds-truncate slds-size_7-of-12"><center><b>Material Item</b></center></th>   
+                                            <th class="slds-truncate slds-size_3-of-12" style="white-space:pre-wrap;"><b>Shipping Address</b></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.combineStoreWrapper}" var="item"   indexVar="rowIndex1">
+                                            <tr class="slds-grid">
+                                                <td style="word-wrap:break-word;white-space:pre-wrap;"  class="slds-truncate slds-size_2-of-12">
+                                                    {!item.CombinedClientContact.Name}
+                                                </td>
+                                                <td class=" slds-size_7-of-12">
+                                                    <table class="slds-table slds-table_cell-buffer slds-no-row-hover slds-table_fixed-layout slds-table_bordered">
+                                                        <tr class="slds-text-heading--label">
+                                                            <th><b>Name</b></th>
+                                                            <th style="white-space:pre-wrap;"><b>Max Quantity</b></th>
+                                                            <th style="text-align:center;"><b>Qty</b></th>
+                                                        </tr>                      
+                                                        <aura:iteration items="{!item.itemsList}" var="i" indexVar="rowIndex2">
+                                                            <tr>
+                                                                <td style="white-space:pre-wrap;">
+                                                                    {!i.mItem.Name}
+                                                                </td>
+                                                                <td id="{!rowIndex1 +'maxQty'+ rowIndex2}"  class="slds-truncate" >
+                                                                    {!i.mItem.Max_Qty__c}                                             
+                                                                </td>
+                                                                <td>   
+                                                                    <div  id="{!rowIndex1 +'qty'+ rowIndex2}" data-value="{!rowIndex2}" data-record="{!rowIndex1}" >
+                                                                        <ui:inputText value="{!i.enteredQty}" class="slds-input" labelClass="{!rowIndex1 +'qty'+ rowIndex2}" updateOn="change" change="{!c.checkQuantity}" maxlength="2"/>
+                                                                    </div>
+                                                                    <b class="slds-wrap" wdith="25%;" id="{!rowIndex1 +'erMsg'+ rowIndex2}" style="display:none;">The Quantity must be less than Max Quantity of Material Item</b>
+                                                                </td>
+                                                            </tr>
+                                                        </aura:iteration>
+                                                    </table>
+                                                </td>
+                                                <td class=" slds-size_3-of-12">
+                                                    
+                                                    
+                                                    <div id="{!rowIndex1 +'noEdit'}" >
+                                                        <lightning:button variant="neutral" 
+                                                                          label="Edit Address"
+                                                                          title="Edit Address"
+                                                                          onclick="{!c.editAdress}" name="{!rowIndex1}" class="buttonClass"/>
+                                                        <lightning:input value="{!item.Attn}" label="TO:/ATTN : :"/>
+                                                        <lightning:input value="{!item.Email}" label="Email :" type="email" required="true" aura:id="txtEmail"/>
+                                                        <lightning:input value="{!item.Address}" label="Shipping Address :" disabled="true"/>
+                                                        <lightning:input value="{!item.Address2}" label="Shipping Address2 :" disabled="true"/>
+                                                        <lightning:input value="{!item.City}" label="Shipping City :" disabled="true" />
+                                                        <lightning:input value="{!item.State}" label="  Shipping state :"  disabled="true"/>  
+                                                        <lightning:input value="{!item.Zipcode}" label="Shipping Zipcode :" disabled="true"/>
+                                                        <lightning:input value="{!item.Phone}" label="Promo Phone :" disabled="true"/> 
+                                                        <lightning:textarea name="input2" label=" Billing Instructions" required="true" aura:id="BillingInstru" value="{!item.BillingInstru}"/>                                            
+                                                        <lightning:textarea name="input2" label="SAP" value="{!item.SAP}"/>
+                                                        <lightning:textarea name="input2" label="WBS" value="{!item.WBS}"/>
+                                                    </div>
+                                                    <div id="{!rowIndex1 +'inEdit'}" style="display:none;">
+                                                        <div class="slds-form-element">
+                                                            <label class="slds-form-element__label" style="word-wrap:break-word;white-space:pre-wrap;">Do you want to update your default shipping address?</label>
+                                                            <div class="slds-form-element__control">
+                                                                <span class="slds-checkbox slds-checkbox_standalone">
+                                                                    <ui:inputCheckbox value="{!item.Acceptance}" />
+                                                                    <span class="slds-checkbox_faux"></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>                                                                                      
+                                                        <lightning:input value="{!item.Attn}" label="TO:/ATTN : :"/>
+                                                        <lightning:input value="{!item.Email}" label="Email :" type="email" required="true" />
+                                                        <lightning:input value="{!item.Address}" label="Shipping Address :"/>
+                                                        <lightning:input value="{!item.Address2}" label="Shipping Address2 :" />
+                                                        <lightning:input value="{!item.City}" label="Shipping City :" />
+                                                        <lightning:input value="{!item.State}" label="  Shipping state :"/>  
+                                                        <lightning:input value="{!item.Zipcode}" label="Shipping Zipcode :" />                                            
+                                                        <lightning:input value="{!item.Phone}" label="Promo Phone :"/>     
+                                                        <lightning:textarea name="input2" label=" Billing Instructions" required="true"  value="{!item.BillingInstru}"/>
+                                                        <lightning:textarea name="input2" label="SAP" value="{!item.SAP}"/>
+                                                        <lightning:textarea name="input2" label="WBS" value="{!item.WBS}"/>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </aura:iteration>  
+                                    </tbody>
+                                </table>
+                            </ui:scrollerWrapper>
+                        </div>
+                    </aura:if>
+                    <aura:if isTrue="{!v.isMobile}">
+                        <div class="showScroll">
+                            <ui:scrollerWrapper class="scrollerSizeCart"> 
+                                <aura:iteration items="{!v.combineStoreWrapper}" var="item"   indexVar="rowIndex1">
+                                    <table>
+                                        <tr>
+                                            <td>  
+                                                <b> {!item.CombinedClientContact.Name}</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <table class="slds-table ">
+                                                <tr>
+                                                    <td>Name</td>
+                                                    <td>Max Qty</td>
+                                                    <td>Qty</td> 
+                                                </tr>    
+                                                <aura:iteration items="{!item.itemsList}" var="i" indexVar="rowIndex2">
+                                                    <tr>
+                                                        <td width="50%" style="white-space:pre-wrap;">
+                                                            {!i.mItem.Name}<br/>
+                                                            <!--p id="{!rowIndex1 +'maxQty'+ rowIndex2}"><b>Max Qty: </b>{!i.MI.Max_Qty__c}  </p-->
+                                                        </td>                                                          
+                                                        <td id="{!rowIndex1 +'maxQty'+ rowIndex2}"  class="slds-truncate" >
+                                                            {!i.mItem.Max_Qty__c}                                             
+                                                        </td>
+                                                        <td>   
+                                                            <div  id="{!rowIndex1 +'qty'+ rowIndex2}" data-value="{!rowIndex2}" data-record="{!rowIndex1}" >
+                                                                <ui:inputText value="{!i.enteredQty}" class="slds-input" labelClass="{!rowIndex1 +'qty'+ rowIndex2}" updateOn="change" change="{!c.checkQuantity}" maxlength="2"/>
+                                                            </div>
+                                                            <b class="slds-wrap" wdith="25%;" id="{!rowIndex1 +'erMsg'+ rowIndex2}" style="display:none;">The Quantity must be less than Max Quantity of Material Item</b>
+                                                        </td>
+                                                    </tr>
+                                                </aura:iteration>
+                                            </table>
+                                            <br/>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"> <b>Shipping Address</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <div id="{!rowIndex1 +'noEdit'}" >
+                                                <table>
+                                                    <tr><lightning:button variant="neutral" 
+                                                                          label="Edit Address"
+                                                                          title="Edit Address"
+                                                                          onclick="{!c.editAdress}" name="{!rowIndex1}" class="buttonClass"/></tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Attn}" label="TO:/ATTN : :"/></td>
+                                                        <td class="padding"><lightning:input value="{!item.Address}" label="Shipping Address :" disabled="true"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Address2}" label="Shipping Address2 :" disabled="true"/></td>
+                                                        <td class="padding"><lightning:input value="{!item.City}" label="Shipping City :" disabled="true" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.State}" label="  Shipping state :"  disabled="true"/>  </td>
+                                                        <td class="padding"><lightning:input value="{!item.Zipcode}" label="Shipping Zipcode :" disabled="true"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Phone}" label="Promo Phone :" disabled="true"/> </td>
+                                                        <td class="padding"> <lightning:textarea name="input2" label=" Billing Instructions" value="{!item.BillingInstru}"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:textarea name="input2" label="SAP" value="{!item.SAP}"/></td>
+                                                        <td class="padding"><lightning:textarea name="input2" label="WBS" value="{!item.WBS}"/></td>
+                                                    </tr>
+                                                </table> 
+                                            </div>
+                                            <div id="{!rowIndex1 +'inEdit'}" style="display:none;">
+                                                <table>
+                                                    <tr>    <div class="slds-form-element">
+                                                        <label class="slds-form-element__label" style="word-wrap:break-word;white-space:pre-wrap;">Do you want to update your default shipping address?</label>
+                                                        <div class="slds-form-element__control">
+                                                            <span class="slds-checkbox slds-checkbox_standalone">
+                                                                <ui:inputCheckbox value="{!item.Acceptance}" />
+                                                                <span class="slds-checkbox_faux"></span>
+                                                            </span>
+                                                        </div>
+                                                        </div> 
+                                                    </tr>                                                                                    
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Attn}" label="TO:/ATTN : :"/></td>
+                                                        <td class="padding"><lightning:input value="{!item.Address}" label="Shipping Address :"/></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Address2}" label="Shipping Address2 :" /></td>
+                                                        <td class="padding"><lightning:input value="{!item.City}" label="Shipping City :" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.State}" label="  Shipping state :"/></td>
+                                                        <td class="padding"><lightning:input value="{!item.Zipcode}" label="Shipping Zipcode :" /></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="padding"><lightning:input value="{!item.Phone}" label="Promo Phone :"/></td>
+                                                        <td class="padding"><lightning:textarea name="input2" label=" Billing Instructions" value="{!item.BillingInstru}"/></td>
+                                                    </tr>
+                                                    <tr><td class="padding"><lightning:textarea name="input2" label="SAP" value="{!item.SAP}"/></td>
+                                                        <td class="padding"><lightning:textarea name="input2" label="WBS" value="{!item.WBS}"/></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </tr>
+                                    </table>
+                                    <hr style="display: block;margin: 1rem 0 1rem 0;border-top: 1px solid rgb(221, 219, 218);"/>
+                                </aura:iteration>
+                            </ui:scrollerWrapper>
+                        </div>
+                    </aura:if>
+                </lightning:accordionSection>
+            </lightning:accordion>
+        </aura:if>
+        <!--===========================================* End of Fleet Sales Order List Layout*=============================-->
+    </lightning:card>
+    
+</aura:component>

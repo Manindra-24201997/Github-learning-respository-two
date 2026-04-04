@@ -1,0 +1,17 @@
+<template>
+/***********  Lightning record form another model with input fields But it didnt worked in record form so kept normal logic****/
+<lightning-card title="lwc record form anther model with input fields ">
+<lightning-record-form record-id={recordId} columns="2" layout-type="full"
+ mode="view" fields={fields} object-api-name={objectApiName} onsubmit={handleSubmit}
+  onsuccess={handleSuccess}>
+    
+</lightning-record-form>
+<!--<lightning-record-form record-id={recordId} object-api-name={objectApiName}
+fields={fields} columns="2" mode="view" onsubmit={handleSubmit} onsuccess={handleSuccess}>
+</lightning-record-form>-->
+
+<!--In lightning record form we can use custom lightning input fields tags logic already checked.It can be used in lightning record edit form only -->
+<!--<lightning-input label="Name" value={nme} ></lightning-input>-->
+
+</lightning-card>
+</template>
