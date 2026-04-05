@@ -32,6 +32,7 @@ public class sampleclass {
     public static List<Contact> getContacts(String searchKeyword) {
         String searchQuery = '%' + String.escapeSingleQuotes(searchKeyword) + '%';
         system.debug('search query  branch changed in remote github changed 3');
+        system.debug('New line added');
         return [SELECT Id, FirstName, LastName, Email FROM Contact WHERE LastName LIKE :searchQuery LIMIT 10];
     }
 }
