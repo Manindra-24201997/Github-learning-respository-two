@@ -1,6 +1,6 @@
 public class sampleclass {
     
-    @AuraEnabled    
+    @AuraEnabled
     public static Job__c returjobrcd(){
         Job__c jrcd=[select Id,name,Job_Auto_Number__c, CreatedDate from Job__c order by createddate desc limit 1];
         return jrcd;
@@ -32,6 +32,7 @@ public class sampleclass {
     public static List<Contact> getContacts(String searchKeyword) {
         String searchQuery = '%' + String.escapeSingleQuotes(searchKeyword) + '%';
         system.debug('search query  branch changed in remote github changed 3');
+        system.debug('local changes');
         return [SELECT Id, FirstName, LastName, Email FROM Contact WHERE LastName LIKE :searchQuery LIMIT 10];
     }
 }
